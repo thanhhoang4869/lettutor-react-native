@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.rntest"
+    namespace "com.LetTutor"
     defaultConfig {
-        applicationId "com.rntest"
+        applicationId "com.LetTutor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package com.rntest;
+package com.LetTutor;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
