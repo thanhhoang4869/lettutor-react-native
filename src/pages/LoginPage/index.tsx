@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {TextInput} from '@react-native-material/core';
 import {Button, Flex, WhiteSpace} from '@ant-design/react-native';
-import {useAppTheme} from '../../../App';
+import {useAppTheme} from '../../App';
 
 export function LoginPage(): JSX.Element {
   const theme = useAppTheme();

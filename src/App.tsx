@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LoginPage from './src/pages/LoginPage';
+import LoginPage from './pages/LoginPage';
 import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
