@@ -17,14 +17,10 @@ export type AppTheme = typeof theme;
 
 export const useAppTheme = () => useTheme<AppTheme>();
 
-class App extends Component {
-  render() {
-    return (
-      <PaperProvider theme={theme}>
-        <LoginPage />
-      </PaperProvider>
-    );
-  }
+export default function App(): JSX.Element {
+  return (
+    <PaperProvider theme={theme}>
+      <LoginPage />
+    </PaperProvider>
+  );
 }
-
-export default App;
