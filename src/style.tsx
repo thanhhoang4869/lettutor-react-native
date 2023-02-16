@@ -5,6 +5,7 @@ const primaryColor = '#1677ff';
 export const color = {
   facebookColor: '#3b5998',
   googleColor: '#db3236',
+  grey: '#d3d3d3',
 };
 
 export const style = StyleSheet.create({
@@ -41,11 +42,15 @@ export const style = StyleSheet.create({
     height: '100%',
     padding: 30,
   },
-  button: {
+  primaryButton: {
     width: '100%',
+    backgroundColor: primaryColor,
   },
   input: {
     width: '100%',
+  },
+  colorBlack: {
+    color: 'black',
   },
   //loginPageEnd
 });

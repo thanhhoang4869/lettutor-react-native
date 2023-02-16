@@ -1,43 +1,46 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity} from 'react-native';
-import {TextInput} from '@react-native-material/core';
-import {Button, Flex, WhiteSpace} from '@ant-design/react-native';
-import {useAppTheme} from 'App';
+
+import {Button, Input} from 'galio-framework';
+import {Image, TouchableOpacity} from 'react-native';
+import {Flex, Text, WhiteSpace} from '@ant-design/react-native';
 import {Icon} from 'react-native-elements';
+
 import {style, color} from 'style';
+import {useAppTheme} from 'App';
 
 export function LoginPage(): JSX.Element {
-  const theme = useAppTheme();
-
   const logo = require('assets/logo.png');
+  const theme = useAppTheme();
 
   return (
     <Flex justify="center" direction="column" style={style.container}>
       <Image style={style.imageStyle} resizeMode={'contain'} source={logo} />
 
-      <WhiteSpace />
-
-      <TextInput
-        label="Email"
-        variant="outlined"
-        style={style.input}
-        color={theme?.colors?.primary}
+      <Input
+        placeholder="Email"
+        rounded
+        placeholderTextColor={color.grey}
+        family="AntDesign"
+        icon="mail"
+        cursorColor={theme?.colors?.primary}
       />
 
       <WhiteSpace />
 
-      <TextInput
-        label="Password"
-        variant="outlined"
-        style={style.input}
-        color={theme?.colors?.primary}
-        secureTextEntry={true}
+      <Input
+        placeholder="Password"
+        password
+        viewPass
+        rounded
+        placeholderTextColor={color.grey}
+        icon="lock"
+        family="AntDesign"
+        cursorColor={theme?.colors?.primary}
       />
 
       <WhiteSpace />
-      <WhiteSpace />
 
-      <Button type="primary" style={style.button}>
+      <Button round style={style.primaryButton}>
         Login
       </Button>
 
