@@ -11,6 +11,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from 'screens/LoginScreen';
 import SignupScreen from 'screens/SignupScreen';
 import ForgetPasswordScreen from 'screens/ForgetPasswordScreen';
+import MainScreen from 'screens/MainScreen/index';
+import DummyScreen from 'screens/DummyScreen';
+import HomeScreen from 'screens/HomeScreen';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -25,6 +28,9 @@ type RootStackParamList = {
   Signup: undefined;
   Login: undefined;
   ForgetPass: undefined;
+  Main: undefined;
+  Dummy: undefined;
+  Home: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -41,6 +47,9 @@ export default function App(): JSX.Element {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
+          <Stack.Screen name="Main" component={MainScreen} />
+          <Stack.Screen name="Dummy" component={DummyScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

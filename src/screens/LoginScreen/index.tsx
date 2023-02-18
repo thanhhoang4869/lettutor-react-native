@@ -41,7 +41,12 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
 
       <WhiteSpace />
 
-      <Button round style={style.primaryButton}>
+      <Button
+        round
+        style={style.primaryButton}
+        onPress={() => {
+          navigate('Main');
+        }}>
         Login
       </Button>
 
