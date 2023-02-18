@@ -3,18 +3,21 @@ import React from 'react';
 import {Button, Input} from 'galio-framework';
 import {Image, TouchableOpacity} from 'react-native';
 import {Flex, Text, WhiteSpace} from '@ant-design/react-native';
-import {Icon} from 'react-native-elements';
-
 import {style, color} from 'style';
 import {useAppTheme} from 'App';
 
-export function LoginPage(): JSX.Element {
+export function SignupScreen({navigation: {navigate}}: any): JSX.Element {
   const logo = require('assets/logo.png');
   const theme = useAppTheme();
 
   return (
     <Flex justify="center" direction="column" style={style.container}>
       <Image style={style.imageStyle} resizeMode={'contain'} source={logo} />
+
+      <Text style={style.textPrimary}>Let us sign you up!</Text>
+
+      <WhiteSpace />
+      <WhiteSpace />
 
       <Input
         placeholder="Email"
@@ -25,7 +28,14 @@ export function LoginPage(): JSX.Element {
         cursorColor={theme?.colors?.primary}
       />
 
-      <WhiteSpace />
+      <Input
+        placeholder="Full name"
+        rounded
+        placeholderTextColor={color.grey}
+        family="AntDesign"
+        icon="user"
+        cursorColor={theme?.colors?.primary}
+      />
 
       <Input
         placeholder="Password"
@@ -38,51 +48,33 @@ export function LoginPage(): JSX.Element {
         cursorColor={theme?.colors?.primary}
       />
 
+      <Input
+        placeholder="Confirm password"
+        password
+        viewPass
+        rounded
+        placeholderTextColor={color.grey}
+        icon="lock"
+        family="AntDesign"
+        cursorColor={theme?.colors?.primary}
+      />
+
       <WhiteSpace />
 
       <Button round style={style.primaryButton}>
-        Login
+        Sign up
       </Button>
 
       <WhiteSpace />
-      <WhiteSpace />
 
-      <Text>Or continue with</Text>
-
-      <WhiteSpace />
-
-      <Flex>
-        <TouchableOpacity style={style.mr5}>
-          <Icon
-            name="facebook"
-            color={color.facebookColor}
-            type="font-awesome-5"
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Icon name="google" type="font-awesome-5" color={color.googleColor} />
-        </TouchableOpacity>
-      </Flex>
-
-      <WhiteSpace />
-      <WhiteSpace />
-
-      <TouchableOpacity>
-        <Text style={style.textBoldPrimary}>Forgot password?</Text>
+      <TouchableOpacity onPress={() => navigate('Login')}>
+        <Flex>
+          <Text style={style.mr2}>Got an account?</Text>
+          <Text style={style.textBoldPrimary}>Login</Text>
+        </Flex>
       </TouchableOpacity>
-
-      <WhiteSpace />
-      <WhiteSpace />
-
-      <Flex>
-        <Text style={style.mr2}>Not a member yet?</Text>
-        <TouchableOpacity>
-          <Text style={style.textBoldPrimary}>Register</Text>
-        </TouchableOpacity>
-      </Flex>
     </Flex>
   );
 }
 
-export default LoginPage;
+export default SignupScreen;
