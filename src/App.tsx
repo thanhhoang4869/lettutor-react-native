@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
@@ -36,6 +36,12 @@ type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App(): JSX.Element {
+  // const [language, setLanguage] = useState('en');
+
+  // const changeLanguage = (lang: string) => {
+  //   setLanguage(lang);
+  // };
+
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>

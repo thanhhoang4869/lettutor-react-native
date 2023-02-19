@@ -5,6 +5,7 @@ import {Image, TouchableOpacity} from 'react-native';
 import {Flex, Text, WhiteSpace} from '@ant-design/react-native';
 import {style, color} from 'style';
 import {useAppTheme} from 'App';
+import MultilangButton from 'components/MultilangButton';
 
 export function ForgetPasswordScreen({
   navigation: {navigate},
@@ -13,35 +14,39 @@ export function ForgetPasswordScreen({
   const theme = useAppTheme();
 
   return (
-    <Flex justify="center" direction="column" style={style.container}>
-      <Image style={style.imageStyle} resizeMode={'contain'} source={logo} />
+    <>
+      <MultilangButton />
 
-      <Text>Please enter your registered email to get recovery code</Text>
+      <Flex direction="column" style={style.containerMul}>
+        <Image style={style.imageStyle} resizeMode={'contain'} source={logo} />
 
-      <WhiteSpace />
-      <WhiteSpace />
+        <Text>Please enter your registered email to get recovery code</Text>
 
-      <Input
-        placeholder="Email"
-        rounded
-        placeholderTextColor={color.grey}
-        family="AntDesign"
-        icon="mail"
-        cursorColor={theme?.colors?.primary}
-      />
+        <WhiteSpace />
+        <WhiteSpace />
 
-      <WhiteSpace />
+        <Input
+          placeholder="Email"
+          rounded
+          placeholderTextColor={color.grey}
+          family="AntDesign"
+          icon="mail"
+          cursorColor={theme?.colors?.primary}
+        />
 
-      <Button round style={style.primaryButton}>
-        Send recovery code
-      </Button>
+        <WhiteSpace />
 
-      <WhiteSpace />
+        <Button round style={style.primaryButton}>
+          Send recovery code
+        </Button>
 
-      <TouchableOpacity onPress={() => navigate('Login')}>
-        <Text style={style.textBoldPrimary}>Back to Login</Text>
-      </TouchableOpacity>
-    </Flex>
+        <WhiteSpace />
+
+        <TouchableOpacity onPress={() => navigate('Login')}>
+          <Text style={style.textBoldPrimary}>Back to Login</Text>
+        </TouchableOpacity>
+      </Flex>
+    </>
   );
 }
 

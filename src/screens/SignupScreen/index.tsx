@@ -5,75 +5,71 @@ import {Image, TouchableOpacity} from 'react-native';
 import {Flex, Text, WhiteSpace} from '@ant-design/react-native';
 import {style, color} from 'style';
 import {useAppTheme} from 'App';
+import MultilangButton from 'components/MultilangButton';
 
 export function SignupScreen({navigation: {navigate}}: any): JSX.Element {
   const logo = require('assets/logo.png');
   const theme = useAppTheme();
 
   return (
-    <Flex justify="center" direction="column" style={style.container}>
-      <Image style={style.imageStyle} resizeMode={'contain'} source={logo} />
+    <>
+      <MultilangButton />
 
-      <Text style={style.textPrimary}>Let us sign you up!</Text>
+      <Flex direction="column" style={style.containerMul}>
+        <Image style={style.imageStyle} resizeMode={'contain'} source={logo} />
 
-      <WhiteSpace />
-      <WhiteSpace />
+        <Text style={style.textPrimary}>Let us sign you up!</Text>
 
-      <Input
-        placeholder="Email"
-        rounded
-        placeholderTextColor={color.grey}
-        family="AntDesign"
-        icon="mail"
-        cursorColor={theme?.colors?.primary}
-      />
+        <WhiteSpace />
+        <WhiteSpace />
 
-      <Input
-        placeholder="Full name"
-        rounded
-        placeholderTextColor={color.grey}
-        family="AntDesign"
-        icon="user"
-        cursorColor={theme?.colors?.primary}
-      />
+        <Input
+          placeholder="Email"
+          rounded
+          placeholderTextColor={color.grey}
+          family="AntDesign"
+          icon="mail"
+          cursorColor={theme?.colors?.primary}
+        />
 
-      <Input
-        placeholder="Password"
-        password
-        viewPass
-        rounded
-        placeholderTextColor={color.grey}
-        icon="lock"
-        family="AntDesign"
-        cursorColor={theme?.colors?.primary}
-      />
+        <Input
+          placeholder="Password"
+          password
+          viewPass
+          rounded
+          placeholderTextColor={color.grey}
+          icon="lock"
+          family="AntDesign"
+          cursorColor={theme?.colors?.primary}
+        />
 
-      <Input
-        placeholder="Confirm password"
-        password
-        viewPass
-        rounded
-        placeholderTextColor={color.grey}
-        icon="lock"
-        family="AntDesign"
-        cursorColor={theme?.colors?.primary}
-      />
+        <Input
+          placeholder="Confirm password"
+          password
+          viewPass
+          rounded
+          placeholderTextColor={color.grey}
+          icon="lock"
+          family="AntDesign"
+          cursorColor={theme?.colors?.primary}
+        />
 
-      <WhiteSpace />
+        <WhiteSpace />
 
-      <Button round style={style.primaryButton}>
-        Sign up
-      </Button>
+        <Button round style={style.primaryButton}>
+          Sign up
+        </Button>
 
-      <WhiteSpace />
+        <WhiteSpace />
 
-      <TouchableOpacity onPress={() => navigate('Login')}>
-        <Flex>
-          <Text style={style.mr2}>Got an account?</Text>
-          <Text style={style.textBoldPrimary}>Login</Text>
-        </Flex>
-      </TouchableOpacity>
-    </Flex>
+        <TouchableOpacity onPress={() => navigate('Login')}>
+          <Flex>
+            <Text style={style.mr2}>Got an account?</Text>
+            <Text style={style.textBoldPrimary}>Login</Text>
+          </Flex>
+        </TouchableOpacity>
+      </Flex>
+    </>
   );
 }
 
