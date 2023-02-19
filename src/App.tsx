@@ -14,6 +14,7 @@ import ForgetPasswordScreen from 'screens/ForgetPasswordScreen';
 import MainScreen from 'screens/MainScreen/index';
 import DummyScreen from 'screens/DummyScreen';
 import HomeScreen from 'screens/HomeScreen';
+import AccountVerifyScreen from 'screens/AccountVerifyScreen';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -31,6 +32,7 @@ type RootStackParamList = {
   Main: undefined;
   Dummy: undefined;
   Home: undefined;
+  AccVerify: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,6 +54,7 @@ export default function App(): JSX.Element {
           initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen name="AccVerify" component={AccountVerifyScreen} />
           <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
           <Stack.Screen name="Main" component={MainScreen} />
           <Stack.Screen name="Dummy" component={DummyScreen} />

@@ -56,7 +56,12 @@ export function SignupScreen({navigation: {navigate}}: any): JSX.Element {
 
         <WhiteSpace />
 
-        <Button round style={style.primaryButton}>
+        <Button
+          round
+          style={style.primaryButton}
+          onPress={() => {
+            navigate('AccVerify');
+          }}>
           Sign up
         </Button>
 
