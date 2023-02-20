@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React from 'react';
 import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
@@ -11,11 +11,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from 'screens/LoginScreen';
 import SignupScreen from 'screens/SignupScreen';
 import ForgetPasswordScreen from 'screens/ForgetPasswordScreen';
-import MainScreen from 'screens/MainScreen/index';
-import DummyScreen from 'screens/DummyScreen';
+import MainLayout from 'components/MainLayout';
+import SettingScreen from 'screens/SettingSccreen';
 import HomeScreen from 'screens/HomeScreen';
 import AccountVerifyScreen from 'screens/AccountVerifyScreen';
 import StartingScreen from 'screens/StartingScreen';
+import UpcomingScreen from 'screens/UpcomingScreen';
+import MessageScreen from 'screens/MessageScreen';
+import TutorScreen from 'screens/TutorScreen';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -35,6 +38,10 @@ type RootStackParamList = {
   Dummy: undefined;
   Home: undefined;
   AccVerify: undefined;
+  Setting: undefined;
+  Message: undefined;
+  Upcoming: undefined;
+  Tutor: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -53,15 +60,18 @@ export default function App(): JSX.Element {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName="Start">
+          initialRouteName="Main">
           <Stack.Screen name="Start" component={StartingScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="AccVerify" component={AccountVerifyScreen} />
           <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
-          <Stack.Screen name="Main" component={MainScreen} />
-          <Stack.Screen name="Dummy" component={DummyScreen} />
+          <Stack.Screen name="Main" component={MainLayout} />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Message" component={MessageScreen} />
+          <Stack.Screen name="Upcoming" component={UpcomingScreen} />
+          <Stack.Screen name="Tutor" component={TutorScreen} />
+          <Stack.Screen name="Setting" component={SettingScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

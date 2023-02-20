@@ -1,12 +1,12 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const DummyScreen = () => {
+const Settings = () => {
   return (
     <View>
-      <Text>DummyScreen</Text>
+      <Text>Settings</Text>
     </View>
   );
 };
 
-export default DummyScreen;
+export default Settings;
