@@ -15,6 +15,7 @@ import MainScreen from 'screens/MainScreen/index';
 import DummyScreen from 'screens/DummyScreen';
 import HomeScreen from 'screens/HomeScreen';
 import AccountVerifyScreen from 'screens/AccountVerifyScreen';
+import StartingScreen from 'screens/StartingScreen';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -26,6 +27,7 @@ export type AppTheme = typeof theme;
 export const useAppTheme = () => useTheme<AppTheme>();
 
 type RootStackParamList = {
+  Start: undefined;
   Signup: undefined;
   Login: undefined;
   ForgetPass: undefined;
@@ -51,7 +53,8 @@ export default function App(): JSX.Element {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName="Login">
+          initialRouteName="Start">
+          <Stack.Screen name="Start" component={StartingScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="AccVerify" component={AccountVerifyScreen} />

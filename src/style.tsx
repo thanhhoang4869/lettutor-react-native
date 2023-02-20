@@ -1,4 +1,3 @@
-import {NOT_INITIALIZED_ERROR} from '@react-navigation/core/lib/typescript/src/createNavigationContainerRef';
 import {StyleSheet} from 'react-native';
 
 const primaryColor = '#1677ff';
