@@ -8,7 +8,7 @@ import {SearchBarProps} from 'components/SearchBar';
 import SearchBar from 'components/SearchBar';
 import FieldChip from 'components/FieldChip';
 
-export default function HomeScreen(): JSX.Element {
+export default function TutorScreen(): JSX.Element {
   const myStyle = StyleSheet.create({
     container: {
       backgroundColor: 'white',

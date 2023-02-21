@@ -13,7 +13,7 @@ const SearchBar = ({placeHolder}: SearchBarProps) => {
       placeholder={placeHolder}
       rounded
       placeholderTextColor={color.grey}
-      style={{borderColor: color.grey, borderRadius: 5}}
+      style={{borderColor: color.grey, borderRadius: 50}}
       family="AntDesign"
       icon="search1"
       cursorColor={color.primaryColor}

@@ -1,10 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Icon} from 'react-native-elements';
 
 import HomeScreen from 'screens/HomeScreen';
 import SettingScreen from 'screens/SettingSccreen';
-import {Icon} from 'react-native-elements';
 import MessageScreen from 'screens/MessageScreen';
 import UpcomingScreen from 'screens/UpcomingScreen';
 import TutorScreen from 'screens/TutorScreen';
