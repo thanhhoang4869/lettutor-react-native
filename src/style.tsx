@@ -6,6 +6,8 @@ export const color = {
   facebookColor: '#3b5998',
   googleColor: '#db3236',
   grey: '#d3d3d3',
+  darkGrey: '#434343',
+  lightGrey: '#f2f2f2',
   primaryColor: primaryColor,
   white: 'white',
 };
@@ -94,6 +96,11 @@ export const style = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: 30,
     backgroundColor: 'white',
+  },
+  pageTitle: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   //loginPageEnd
 });
