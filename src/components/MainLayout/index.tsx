@@ -46,7 +46,7 @@ export default function MainLayout() {
               break;
             case 'Settings':
               iconName = 'settings';
-              iconType = 'material-icons';
+              iconType = focused ? 'material-icons' : 'feather';
 
               break;
             default:
