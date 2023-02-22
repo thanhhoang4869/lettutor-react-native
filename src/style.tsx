@@ -45,6 +45,21 @@ export const style = StyleSheet.create({
   ml2: {
     marginLeft: 5,
   },
+  pl5: {
+    paddingLeft: 20,
+  },
+  pl4: {
+    paddingLeft: 15,
+  },
+  pl3: {
+    paddingLeft: 10,
+  },
+  pl2: {
+    paddingLeft: 5,
+  },
+  w100: {
+    width: '100%',
+  },
   //globalEnd
 
   //loginPage
