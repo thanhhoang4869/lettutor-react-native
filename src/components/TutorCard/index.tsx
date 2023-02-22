@@ -1,9 +1,9 @@
-import {Card, Flex, WhiteSpace} from '@ant-design/react-native';
+import {Card, Flex} from '@ant-design/react-native';
 import FieldChip from 'components/FieldChip';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {color, style} from 'style';
+import {color} from 'style';
 
 export default function TutorCard(): JSX.Element {
   const myStyle = StyleSheet.create({

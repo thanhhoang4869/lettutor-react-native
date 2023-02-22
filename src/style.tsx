@@ -99,7 +99,7 @@ export const style = StyleSheet.create({
   },
   pageTitle: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   //loginPageEnd
