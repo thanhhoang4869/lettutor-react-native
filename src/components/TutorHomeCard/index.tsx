@@ -6,6 +6,8 @@ import {Icon} from 'react-native-elements';
 import {color} from 'style';
 
 export default function TutorCard(): JSX.Element {
+  const [fav, setFav] = React.useState(false);
+
   const myStyle = StyleSheet.create({
     cardContent: {
       height: 70,
@@ -37,8 +39,15 @@ export default function TutorCard(): JSX.Element {
         <Icon name="star" type="material-community" color="#F1cf35" />
       </Flex>
 
-      <TouchableOpacity>
-        <Icon name="heart" type="material-community" color="red" />
+      <TouchableOpacity
+        onPress={() => {
+          setFav(!fav);
+        }}>
+        {fav ? (
+          <Icon name="heart" type="material-community" color="red" />
+        ) : (
+          <Icon name="heart-outline" type="material-community" color="red" />
+        )}
       </TouchableOpacity>
     </Flex>
   );
