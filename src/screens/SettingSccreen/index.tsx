@@ -120,15 +120,17 @@ export default function SettingScreen({
             </Flex>
           </Button>
 
-          <Button style={myStyle.button}>
+          <Button style={myStyle.button} onPress={() => navigate('Advance')}>
             <Flex justify="start" style={style.w100}>
               <Icon
-                name="language-outline"
-                type="ionicon"
+                // name="language-outline"
+                // type="ionicon"
+                name="settings"
+                type="feather"
                 color="black"
                 style={style.ml5}
               />
-              <Text style={myStyle.buttonText}>Language</Text>
+              <Text style={myStyle.buttonText}>Advanced Settings</Text>
             </Flex>
           </Button>
 
