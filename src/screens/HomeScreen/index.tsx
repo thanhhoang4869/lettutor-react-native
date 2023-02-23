@@ -1,6 +1,12 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React from 'react';
-import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {color, style} from 'style';
 
 import {SearchBarProps} from 'components/SearchBar';
@@ -54,7 +60,20 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
 
   return (
     <Flex direction="column" align="start" style={myStyle.container}>
-      <Text style={style.pageTitle}>Home</Text>
+      <Flex justify="between" style={{width: '100%'}}>
+        <Text style={style.pageTitle}>Home</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigate('Settings');
+          }}>
+          <Image
+            source={{
+              uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
+            }}
+            style={{width: 40, height: 40}}
+          />
+        </TouchableOpacity>
+      </Flex>
 
       <WhiteSpace size="lg" />
 

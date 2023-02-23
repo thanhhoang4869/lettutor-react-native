@@ -1,14 +1,24 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React from 'react';
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
 import {color, style} from 'style';
 
 import TutorCard from 'components/TutorCard';
 import {SearchBarProps} from 'components/SearchBar';
 import SearchBar from 'components/SearchBar';
 import FieldChip from 'components/FieldChip';
+import {Divider} from 'react-native-paper';
 
-export default function TutorScreen(): JSX.Element {
+export default function TutorScreen({
+  navigation: {navigate},
+}: any): JSX.Element {
   const myStyle = StyleSheet.create({
     container: {
       backgroundColor: 'white',
@@ -35,7 +45,20 @@ export default function TutorScreen(): JSX.Element {
 
   return (
     <Flex direction="column" align="start" style={myStyle.container}>
-      <Text style={style.pageTitle}>Tutors</Text>
+      <Flex justify="between" style={{width: '100%'}}>
+        <Text style={style.pageTitle}>Tutors</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigate('Settings');
+          }}>
+          <Image
+            source={{
+              uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
+            }}
+            style={{width: 40, height: 40}}
+          />
+        </TouchableOpacity>
+      </Flex>
 
       <WhiteSpace />
 

@@ -87,6 +87,18 @@ export default function SettingScreen({
           <Button style={myStyle.button}>
             <Flex justify="start" style={style.w100}>
               <Icon
+                name="book"
+                type="feather"
+                color="black"
+                style={style.ml5}
+              />
+              <Text style={myStyle.buttonText}>Become a Tutor</Text>
+            </Flex>
+          </Button>
+
+          <Button style={myStyle.button}>
+            <Flex justify="start" style={style.w100}>
+              <Icon
                 name="mail-unread-outline"
                 type="ionicon"
                 color="black"

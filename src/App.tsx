@@ -19,6 +19,7 @@ import StartingScreen from 'screens/StartingScreen';
 import UpcomingScreen from 'screens/UpcomingScreen';
 import MessageScreen from 'screens/MessageScreen';
 import TutorScreen from 'screens/TutorScreen';
+import CourseScreen from 'screens/CourseScreen';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -38,10 +39,11 @@ type RootStackParamList = {
   Dummy: undefined;
   Home: undefined;
   AccVerify: undefined;
-  Setting: undefined;
+  Settings: undefined;
   Message: undefined;
   Upcoming: undefined;
   Tutor: undefined;
+  Course: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -71,7 +73,8 @@ export default function App(): JSX.Element {
           <Stack.Screen name="Message" component={MessageScreen} />
           <Stack.Screen name="Upcoming" component={UpcomingScreen} />
           <Stack.Screen name="Tutor" component={TutorScreen} />
-          <Stack.Screen name="Setting" component={SettingScreen} />
+          <Stack.Screen name="Settings" component={SettingScreen} />
+          <Stack.Screen name="Course" component={CourseScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

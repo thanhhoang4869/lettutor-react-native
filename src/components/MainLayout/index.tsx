@@ -8,6 +8,7 @@ import SettingScreen from 'screens/SettingSccreen';
 import MessageScreen from 'screens/MessageScreen';
 import UpcomingScreen from 'screens/UpcomingScreen';
 import TutorScreen from 'screens/TutorScreen';
+import CourseScreen from 'screens/CourseScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,11 +26,15 @@ export default function MainLayout() {
               iconName = focused ? 'home' : 'home-outline';
               iconType = focused ? 'ionicons' : 'material-community';
               break;
-            case 'Message':
-              iconName = focused
-                ? 'message-processing'
-                : 'message-processing-outline';
+
+            case 'Tutor':
+              iconName = focused ? 'account-tie' : 'account-tie-outline';
               iconType = 'material-community';
+
+              break;
+            case 'Course':
+              iconName = 'mortar-board';
+              iconType = focused ? 'font-awesome' : 'octicon';
 
               break;
             case 'Upcoming':
@@ -39,14 +44,11 @@ export default function MainLayout() {
               iconType = 'material-community';
 
               break;
-            case 'Tutor':
-              iconName = focused ? 'account-tie' : 'account-tie-outline';
+            case 'Message':
+              iconName = focused
+                ? 'message-processing'
+                : 'message-processing-outline';
               iconType = 'material-community';
-
-              break;
-            case 'Settings':
-              iconName = 'settings';
-              iconType = focused ? 'material-icons' : 'feather';
 
               break;
             default:
@@ -65,10 +67,10 @@ export default function MainLayout() {
         },
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Message" component={MessageScreen} />
-      <Tab.Screen name="Upcoming" component={UpcomingScreen} />
       <Tab.Screen name="Tutor" component={TutorScreen} />
-      <Tab.Screen name="Settings" component={SettingScreen} />
+      <Tab.Screen name="Upcoming" component={UpcomingScreen} />
+      <Tab.Screen name="Course" component={CourseScreen} />
+      <Tab.Screen name="Message" component={MessageScreen} />
     </Tab.Navigator>
   );
 }
