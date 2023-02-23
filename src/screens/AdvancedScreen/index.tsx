@@ -59,7 +59,7 @@ const AdvancedScreen = () => {
       <WhiteSpace />
 
       <Flex justify="between" style={{width: '100%'}}>
-        <Text>Dark theme</Text>
+        <Text style={style.ml3}>Dark theme</Text>
         <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
       </Flex>
     </Flex>
