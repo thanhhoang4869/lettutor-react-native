@@ -1,14 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
-import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import * as React from 'react';
 import {Icon} from 'react-native-elements';
 
-import HomeScreen from 'screens/HomeScreen';
-import SettingScreen from 'screens/SettingSccreen';
-import MessageScreen from 'screens/MessageScreen';
-import UpcomingScreen from 'screens/UpcomingScreen';
-import TutorScreen from 'screens/TutorScreen';
 import CourseScreen from 'screens/CourseScreen';
+import HomeScreen from 'screens/HomeScreen';
+import MessageScreen from 'screens/MessageScreen';
+import TutorScreen from 'screens/TutorScreen';
+import UpcomingScreen from 'screens/UpcomingScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +36,7 @@ export default function MainLayout() {
               iconType = focused ? 'font-awesome' : 'octicon';
 
               break;
-            case 'Upcoming':
+            case 'Schedule':
               iconName = focused
                 ? 'clock-time-eight'
                 : 'clock-time-eight-outline';
@@ -68,7 +67,7 @@ export default function MainLayout() {
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Tutor" component={TutorScreen} />
-      <Tab.Screen name="Upcoming" component={UpcomingScreen} />
+      <Tab.Screen name="Schedule" component={UpcomingScreen} />
       <Tab.Screen name="Course" component={CourseScreen} />
       <Tab.Screen name="Message" component={MessageScreen} />
     </Tab.Navigator>

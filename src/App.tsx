@@ -41,7 +41,7 @@ type RootStackParamList = {
   AccVerify: undefined;
   Settings: undefined;
   Message: undefined;
-  Upcoming: undefined;
+  Schedule: undefined;
   Tutor: undefined;
   Course: undefined;
 };
@@ -71,7 +71,7 @@ export default function App(): JSX.Element {
           <Stack.Screen name="Main" component={MainLayout} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Message" component={MessageScreen} />
-          <Stack.Screen name="Upcoming" component={UpcomingScreen} />
+          <Stack.Screen name="Schedule" component={UpcomingScreen} />
           <Stack.Screen name="Tutor" component={TutorScreen} />
           <Stack.Screen name="Settings" component={SettingScreen} />
           <Stack.Screen name="Course" component={CourseScreen} />

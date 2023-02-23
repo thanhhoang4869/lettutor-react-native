@@ -5,16 +5,13 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  Touchable,
   TouchableOpacity,
 } from 'react-native';
 import {color, style} from 'style';
 
-import TutorCard from 'components/TutorCard';
-import {SearchBarProps} from 'components/SearchBar';
-import SearchBar from 'components/SearchBar';
 import FieldChip from 'components/FieldChip';
-import {Divider} from 'react-native-paper';
+import SearchBar, {SearchBarProps} from 'components/SearchBar';
+import TutorCard from 'components/TutorCard';
 
 export default function TutorScreen({
   navigation: {navigate},

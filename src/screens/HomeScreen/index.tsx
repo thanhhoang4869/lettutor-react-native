@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {color, style} from 'style';
 
-import {SearchBarProps} from 'components/SearchBar';
 import TutorHomeCard from 'components/TutorHomeCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
@@ -40,6 +39,13 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     },
     welcomeBadgeText: {
       color: 'white',
+    },
+    welcomeBadgeHeader: {
+      color: 'white',
+      fontSize: 18,
+    },
+    welcomeBadgeCourseName: {
+      color: 'white',
       fontWeight: 'bold',
       fontSize: 20,
     },
@@ -53,10 +59,6 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
       fontWeight: '500',
     },
   });
-
-  const searchBarProps: SearchBarProps = {
-    placeHolder: 'Search for tutors',
-  };
 
   return (
     <Flex direction="column" align="start" style={myStyle.container}>
@@ -82,12 +84,14 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
         direction="column"
         align="center"
         justify="center">
-        <Text style={myStyle.welcomeBadgeText}>Welcome to LetTutor!</Text>
+        <Text style={myStyle.welcomeBadgeText}>Upcoming Lesson</Text>
         <WhiteSpace />
-        <Button
-          style={myStyle.welcomeBadgeButton}
-          onPress={() => navigate('Tutor')}>
-          <Text style={myStyle.welcomeBadgeButtonText}>Book a lesson</Text>
+        <Text style={myStyle.welcomeBadgeCourseName}>English for Business</Text>
+        <WhiteSpace />
+        <Text style={myStyle.welcomeBadgeText}>2023-02-24 at 18:30</Text>
+        <WhiteSpace />
+        <Button style={myStyle.welcomeBadgeButton}>
+          <Text style={myStyle.welcomeBadgeButtonText}>Join lesson</Text>
         </Button>
       </Flex>
 
