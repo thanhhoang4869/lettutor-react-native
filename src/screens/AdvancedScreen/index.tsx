@@ -1,6 +1,6 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {RadioButton, Switch} from 'react-native-paper';
 import {style} from 'style';
 

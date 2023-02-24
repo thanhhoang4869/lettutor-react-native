@@ -1,6 +1,12 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {color, style} from 'style';
 
 import {Button} from 'galio-framework';
@@ -55,24 +61,29 @@ export default function SettingScreen({
         <WhiteSpace size="lg" />
         <WhiteSpace size="lg" />
 
-        <Flex>
-          <Image
-            source={{
-              uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
-            }}
-            style={{width: 70, height: 70}}
-          />
-          <Flex direction="column" align="start" style={{marginLeft: 20}}>
-            <Text style={myStyle.name}>John Doe</Text>
-            <Text>john.doe@gmail.com</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigate('Account');
+          }}>
+          <Flex>
+            <Image
+              source={{
+                uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
+              }}
+              style={{width: 70, height: 70}}
+            />
+            <Flex direction="column" align="start" style={{marginLeft: 20}}>
+              <Text style={myStyle.name}>John Doe</Text>
+              <Text>john.doe@gmail.com</Text>
+            </Flex>
           </Flex>
-        </Flex>
+        </TouchableOpacity>
 
         <WhiteSpace size="lg" />
         <WhiteSpace size="lg" />
 
         <Flex direction="column" style={style.w100} align="start">
-          <Button style={myStyle.button}>
+          {/*   <Button style={myStyle.button}>
             <Flex justify="start" style={style.w100}>
               <Icon
                 name="account-outline"
@@ -82,7 +93,7 @@ export default function SettingScreen({
               />
               <Text style={myStyle.buttonText}>Account</Text>
             </Flex>
-          </Button>
+          </Button> */}
 
           <Button style={myStyle.button}>
             <Flex justify="start" style={style.w100}>
