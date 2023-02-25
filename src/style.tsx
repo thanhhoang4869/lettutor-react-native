@@ -113,7 +113,7 @@ export const style = StyleSheet.create({
     backgroundColor: 'white',
   },
   pageTitle: {
-    color: 'black',
+    color: color.primaryColor,
     fontSize: 18,
     fontWeight: 'bold',
   },
