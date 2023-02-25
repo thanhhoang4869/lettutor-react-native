@@ -1,7 +1,6 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React, {useState} from 'react';
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,13 +10,13 @@ import {
 import {color, style} from 'style';
 
 import FieldChip from 'components/FieldChip';
+import Header, {HeaderProps} from 'components/Header';
 import SearchBar, {SearchBarProps} from 'components/SearchBar';
 import TutorCard from 'components/TutorCard';
-import {Icon} from 'react-native-elements';
-import SelectDropdown from 'react-native-select-dropdown';
 import {Button} from 'galio-framework';
+import {Icon} from 'react-native-elements';
 import Modal from 'react-native-modal';
-import Header, {HeaderProps} from 'components/Header';
+import {DataTable, RadioButton} from 'react-native-paper';
 
 export default function TutorScreen({
   navigation: {navigate},
@@ -40,6 +39,11 @@ export default function TutorScreen({
       marginRight: 5,
       fontWeight: 'bold',
     },
+
+    text: {
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
   });
 
   const searchBarProps: SearchBarProps = {
@@ -53,107 +57,167 @@ export default function TutorScreen({
     },
   };
 
-  const [countries, setCountries] = useState([
-    {label: 'Vietnam', value: 'vie'},
-    {label: 'England', value: 'eng'},
-  ]);
+  const [value, setValue] = React.useState('eng');
 
   const [isModalVisible, setModalVisible] = useState(false);
-
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
+  const items = [
+    {
+      key: 1,
+      name: 'Page 1',
+    },
+    {
+      key: 2,
+      name: 'Page 2',
+    },
+    {
+      key: 3,
+      name: 'Page 3',
+    },
+    {
+      key: 4,
+      name: 'Page 4',
+    },
+    {
+      key: 5,
+      name: 'Page 5',
+    },
+  ];
+  const [page, setPage] = React.useState(0);
+  const numberOfItemsPerPage = 3;
+  const from = page * numberOfItemsPerPage;
+  const to = Math.min((page + 1) * numberOfItemsPerPage, items.length);
+
   return (
-    <Flex direction="column" align="start" style={myStyle.container}>
-      <Header title={headerProps.title} onTouch={headerProps.onTouch} />
+    <>
+      <View>
+        <Modal isVisible={isModalVisible}>
+          <Flex style={style.modal} direction="column" align="start">
+            <Text style={style.modalTitle}>Filter search tutor</Text>
 
-      <WhiteSpace />
+            <WhiteSpace size="xl" />
 
-      <SearchBar placeHolder={searchBarProps.placeHolder} />
+            <Text
+              style={{
+                fontWeight: 'bold',
+              }}>
+              Speciality
+            </Text>
 
-      {/* 
-      <Flex direction="column" style={{height: '20%', width: '100%'}}>
-        <SearchBar placeHolder={searchBarProps.placeHolder} />
+            <WhiteSpace size="lg" />
+
+            <ScrollView horizontal={true}>
+              <FieldChip label="All" color={color.primaryColor} />
+              <Text style={{marginRight: 5}} />
+              <FieldChip label="English for Kids" color={color.darkGrey} />
+              <Text style={{marginRight: 5}} />
+              <FieldChip label="Business English" color={color.darkGrey} />
+              <Text style={{marginRight: 5}} />
+              <FieldChip label="Communication" color={color.darkGrey} />
+            </ScrollView>
+
+            <WhiteSpace size="lg" />
+
+            <Text
+              style={{
+                fontWeight: 'bold',
+              }}>
+              Nationality
+            </Text>
+
+            <WhiteSpace />
+
+            <RadioButton.Group
+              onValueChange={newValue => setValue(newValue)}
+              value={value}>
+              <Flex>
+                <RadioButton value="eng" />
+                <Text>English</Text>
+              </Flex>
+              <Flex>
+                <RadioButton value="vie" />
+                <Text>Vietnamese</Text>
+              </Flex>
+            </RadioButton.Group>
+
+            <WhiteSpace />
+
+            <Flex justify="between" style={{width: '100%'}}>
+              <TouchableOpacity
+                onPress={() => {
+                  toggleModal();
+                }}>
+                <Text style={style.modalText}>Reset</Text>
+              </TouchableOpacity>
+              <Button style={style.primaryButtonNoWidth} onPress={toggleModal}>
+                Apply
+              </Button>
+            </Flex>
+          </Flex>
+        </Modal>
+      </View>
+
+      <Flex direction="column" align="start" style={myStyle.container}>
+        <Header title={headerProps.title} onTouch={headerProps.onTouch} />
 
         <WhiteSpace />
 
-        <SelectDropdown
-          data={countries}
-          onSelect={(selectedItem, index) => {
-            // Alert.alert(selectedItem.value);
-          }}
-          defaultButtonText={'Select country'}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem.label;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item.label;
-          }}
-          renderDropdownIcon={isOpened => {
-            return (
-              <Icon
-                type="font-awesome-5"
-                name={isOpened ? 'chevron-up' : 'chevron-down'}
-                color={color.grey}
-                size={14}
-                style={{marginRight: 10}}
-              />
-            );
-          }}
-          buttonStyle={myStyle.dropdown2BtnStyle}
-          buttonTextStyle={myStyle.dropdown2BtnTxtStyle}
-          dropdownIconPosition={'right'}
-          dropdownStyle={myStyle.dropdown2DropdownStyle}
-          rowStyle={myStyle.dropdown2RowStyle}
-          rowTextStyle={myStyle.dropdown2RowTxtStyle}
-        />
+        <Flex align="center" style={{width: '100%'}} justify="between">
+          <SearchBar placeHolder={searchBarProps.placeHolder} />
 
-        <WhiteSpace size="lg" />
+          <TouchableOpacity onPress={toggleModal}>
+            <Icon
+              name="filter"
+              //filter-check
+              type="material-community"
+              color={color.primaryColor}
+            />
+          </TouchableOpacity>
+        </Flex>
 
-        <ScrollView horizontal={true}>
-          <FieldChip label="All" color={color.primaryColor} />
-          <Text style={{marginRight: 5}} />
-          <FieldChip label="English for Kids" color={color.darkGrey} />
-          <Text style={{marginRight: 5}} />
-          <FieldChip label="Business English" color={color.darkGrey} />
-          <Text style={{marginRight: 5}} />
-          <FieldChip label="Communication" color={color.darkGrey} />
+        <WhiteSpace />
+        <WhiteSpace />
+
+        <Text style={myStyle.text}>Total: 5 results</Text>
+
+        <WhiteSpace />
+        <WhiteSpace />
+
+        <ScrollView
+          style={{
+            height: '80%',
+            width: '100%',
+          }}>
+          <TutorCard />
+          <WhiteSpace size="lg" />
+
+          <TutorCard />
+          <WhiteSpace size="lg" />
+
+          <TutorCard />
+          <WhiteSpace size="lg" />
+
+          <DataTable.Pagination
+            style={{
+              justifyContent: 'flex-end',
+              marginRight: -12,
+            }}
+            page={page}
+            numberOfPages={Math.ceil(items.length / numberOfItemsPerPage)}
+            onPageChange={tarPage => setPage(tarPage)}
+            label={`${from + 1}-${to} of ${items.length}`}
+            showFastPaginationControls
+            numberOfItemsPerPage={numberOfItemsPerPage}
+            selectPageDropdownLabel={'Rows per page'}
+          />
+
+          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg" />
         </ScrollView>
-      </Flex> */}
-
-      <WhiteSpace />
-      <WhiteSpace />
-
-      <ScrollView
-        style={{
-          height: '80%',
-          width: '100%',
-        }}>
-        <TutorCard />
-        <WhiteSpace size="lg" />
-
-        <TutorCard />
-        <WhiteSpace size="lg" />
-
-        <TutorCard />
-        <WhiteSpace size="lg" />
-
-        <TutorCard />
-        <WhiteSpace size="lg" />
-
-        <TutorCard />
-        <WhiteSpace size="lg" />
-
-        <TutorCard />
-        <WhiteSpace size="lg" />
-
-        <TutorCard />
-
-        <WhiteSpace size="lg" />
-        <WhiteSpace size="lg" />
-        <WhiteSpace size="lg" />
-      </ScrollView>
-    </Flex>
+      </Flex>
+    </>
   );
 }

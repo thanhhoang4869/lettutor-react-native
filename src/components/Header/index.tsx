@@ -1,7 +1,7 @@
 import {Flex} from '@ant-design/react-native';
 import React from 'react';
 import {Image, Text, TouchableOpacity} from 'react-native';
-import {style} from 'style';
+import {style, color} from 'style';
 
 export interface HeaderProps {
   title: string;
@@ -10,7 +10,7 @@ export interface HeaderProps {
 
 const Header = ({title, onTouch}: HeaderProps) => {
   return (
-    <Flex justify="between" style={{width: '100%'}}>
+    <Flex justify="between" style={{width: '100%', backgroundColor: 'white'}}>
       <Text style={style.pageTitle}>{title}</Text>
       <TouchableOpacity onPress={onTouch}>
         <Image

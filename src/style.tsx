@@ -83,6 +83,24 @@ export const style = StyleSheet.create({
   },
   dropdown2RowTxtStyle: {color: '#444', textAlign: 'left'},
 
+  modal: {
+    backgroundColor: 'white',
+    padding: 30,
+    borderRadius: 10,
+  },
+
+  modalText: {
+    color: primaryColor,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: color.primaryColor,
+  },
+
   //globalEnd
 
   //loginPage
@@ -110,7 +128,14 @@ export const style = StyleSheet.create({
   primaryButton: {
     width: '100%',
     backgroundColor: primaryColor,
+    borderRadius: 50,
   },
+
+  primaryButtonNoWidth: {
+    borderRadius: 50,
+    backgroundColor: primaryColor,
+  },
+
   mulButton: {
     backgroundColor: 'white',
     flexDirection: 'row',
