@@ -48,9 +48,6 @@ const BecomeTutorScreen = () => {
     },
   });
 
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
-
   const [countries, setCountries] = useState([
     {label: 'Vietnam', value: 'vie'},
     {label: 'England', value: 'eng'},

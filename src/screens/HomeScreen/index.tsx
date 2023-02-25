@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {color} from 'style';
 
 import Header, {HeaderProps} from 'components/Header';
-import TutorHomeCard from 'components/TutorHomeCard';
+import TutorHomeCard, {TutorCardProps} from 'components/TutorHomeCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
 
@@ -59,6 +59,12 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     title: 'Home',
     onTouch: () => {
       navigate('Settings');
+    },
+  };
+
+  const tutorCardProps: TutorCardProps = {
+    onTouch: () => {
+      navigate('TutorProfile');
     },
   };
 
@@ -123,25 +129,25 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
           height: '60%',
           width: '100%',
         }}>
-        <TutorHomeCard />
+        <TutorHomeCard onTouch={tutorCardProps.onTouch} />
         <WhiteSpace size="lg" />
 
-        <TutorHomeCard />
+        <TutorHomeCard onTouch={tutorCardProps.onTouch} />
         <WhiteSpace size="lg" />
 
-        <TutorHomeCard />
+        <TutorHomeCard onTouch={tutorCardProps.onTouch} />
         <WhiteSpace size="lg" />
 
-        <TutorHomeCard />
+        <TutorHomeCard onTouch={tutorCardProps.onTouch} />
         <WhiteSpace size="lg" />
 
-        <TutorHomeCard />
+        <TutorHomeCard onTouch={tutorCardProps.onTouch} />
         <WhiteSpace size="lg" />
 
-        <TutorHomeCard />
+        <TutorHomeCard onTouch={tutorCardProps.onTouch} />
         <WhiteSpace size="lg" />
 
-        <TutorHomeCard />
+        <TutorHomeCard onTouch={tutorCardProps.onTouch} />
 
         <WhiteSpace size="lg" />
         <WhiteSpace size="lg" />

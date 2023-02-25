@@ -5,7 +5,11 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {color} from 'style';
 
-export default function TutorCard(): JSX.Element {
+export interface TutorCardProps {
+  onTouch: () => void;
+}
+
+export default function TutorCard({onTouch}: TutorCardProps): JSX.Element {
   const [fav, setFav] = React.useState(false);
 
   const myStyle = StyleSheet.create({
@@ -61,7 +65,7 @@ export default function TutorCard(): JSX.Element {
   );
 
   return (
-    <>
+    <TouchableOpacity onPress={onTouch}>
       <Card style={myStyle.card}>
         <Card.Header
           title="Abby"
@@ -82,6 +86,6 @@ export default function TutorCard(): JSX.Element {
         </Card.Body>
         <Card.Footer content={contentFooter} />
       </Card>
-    </>
+    </TouchableOpacity>
   );
 }

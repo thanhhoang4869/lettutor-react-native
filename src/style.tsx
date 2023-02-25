@@ -18,6 +18,16 @@ export const style = StyleSheet.create({
     fontWeight: 'bold',
     color: primaryColor,
   },
+  textBlack: {
+    color: 'black',
+  },
+  textBoldBlack: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  textBold: {
+    fontWeight: 'bold',
+  },
   textPrimary: {
     color: primaryColor,
   },
@@ -118,6 +128,7 @@ export const style = StyleSheet.create({
   },
   container: {
     backgroundColor: 'white',
+
     height: '100%',
     padding: 30,
   },
