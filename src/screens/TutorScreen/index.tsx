@@ -96,7 +96,9 @@ export default function TutorScreen({
       <View>
         <Modal isVisible={isModalVisible}>
           <Flex style={style.modal} direction="column" align="start">
-            <Text style={style.modalTitle}>Filter search tutor</Text>
+            <Text style={{margin: 5, ...style.modalTitle}}>
+              Filter search tutor
+            </Text>
 
             <WhiteSpace size="xl" />
 

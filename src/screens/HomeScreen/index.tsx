@@ -64,7 +64,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const headerProps: HeaderProps = {
     title: 'Home',
     onTouch: () => {
-      navigate('Home');
+      navigate('Settings');
     },
   };
 

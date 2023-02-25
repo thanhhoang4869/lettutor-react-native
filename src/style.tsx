@@ -98,7 +98,8 @@ export const style = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: color.primaryColor,
+    // color: color.primaryColor,
+    color: 'black',
   },
 
   //globalEnd
