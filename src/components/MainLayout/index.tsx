@@ -32,8 +32,8 @@ export default function MainLayout() {
 
               break;
             case 'Course':
-              iconName = 'mortar-board';
-              iconType = focused ? 'font-awesome' : 'octicon';
+              iconName = focused ? 'graduation-cap' : 'graduation';
+              iconType = focused ? 'entypo' : 'simple-line-icon';
 
               break;
             case 'Schedule':
@@ -43,13 +43,13 @@ export default function MainLayout() {
               iconType = 'material-community';
 
               break;
-            case 'Message':
-              iconName = focused
-                ? 'message-processing'
-                : 'message-processing-outline';
-              iconType = 'material-community';
+            // case 'Message':
+            //   iconName = focused
+            //     ? 'message-processing'
+            //     : 'message-processing-outline';
+            //   iconType = 'material-community';
 
-              break;
+            //   break;
             default:
               iconName = 'home';
               iconType = 'ionicons';
@@ -69,7 +69,7 @@ export default function MainLayout() {
       <Tab.Screen name="Tutor" component={TutorScreen} />
       <Tab.Screen name="Schedule" component={UpcomingScreen} />
       <Tab.Screen name="Course" component={CourseScreen} />
-      <Tab.Screen name="Message" component={MessageScreen} />
+      {/* <Tab.Screen name="Message" component={MessageScreen} /> */}
     </Tab.Navigator>
   );
 }
