@@ -83,19 +83,9 @@ export default function SettingScreen({
         <WhiteSpace size="lg" />
 
         <Flex direction="column" style={style.w100} align="start">
-          {/*   <Button style={myStyle.button}>
-            <Flex justify="start" style={style.w100}>
-              <Icon
-                name="account-outline"
-                type="material-community"
-                color="black"
-                style={style.ml5}
-              />
-              <Text style={myStyle.buttonText}>Account</Text>
-            </Flex>
-          </Button> */}
-
-          <Button style={myStyle.button}>
+          <Button
+            style={myStyle.button}
+            onPress={() => navigate('BecomeTutor')}>
             <Flex justify="start" style={style.w100}>
               <Icon
                 name="book"
@@ -104,18 +94,6 @@ export default function SettingScreen({
                 style={style.ml5}
               />
               <Text style={myStyle.buttonText}>Become a Tutor</Text>
-            </Flex>
-          </Button>
-
-          <Button style={myStyle.button}>
-            <Flex justify="start" style={style.w100}>
-              <Icon
-                name="mail-unread-outline"
-                type="ionicon"
-                color="black"
-                style={style.ml5}
-              />
-              <Text style={myStyle.buttonText}>View Feedbacks</Text>
             </Flex>
           </Button>
 

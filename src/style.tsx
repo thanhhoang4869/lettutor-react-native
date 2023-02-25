@@ -60,6 +60,29 @@ export const style = StyleSheet.create({
   w100: {
     width: '100%',
   },
+
+  dropdown2BtnStyle: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: color.grey,
+  },
+  dropdown2BtnTxtStyle: {
+    color: '#444',
+    textAlign: 'left',
+    fontSize: 14,
+    marginLeft: 16,
+  },
+  dropdown2DropdownStyle: {backgroundColor: color.grey},
+  dropdown2RowStyle: {
+    backgroundColor: '#EFEFEF',
+    borderBottomColor: '#C5C5C5',
+  },
+  dropdown2RowTxtStyle: {color: '#444', textAlign: 'left'},
+
   //globalEnd
 
   //loginPage

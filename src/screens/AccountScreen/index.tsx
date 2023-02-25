@@ -1,18 +1,12 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
+import FieldChip from 'components/FieldChip';
 import {Button, Input} from 'galio-framework';
 import React, {useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import {Icon, Image} from 'react-native-elements';
 import SelectDropdown from 'react-native-select-dropdown';
 import {color, style} from 'style';
-import FieldChip from 'components/FieldChip';
 
 const AccountScreen = () => {
   const myStyle = StyleSheet.create({
@@ -47,28 +41,6 @@ const AccountScreen = () => {
       color: 'grey',
       fontWeight: 'bold',
     },
-
-    dropdown2BtnStyle: {
-      flex: 1,
-      height: 50,
-      backgroundColor: '#FFF',
-      borderRadius: 8,
-      width: '100%',
-      borderWidth: 1,
-      borderColor: color.grey,
-    },
-    dropdown2BtnTxtStyle: {
-      color: '#444',
-      textAlign: 'left',
-      fontSize: 14,
-      marginLeft: 16,
-    },
-    dropdown2DropdownStyle: {backgroundColor: color.grey},
-    dropdown2RowStyle: {
-      backgroundColor: '#EFEFEF',
-      borderBottomColor: '#C5C5C5',
-    },
-    dropdown2RowTxtStyle: {color: '#444', textAlign: 'left'},
 
     button: {
       backgroundColor: color.primaryColor,
@@ -198,12 +170,12 @@ const AccountScreen = () => {
             />
           );
         }}
-        buttonStyle={myStyle.dropdown2BtnStyle}
-        buttonTextStyle={myStyle.dropdown2BtnTxtStyle}
+        buttonStyle={style.dropdown2BtnStyle}
+        buttonTextStyle={style.dropdown2BtnTxtStyle}
         dropdownIconPosition={'right'}
-        dropdownStyle={myStyle.dropdown2DropdownStyle}
-        rowStyle={myStyle.dropdown2RowStyle}
-        rowTextStyle={myStyle.dropdown2RowTxtStyle}
+        dropdownStyle={style.dropdown2DropdownStyle}
+        rowStyle={style.dropdown2RowStyle}
+        rowTextStyle={style.dropdown2RowTxtStyle}
       />
 
       <WhiteSpace />
@@ -235,12 +207,12 @@ const AccountScreen = () => {
             />
           );
         }}
-        buttonStyle={myStyle.dropdown2BtnStyle}
-        buttonTextStyle={myStyle.dropdown2BtnTxtStyle}
+        buttonStyle={style.dropdown2BtnStyle}
+        buttonTextStyle={style.dropdown2BtnTxtStyle}
         dropdownIconPosition={'right'}
-        dropdownStyle={myStyle.dropdown2DropdownStyle}
-        rowStyle={myStyle.dropdown2RowStyle}
-        rowTextStyle={myStyle.dropdown2RowTxtStyle}
+        dropdownStyle={style.dropdown2DropdownStyle}
+        rowStyle={style.dropdown2RowStyle}
+        rowTextStyle={style.dropdown2RowTxtStyle}
       />
 
       <WhiteSpace />
