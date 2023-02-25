@@ -12,6 +12,7 @@ import {color, style} from 'style';
 import TutorHomeCard from 'components/TutorHomeCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
+import Header, {HeaderProps} from 'components/Header';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const myStyle = StyleSheet.create({
@@ -60,22 +61,16 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     },
   });
 
+  const headerProps: HeaderProps = {
+    title: 'Home',
+    onTouch: () => {
+      navigate('Home');
+    },
+  };
+
   return (
     <Flex direction="column" align="start" style={myStyle.container}>
-      <Flex justify="between" style={{width: '100%'}}>
-        <Text style={style.pageTitle}>Home</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigate('Settings');
-          }}>
-          <Image
-            source={{
-              uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
-            }}
-            style={{width: 40, height: 40}}
-          />
-        </TouchableOpacity>
-      </Flex>
+      <Header title={headerProps.title} onTouch={headerProps.onTouch} />
 
       <WhiteSpace size="lg" />
 
