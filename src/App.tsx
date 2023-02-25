@@ -22,7 +22,7 @@ import TutorScreen from 'screens/TutorScreen';
 import CourseScreen from 'screens/CourseScreen';
 import AdvancedScreen from 'screens/AdvancedScreen';
 import AccountScreen from 'screens/AccountScreen';
-import BecomeTutorScreen from 'screens/BecomTutorScreen/index';
+import BecomeTutorScreen from 'screens/BecomeTutorScreen';
 
 const theme: ThemeProp = {
   ...DefaultTheme,

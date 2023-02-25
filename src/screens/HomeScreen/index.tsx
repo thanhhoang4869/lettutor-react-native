@@ -1,18 +1,12 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import {color, style} from 'style';
+import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {color} from 'style';
 
+import Header, {HeaderProps} from 'components/Header';
 import TutorHomeCard from 'components/TutorHomeCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
-import Header, {HeaderProps} from 'components/Header';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const myStyle = StyleSheet.create({
