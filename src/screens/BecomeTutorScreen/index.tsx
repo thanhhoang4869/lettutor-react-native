@@ -53,9 +53,9 @@ const BecomeTutorScreen = () => {
     {label: 'England', value: 'eng'},
   ]);
 
-  const [levels, setLevels] = useState([
-    {label: 'B1', value: 'b1'},
-    {label: 'B2', value: 'b2'},
+  const [langs, setLangs] = useState([
+    {label: 'Vietnamese', value: 'viel'},
+    {label: 'English', value: 'engl'},
   ]);
 
   return (
@@ -85,7 +85,7 @@ const BecomeTutorScreen = () => {
       <WhiteSpace size="lg" />
       <WhiteSpace size="lg" />
 
-      <Text style={myStyle.field}>Your nationality</Text>
+      <Text style={myStyle.field}>Nationality</Text>
 
       <WhiteSpace />
       <SelectDropdown
@@ -122,7 +122,44 @@ const BecomeTutorScreen = () => {
       <WhiteSpace />
       <WhiteSpace />
 
-      <Text style={myStyle.field}>Your major</Text>
+      <Text style={myStyle.field}>Language</Text>
+
+      <WhiteSpace />
+      <SelectDropdown
+        data={langs}
+        onSelect={(selectedItem, index) => {
+          // Alert.alert(selectedItem.value);
+        }}
+        defaultButtonText={'Select language'}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem.label;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item.label;
+        }}
+        renderDropdownIcon={isOpened => {
+          return (
+            <Icon
+              type="font-awesome-5"
+              name={isOpened ? 'chevron-up' : 'chevron-down'}
+              color={color.grey}
+              size={14}
+              style={{marginRight: 10}}
+            />
+          );
+        }}
+        buttonStyle={style.dropdown2BtnStyle}
+        buttonTextStyle={style.dropdown2BtnTxtStyle}
+        dropdownIconPosition={'right'}
+        dropdownStyle={style.dropdown2DropdownStyle}
+        rowStyle={style.dropdown2RowStyle}
+        rowTextStyle={style.dropdown2RowTxtStyle}
+      />
+
+      <WhiteSpace />
+      <WhiteSpace />
+
+      <Text style={myStyle.field}>Specialities</Text>
 
       <WhiteSpace />
 
@@ -141,6 +178,39 @@ const BecomeTutorScreen = () => {
       <WhiteSpace />
       <WhiteSpace />
 
+      <Text style={myStyle.field}>Education</Text>
+      <Input
+        color={'#444'}
+        placeholderTextColor={color.grey}
+        style={{borderColor: color.grey}}
+        cursorColor={color.primaryColor}
+      />
+
+      <WhiteSpace />
+      <WhiteSpace />
+
+      <Text style={myStyle.field}>Experience</Text>
+      <Input
+        color={'#444'}
+        placeholderTextColor={color.grey}
+        style={{borderColor: color.grey}}
+        cursorColor={color.primaryColor}
+      />
+
+      <WhiteSpace />
+      <WhiteSpace />
+
+      <Text style={myStyle.field}>Interest</Text>
+      <Input
+        color={'#444'}
+        placeholderTextColor={color.grey}
+        style={{borderColor: color.grey}}
+        cursorColor={color.primaryColor}
+      />
+
+      <WhiteSpace />
+      <WhiteSpace />
+
       <Text style={myStyle.field}>Link to your CV</Text>
       <Input
         color={'#444'}
@@ -153,7 +223,7 @@ const BecomeTutorScreen = () => {
       <WhiteSpace />
 
       <Button round style={myStyle.button}>
-        Register
+        Submit
       </Button>
     </ScrollView>
   );

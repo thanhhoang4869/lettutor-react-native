@@ -91,7 +91,7 @@ const TutorProfileScreen = () => {
 
             <WhiteSpace size="lg" />
 
-            <Flex justify="between" style={{width: '100%'}}>
+            <Flex justify="between" style={{width: '100%', marginLeft: 10}}>
               <TouchableOpacity
                 onPress={() => {
                   toggleReportModal();
