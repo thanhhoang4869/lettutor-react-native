@@ -31,6 +31,9 @@ export const style = StyleSheet.create({
   textPrimary: {
     color: primaryColor,
   },
+  textArea: {
+    height: 100,
+  },
   mr5: {
     marginRight: 20,
   },
