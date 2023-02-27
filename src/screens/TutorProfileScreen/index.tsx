@@ -1,5 +1,6 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import FieldChip from 'components/FieldChip';
+import ReviewCard from 'components/ReviewCard';
 import {Button, Input} from 'galio-framework';
 import React from 'react';
 import {
@@ -11,7 +12,6 @@ import {
 } from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import Modal from 'react-native-modal';
-import {AirbnbRating} from 'react-native-ratings';
 import VideoPlayer from 'react-native-video-player';
 import {color, style} from 'style';
 
@@ -113,35 +113,28 @@ const TutorProfileScreen = () => {
       <View>
         <Modal isVisible={isReviewModalVisible}>
           <Flex style={style.modal} direction="column" align="start">
-            <Text style={{margin: 5, ...style.modalTitle}}>
-              Review this tutor
-            </Text>
+            <Text style={style.modalTitle}>Reviews</Text>
 
-            <WhiteSpace size="lg" />
+            <WhiteSpace size="xl" />
 
-            <Flex
-              justify="center"
+            <ScrollView
               style={{
+                height: 300,
                 width: '100%',
               }}>
-              <AirbnbRating
-                count={5}
-                reviews={['Terrible', 'Bad', 'Fair', 'Good', 'Excellent']}
-                defaultRating={5}
-                size={30}
-                reviewSize={16}
-                reviewColor={color.primaryColor}
-              />
-            </Flex>
+              <ReviewCard />
+              <ReviewCard />
+
+              <ReviewCard />
+              <ReviewCard />
+              <ReviewCard />
+            </ScrollView>
 
             <WhiteSpace size="lg" />
-
-            <Input cursorColor={color.primaryColor} style={style.textArea} />
-
             <WhiteSpace size="lg" />
 
             <Flex
-              justify="between"
+              justify="end"
               style={{
                 width: '100%',
                 marginLeft: 10,
@@ -150,13 +143,8 @@ const TutorProfileScreen = () => {
                 onPress={() => {
                   toggleReviewModal();
                 }}>
-                <Text style={style.textBold}>Cancel</Text>
+                <Text style={style.textBold}>Back</Text>
               </TouchableOpacity>
-              <Button
-                style={style.primaryButtonNoWidth}
-                onPress={toggleReviewModal}>
-                Submit
-              </Button>
             </Flex>
           </Flex>
         </Modal>
