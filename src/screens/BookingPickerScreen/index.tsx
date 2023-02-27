@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const BookingPickerScreen = () => {
+const BookingPickerScreen = ({navigation: {navigate}}: any) => {
   const [value, setValue] = React.useState('first');
 
   return (
@@ -78,7 +78,9 @@ const BookingPickerScreen = () => {
         <WhiteSpace size="lg" />
         <WhiteSpace size="lg" />
 
-        <Button style={styles.button}>Next</Button>
+        <Button style={styles.button} onPress={() => navigate('BookingDetail')}>
+          Next
+        </Button>
       </View>
     </View>
   );
