@@ -3,6 +3,7 @@ import FieldChip from 'components/FieldChip';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
+import {AirbnbRating} from 'react-native-ratings';
 import {color} from 'style';
 
 export default function TutorCard(): JSX.Element {
@@ -32,14 +33,13 @@ export default function TutorCard(): JSX.Element {
 
   const extra: React.ReactNode = (
     <Flex direction="row" justify="end">
-      <Flex
-        direction="row"
-        justify="end"
-        // style={{marginRight: 10}}
-      >
-        <Text style={myStyle.starText}>5.00</Text>
-        <Icon name="star" type="material-community" color="#F1cf35" />
-      </Flex>
+      <AirbnbRating
+        count={5}
+        isDisabled={true}
+        defaultRating={5}
+        size={15}
+        showRating={false}
+      />
 
       {/* <TouchableOpacity>
         <Icon name="heart" type="material-community" color="red" />

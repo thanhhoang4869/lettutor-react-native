@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import Modal from 'react-native-modal';
+import {AirbnbRating} from 'react-native-ratings';
 import VideoPlayer from 'react-native-video-player';
 import {color, style} from 'style';
 
@@ -174,10 +175,13 @@ const TutorProfileScreen = () => {
             <View style={{width: '75%', marginLeft: 20}}>
               <Flex justify="between">
                 <Text style={myStyle.tutorName}>Abby</Text>
-                <Flex>
-                  <Text style={myStyle.starText}>5.00</Text>
-                  <Icon name="star" type="material-community" color="#F1cf35" />
-                </Flex>
+                <AirbnbRating
+                  count={5}
+                  isDisabled={true}
+                  defaultRating={5}
+                  size={20}
+                  showRating={false}
+                />
               </Flex>
 
               <Flex justify="between">
