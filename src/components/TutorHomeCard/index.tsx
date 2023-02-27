@@ -6,11 +6,11 @@ import {Icon} from 'react-native-elements';
 import {AirbnbRating} from 'react-native-ratings';
 import {color} from 'style';
 
-export interface TutorCardProps {
+export interface TutorHomeCardProps {
   onTouch: () => void;
 }
 
-export default function TutorCard({onTouch}: TutorCardProps): JSX.Element {
+export default function TutorCard({onTouch}: TutorHomeCardProps): JSX.Element {
   const [fav, setFav] = React.useState(false);
 
   const myStyle = StyleSheet.create({

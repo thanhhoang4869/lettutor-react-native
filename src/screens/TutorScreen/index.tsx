@@ -17,6 +17,7 @@ import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {DataTable, RadioButton} from 'react-native-paper';
+import {TutorCardProps} from 'components/TutorHomeCard';
 
 export default function TutorScreen({
   navigation: {navigate},
@@ -90,6 +91,12 @@ export default function TutorScreen({
   const numberOfItemsPerPage = 3;
   const from = page * numberOfItemsPerPage;
   const to = Math.min((page + 1) * numberOfItemsPerPage, items.length);
+
+  const tutorCardProps: TutorCardProps = {
+    onTouch: () => {
+      navigate('TutorProfile');
+    },
+  };
 
   return (
     <>
@@ -193,13 +200,16 @@ export default function TutorScreen({
             height: '80%',
             width: '100%',
           }}>
-          <TutorCard />
+          <TutorCard onTouch={tutorCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
-          <TutorCard />
+          <TutorCard onTouch={tutorCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
-          <TutorCard />
+          <TutorCard onTouch={tutorCardProps.onTouch} />
+          <WhiteSpace size="lg" />
+
+          <TutorCard onTouch={tutorCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
           <DataTable.Pagination

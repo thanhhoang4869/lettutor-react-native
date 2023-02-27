@@ -1,12 +1,15 @@
 import {Card, Flex} from '@ant-design/react-native';
 import FieldChip from 'components/FieldChip';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {AirbnbRating} from 'react-native-ratings';
 import {color} from 'style';
 
-export default function TutorCard(): JSX.Element {
+export interface TutorCardProps {
+  onTouch: () => void;
+}
+
+export default function TutorCard({onTouch}: TutorCardProps): JSX.Element {
   const myStyle = StyleSheet.create({
     cardContent: {
       height: 70,
@@ -41,9 +44,9 @@ export default function TutorCard(): JSX.Element {
         showRating={false}
       />
 
-      {/* <TouchableOpacity>
+      {/* <TouchableOpacityOpacity>
         <Icon name="heart" type="material-community" color="red" />
-      </TouchableOpacity> */}
+      </TouchableOpacityOpacity> */}
     </Flex>
   );
 
@@ -57,26 +60,28 @@ export default function TutorCard(): JSX.Element {
 
   return (
     <>
-      <Card style={myStyle.card}>
-        <Card.Header
-          title="Abby"
-          thumbStyle={{width: 30, height: 30, marginRight: 16}}
-          thumb="https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png"
-          extra={extra}
-        />
-        <Card.Body>
-          <View style={myStyle.cardContent}>
-            <Text style={myStyle.cardContentText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
-              mollitia, molestiae quas vel sint commodi repudiandae consequuntur
-              voluptatum laborum numquam blanditiis harum quisquam eius sed odit
-              fugiat iusto fuga praesentium optio, eaque rerum! Provident
-              similique accusantium nemo autem.
-            </Text>
-          </View>
-        </Card.Body>
-        <Card.Footer content={contentFooter} />
-      </Card>
+      <TouchableOpacity onPress={onTouch}>
+        <Card style={myStyle.card}>
+          <Card.Header
+            title="Abby"
+            thumbStyle={{width: 30, height: 30, marginRight: 16}}
+            thumb="https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png"
+            extra={extra}
+          />
+          <Card.Body>
+            <View style={myStyle.cardContent}>
+              <Text style={myStyle.cardContentText}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+                mollitia, molestiae quas vel sint commodi repudiandae
+                consequuntur voluptatum laborum numquam blanditiis harum
+                quisquam eius sed odit fugiat iusto fuga praesentium optio,
+                eaque rerum! Provident similique accusantium nemo autem.
+              </Text>
+            </View>
+          </Card.Body>
+          <Card.Footer content={contentFooter} />
+        </Card>
+      </TouchableOpacity>
     </>
   );
 }
