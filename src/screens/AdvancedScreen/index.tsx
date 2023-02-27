@@ -22,7 +22,6 @@ const AdvancedScreen = () => {
   });
 
   const [value, setValue] = React.useState('first');
-
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);

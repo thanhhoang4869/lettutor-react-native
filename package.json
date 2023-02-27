@@ -23,6 +23,7 @@
     "galio-framework": "^0.8.0",
     "react": "18.2.0",
     "react-native": "0.71.3",
+    "react-native-calendar-strip": "^2.2.6",
     "react-native-date-picker": "^4.2.9",
     "react-native-elements": "^3.4.3",
     "react-native-modal": "^13.0.1",

@@ -12,12 +12,11 @@ import {color, style} from 'style';
 import FieldChip from 'components/FieldChip';
 import Header, {HeaderProps} from 'components/Header';
 import SearchBar, {SearchBarProps} from 'components/SearchBar';
-import TutorCard from 'components/TutorCard';
+import TutorCard, {TutorCardProps} from 'components/TutorCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {DataTable, RadioButton} from 'react-native-paper';
-import {TutorCardProps} from 'components/TutorHomeCard';
 
 export default function TutorScreen({
   navigation: {navigate},

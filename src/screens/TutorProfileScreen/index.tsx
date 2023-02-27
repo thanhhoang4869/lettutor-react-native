@@ -16,7 +16,7 @@ import {AirbnbRating} from 'react-native-ratings';
 import VideoPlayer from 'react-native-video-player';
 import {color, style} from 'style';
 
-const TutorProfileScreen = () => {
+const TutorProfileScreen = ({navigation: {navigate}}: any) => {
   const [fav, setFav] = React.useState<boolean>(false);
 
   const myStyle = StyleSheet.create({
@@ -204,7 +204,13 @@ const TutorProfileScreen = () => {
 
           <WhiteSpace />
 
-          <Button style={style.primaryButton}>Book this tutor</Button>
+          <Button
+            style={style.primaryButton}
+            onPress={() => {
+              navigate('BookingPicker');
+            }}>
+            Book this tutor
+          </Button>
 
           <WhiteSpace />
 
