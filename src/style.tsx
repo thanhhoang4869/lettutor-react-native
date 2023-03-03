@@ -10,6 +10,7 @@ export const color = {
   lightGrey: '#f2f2f2',
   primaryColor: primaryColor,
   white: 'white',
+  danger: '#dc3545',
 };
 
 export const style = StyleSheet.create({

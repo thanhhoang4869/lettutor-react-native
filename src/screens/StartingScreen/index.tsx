@@ -1,9 +1,9 @@
-import {Text, StyleSheet, Image} from 'react-native';
-import React from 'react';
-import {style, color} from 'style';
-import {Flex, WhiteSpace} from '@ant-design/react-native';
+import {Flex} from '@ant-design/react-native';
 import {Button} from 'galio-framework';
+import React from 'react';
+import {Image, StyleSheet, Text} from 'react-native';
 import {Icon} from 'react-native-elements';
+import {color, style} from 'style';
 
 const StartingScreen = ({navigation: {navigate}}: any) => {
   const myStyle = StyleSheet.create({

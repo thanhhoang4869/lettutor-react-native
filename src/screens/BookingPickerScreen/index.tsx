@@ -52,10 +52,30 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
 
             <Text
               style={{
-                fontWeight: 'bold',
                 marginLeft: 5,
+                ...style.textBoldPrimary,
               }}>
-              Your booking is at: 22/02/2023 - 18:30
+              Booking time: 22/02/2023 - 18:30 - 20:00
+            </Text>
+
+            <WhiteSpace />
+
+            <Text
+              style={{
+                marginLeft: 5,
+                marginTop: 5,
+              }}>
+              Balance: 1088 lessons left
+            </Text>
+
+            <WhiteSpace />
+
+            <Text
+              style={{
+                marginLeft: 5,
+                marginTop: 5,
+              }}>
+              Price: 1 lesson
             </Text>
 
             <WhiteSpace size="xl" />
@@ -72,13 +92,17 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
                   fontWeight: 'bold',
                   marginLeft: 5,
                 }}>
-                Note for this booking
+                Notes
               </Text>
             </Flex>
 
             <WhiteSpace size="lg" />
 
-            <Input cursorColor={color.primaryColor} style={style.textArea} />
+            <Input
+              cursorColor={color.primaryColor}
+              multiline={true}
+              style={style.textArea}
+            />
 
             <WhiteSpace size="lg" />
 
@@ -91,7 +115,9 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
               </TouchableOpacity>
               <Button
                 style={style.primaryButtonNoWidth}
-                onPress={toggleConfirmModal}>
+                onPress={() => {
+                  navigate('Schedule');
+                }}>
                 Confirm
               </Button>
             </Flex>

@@ -88,7 +88,11 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
 
             <WhiteSpace size="lg" />
 
-            <Input cursorColor={color.primaryColor} style={style.textArea} />
+            <Input
+              multiline={true}
+              cursorColor={color.primaryColor}
+              style={style.textArea}
+            />
 
             <WhiteSpace size="lg" />
 
@@ -271,7 +275,12 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
 
           <Text style={style.textBoldPrimary}>Schedule</Text>
           <WhiteSpace />
-          <Text>{'M-W-F (18:30)'}</Text>
+          <View>
+            <Text style={style.textPrimary}>Today</Text>
+
+            <WhiteSpace />
+            <Text>10:00 - 12:00 | 13:00 - 15:00 | 17:00 - 19:00</Text>
+          </View>
 
           <WhiteSpace size="lg" />
 
@@ -305,6 +314,29 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
           <Text style={style.textBoldPrimary}>Education</Text>
           <WhiteSpace />
           <Text>New York University</Text>
+          <WhiteSpace size="lg" />
+
+          <Text style={style.textBoldPrimary}>Suggested courses</Text>
+          <WhiteSpace />
+          <View>
+            <Flex
+              justify="between"
+              style={{
+                width: '100%',
+              }}>
+              <Text style={style.textBold}>Life in the Internet Age</Text>
+              <Text style={style.textPrimary}>View</Text>
+            </Flex>
+            <WhiteSpace />
+            <Flex
+              justify="between"
+              style={{
+                width: '100%',
+              }}>
+              <Text style={style.textBold}>Life in the Internet Age</Text>
+              <Text style={style.textPrimary}>View</Text>
+            </Flex>
+          </View>
           <WhiteSpace size="lg" />
         </View>
       </ScrollView>
