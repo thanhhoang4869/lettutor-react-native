@@ -5,9 +5,8 @@ import {Icon} from 'react-native-elements';
 
 import CourseScreen from 'screens/CourseScreen';
 import HomeScreen from 'screens/HomeScreen';
-import MessageScreen from 'screens/MessageScreen';
 import TutorScreen from 'screens/TutorScreen';
-import UpcomingScreen from 'screens/UpcomingScreen';
+import UpcomingScreen from 'screens/ScheduleScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +68,6 @@ export default function MainLayout() {
       <Tab.Screen name="Tutor" component={TutorScreen} />
       <Tab.Screen name="Schedule" component={UpcomingScreen} />
       <Tab.Screen name="Course" component={CourseScreen} />
-      {/* <Tab.Screen name="Message" component={MessageScreen} /> */}
     </Tab.Navigator>
   );
 }

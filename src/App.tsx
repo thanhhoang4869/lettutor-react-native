@@ -16,8 +16,6 @@ import SettingScreen from 'screens/SettingSccreen';
 import HomeScreen from 'screens/HomeScreen';
 import AccountVerifyScreen from 'screens/AccountVerifyScreen';
 import StartingScreen from 'screens/StartingScreen';
-import UpcomingScreen from 'screens/UpcomingScreen';
-import MessageScreen from 'screens/MessageScreen';
 import TutorScreen from 'screens/TutorScreen';
 import CourseScreen from 'screens/CourseScreen';
 import AdvancedScreen from 'screens/AdvancedScreen';
@@ -83,7 +81,6 @@ export default function App(): JSX.Element {
           <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
           <Stack.Screen name="Main" component={MainLayout} />
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Message" component={MessageScreen} />
           <Stack.Screen name="Tutor" component={TutorScreen} />
           <Stack.Screen name="Settings" component={SettingScreen} />
           <Stack.Screen name="Course" component={CourseScreen} />
