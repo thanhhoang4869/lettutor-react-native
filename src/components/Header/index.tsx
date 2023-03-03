@@ -1,7 +1,7 @@
 import {Flex} from '@ant-design/react-native';
 import React from 'react';
 import {Image, Text, TouchableOpacity} from 'react-native';
-import {style, color} from 'style';
+import {style} from 'style';
 
 export interface HeaderProps {
   title: string;

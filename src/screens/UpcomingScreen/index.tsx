@@ -2,6 +2,7 @@ import {Flex, WhiteSpace} from '@ant-design/react-native';
 import Header, {HeaderProps} from 'components/Header';
 import ScheduleCard from 'components/ScheduleCard';
 import {ScheduleCardProps} from 'components/ScheduleCard/index';
+import {Button, Input} from 'galio-framework';
 import React from 'react';
 import {
   ScrollView,
@@ -10,10 +11,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Icon, Image} from 'react-native-elements';
-import {color, style} from 'style';
+import {Image} from 'react-native-elements';
 import Modal from 'react-native-modal';
-import {Button, Input} from 'galio-framework';
+import {color, style} from 'style';
 
 const UpcomingScreen = ({navigation: {navigate}}: any) => {
   const myStyle = StyleSheet.create({
@@ -42,18 +42,6 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
     },
     onCancel: () => {},
   };
-
-  // useEffect(() => {
-  //   const backHandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     () => {
-  //       navigate('Main');
-  //       return null;
-  //     },
-  //   );
-
-  //   return () => backHandler.remove();
-  // }, [navigate]);
 
   const image = require('assets/calendar.png');
 
@@ -133,7 +121,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
       <ScrollView
         style={{
-          height: '80%',
+          height: '100%',
           width: '100%',
         }}>
         <ScheduleCard

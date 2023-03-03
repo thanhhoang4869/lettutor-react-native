@@ -97,7 +97,9 @@ export default function SettingScreen({
             </Flex>
           </Button>
 
-          <Button style={myStyle.button}>
+          <Button
+            style={myStyle.button}
+            onPress={() => navigate('BookingHistory')}>
             <Flex justify="start" style={style.w100}>
               <Icon
                 name="history"

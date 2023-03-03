@@ -3,10 +3,10 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {color, style} from 'style';
 
-import {Button} from 'galio-framework';
-import {Icon, Image} from 'react-native-elements';
+import {Divider, Icon, Image} from 'react-native-elements';
+import {AirbnbRating} from 'react-native-ratings';
 
-export interface ScheduleCardProps {
+export interface HistoryCardProps {
   teacher: string;
   date: string;
   time: string;
@@ -15,14 +15,14 @@ export interface ScheduleCardProps {
   onCancel: () => void;
 }
 
-const ScheduleCard = ({
+const HistoryCard = ({
   teacher,
   date,
   time,
   notes,
   onEdit,
   onCancel,
-}: ScheduleCardProps) => {
+}: HistoryCardProps) => {
   const myStyle = StyleSheet.create({
     cardContent: {
       height: 70,
@@ -68,7 +68,12 @@ const ScheduleCard = ({
             </Flex>
 
             <TouchableOpacity onPress={onEdit}>
-              <Icon name="edit" color={color.primaryColor} />
+              <Flex>
+                <Text style={{marginRight: 5, ...style.textBoldPrimary}}>
+                  Review
+                </Text>
+                <Icon name="edit" color={color.primaryColor} />
+              </Flex>
             </TouchableOpacity>
           </Flex>
           <WhiteSpace size="xl" />
@@ -85,37 +90,25 @@ const ScheduleCard = ({
 
           <Text>Notes: {notes}</Text>
 
+          <WhiteSpace size="lg" />
+
+          <Divider />
+
+          <WhiteSpace size="lg" />
+
+          <Text style={style.textBoldBlack}>Tutor's review</Text>
           <WhiteSpace />
-
-          <Flex
-            style={{
-              width: '100%',
-            }}>
-            <Button
-              round
-              onPress={onCancel}
-              style={{
-                width: '45%',
-                marginLeft: -2,
-                backgroundColor: 'lightgrey',
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 16,
-                }}>
-                Cancel
-              </Text>
-            </Button>
-
-            <Button
-              round
-              style={{
-                width: '45%',
-                backgroundColor: color.primaryColor,
-              }}>
-              Join lesson
-            </Button>
+          <Text>Lesson progress: Completed</Text>
+          <Text>Comment: Good job!</Text>
+          <Flex>
+            <Text>Student's skills: </Text>
+            <AirbnbRating
+              count={5}
+              isDisabled={true}
+              defaultRating={5}
+              size={15}
+              showRating={false}
+            />
           </Flex>
         </View>
       </Card.Body>
@@ -123,4 +116,4 @@ const ScheduleCard = ({
   );
 };
 
-export default ScheduleCard;
+export default HistoryCard;
