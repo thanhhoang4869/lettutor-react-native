@@ -49,7 +49,7 @@ const HistoryCard = ({
     },
   });
   return (
-    <Card style={myStyle.card}>
+    <Card style={style.card}>
       <Card.Body>
         <View
           style={{

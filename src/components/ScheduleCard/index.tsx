@@ -31,16 +31,6 @@ const ScheduleCard = ({
       marginLeft: 16,
     },
 
-    card: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 8,
-        height: 8,
-      },
-      shadowOpacity: 0.27,
-      shadowRadius: 3.65,
-      elevation: 5,
-    },
     tutorName: {
       fontWeight: 'bold',
       fontSize: 16,
@@ -49,7 +39,7 @@ const ScheduleCard = ({
     },
   });
   return (
-    <Card style={myStyle.card}>
+    <Card style={style.card}>
       <Card.Body>
         <View
           style={{

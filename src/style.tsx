@@ -15,6 +15,17 @@ export const color = {
 
 export const style = StyleSheet.create({
   //global
+  card: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 8,
+      height: 8,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 3.65,
+    elevation: 5,
+    borderRadius: 10,
+  },
   textBoldPrimary: {
     fontWeight: 'bold',
     color: primaryColor,

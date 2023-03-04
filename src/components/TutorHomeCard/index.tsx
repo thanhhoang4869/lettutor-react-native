@@ -4,7 +4,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {AirbnbRating} from 'react-native-ratings';
-import {color} from 'style';
+import {color, style} from 'style';
 
 export interface TutorHomeCardProps {
   onTouch: () => void;
@@ -23,17 +23,6 @@ export default function TutorCard({onTouch}: TutorHomeCardProps): JSX.Element {
     starText: {
       marginRight: 5,
       fontWeight: 'bold',
-    },
-    card: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 8,
-        height: 8,
-      },
-      shadowOpacity: 0.27,
-      shadowRadius: 3.65,
-      elevation: 5,
-      // borderRadius: 10,
     },
   });
 
@@ -75,7 +64,7 @@ export default function TutorCard({onTouch}: TutorHomeCardProps): JSX.Element {
 
   return (
     <TouchableOpacity onPress={onTouch}>
-      <Card style={myStyle.card}>
+      <Card style={style.card}>
         <Card.Header
           title="Abby"
           thumbStyle={{width: 30, height: 30, marginRight: 16}}

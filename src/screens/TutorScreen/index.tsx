@@ -189,7 +189,7 @@ export default function TutorScreen({
         <WhiteSpace />
         <WhiteSpace />
 
-        <Text style={myStyle.text}>Total: 5 results</Text>
+        <Text style={myStyle.text}>Total: 5 tutors</Text>
 
         <WhiteSpace />
         <WhiteSpace />
