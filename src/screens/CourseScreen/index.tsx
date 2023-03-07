@@ -91,7 +91,11 @@ export default function CourseScreen({
   const from = page * numberOfItemsPerPage;
   const to = Math.min((page + 1) * numberOfItemsPerPage, items.length);
 
-  // const CourseCardProps: CourseCardProps = {};
+  const courseCardProps: CourseCardProps = {
+    onTouch: () => {
+      navigate('CourseDetail');
+    },
+  };
 
   return (
     <>
@@ -186,16 +190,16 @@ export default function CourseScreen({
             height: '80%',
             width: '100%',
           }}>
-          <CourseCard />
+          <CourseCard onTouch={courseCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
-          <CourseCard />
+          <CourseCard onTouch={courseCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
-          <CourseCard />
+          <CourseCard onTouch={courseCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
-          <CourseCard />
+          <CourseCard onTouch={courseCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
           <DataTable.Pagination
