@@ -25,6 +25,7 @@ import TutorProfileScreen from 'screens/TutorProfileScreen';
 import BookingPickerScreen from 'screens/BookingPickerScreen';
 import BookingHistoryScreen from 'screens/BookingHistoryScreen';
 import CourseDetailScreen from 'screens/CourseDetailScreen';
+import TopicDetailScreen from 'screens/TopicDetailScreen/index';
 
 // const theme: ThemeProp = {
 //   ...DefaultTheme,
@@ -57,6 +58,7 @@ type RootStackParamList = {
   BookingPicker: undefined;
   BookingHistory: undefined;
   CourseDetail: undefined;
+  TopicDetail: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -93,6 +95,7 @@ export default function App(): JSX.Element {
         <Stack.Screen name="BookingPicker" component={BookingPickerScreen} />
         <Stack.Screen name="CourseDetail" component={CourseDetailScreen} />
         <Stack.Screen name="BookingHistory" component={BookingHistoryScreen} />
+        <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     // </PaperProvider>

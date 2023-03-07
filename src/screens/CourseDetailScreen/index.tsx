@@ -94,7 +94,9 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
             <WhiteSpace size="lg" />
             <TopicCard
               title="1. Introduction to the Internet"
-              onTouch={() => {}}
+              onTouch={() => {
+                navigate('TopicDetail');
+              }}
             />
             <WhiteSpace size="lg" />
             <TopicCard title="2. Gamification" onTouch={() => {}} />
