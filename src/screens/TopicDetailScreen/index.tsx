@@ -1,10 +1,10 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
-import TopicCard from 'components/TopicCard';
 import React from 'react';
-import {ScrollView, StyleSheet, Dimensions, Text, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Divider, Icon, Image} from 'react-native-elements';
-import {color, style} from 'style';
+import {ScreenHeight} from 'react-native-elements/dist/helpers';
 import Pdf from 'react-native-pdf';
+import {color, style} from 'style';
 
 const TopicDetailScreen = ({navigation: {navigate}}: any) => {
   const myStyle = StyleSheet.create({
@@ -15,13 +15,15 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
     },
     pdf: {
       flex: 1,
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+      width: '100%',
+      height: ScreenHeight,
+      borderColor: color.grey,
+      borderWidth: 1,
     },
   });
 
   const source = {
-    uri: 'https://www.africau.edu/images/default/sample.pdf',
+    uri: 'https://dl.ebooksworld.ir/books/Spring.in.Action.6th.Edition.Craig.Walls.Manning.9781617297571.EBooksWorld.ir.pdf',
     cache: true,
   };
 
@@ -39,9 +41,7 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
         />
         <View style={style.container}>
           <Text style={style.pageTitle}>Life in the Internet Age</Text>
-
           <WhiteSpace size="lg" />
-
           <Flex>
             <Icon
               name="file-o"
@@ -55,13 +55,9 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
               Topic 1. Introduction to the Internet
             </Text>
           </Flex>
-
           <WhiteSpace size="lg" />
-
           <Divider />
-
           <WhiteSpace size="lg" />
-
           <ScrollView>
             <Pdf
               trustAllCerts={false}
@@ -78,6 +74,7 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
               onPressLink={uri => {
                 console.log(`Link pressed: ${uri}`);
               }}
+              fitPolicy={0}
               style={myStyle.pdf}
             />
           </ScrollView>
