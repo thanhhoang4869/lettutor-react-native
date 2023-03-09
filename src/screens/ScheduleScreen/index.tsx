@@ -41,6 +41,9 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
       toggleEditModal();
     },
     onCancel: () => {},
+    onJoin: () => {
+      navigate('Meeting');
+    },
   };
 
   const image = require('assets/calendar.png');
@@ -131,6 +134,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
           notes={scheduleProps.notes}
           onEdit={scheduleProps.onEdit}
           onCancel={scheduleProps.onCancel}
+          onJoin={scheduleProps.onJoin}
         />
         <WhiteSpace size="lg" />
 
@@ -141,6 +145,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
           notes={scheduleProps.notes}
           onEdit={scheduleProps.onEdit}
           onCancel={scheduleProps.onCancel}
+          onJoin={scheduleProps.onJoin}
         />
 
         <WhiteSpace size="lg" />
@@ -152,6 +157,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
           notes={scheduleProps.notes}
           onEdit={scheduleProps.onEdit}
           onCancel={scheduleProps.onCancel}
+          onJoin={scheduleProps.onJoin}
         />
 
         <WhiteSpace size="lg" />

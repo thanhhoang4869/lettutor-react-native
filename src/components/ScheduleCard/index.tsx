@@ -13,6 +13,7 @@ export interface ScheduleCardProps {
   notes: string;
   onEdit: () => void;
   onCancel: () => void;
+  onJoin: () => void;
 }
 
 const ScheduleCard = ({
@@ -22,6 +23,7 @@ const ScheduleCard = ({
   notes,
   onEdit,
   onCancel,
+  onJoin,
 }: ScheduleCardProps) => {
   const myStyle = StyleSheet.create({
     cardContent: {
@@ -38,6 +40,7 @@ const ScheduleCard = ({
       color: 'black',
     },
   });
+
   return (
     <Card style={style.card}>
       <Card.Body>
@@ -103,7 +106,8 @@ const ScheduleCard = ({
               style={{
                 width: '45%',
                 backgroundColor: color.primaryColor,
-              }}>
+              }}
+              onPress={onJoin}>
               Join lesson
             </Button>
           </Flex>

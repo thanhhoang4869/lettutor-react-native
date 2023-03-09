@@ -85,7 +85,9 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
         <WhiteSpace />
         <Text style={myStyle.welcomeBadgeText}>2023-02-24 at 18:30</Text>
         <WhiteSpace />
-        <Button style={myStyle.welcomeBadgeButton}>
+        <Button
+          style={myStyle.welcomeBadgeButton}
+          onPress={() => navigate('Meeting')}>
           <Text style={myStyle.welcomeBadgeButtonText}>Join lesson</Text>
         </Button>
       </Flex>
