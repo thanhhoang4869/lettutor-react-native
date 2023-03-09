@@ -20,15 +20,14 @@ const TopicCard = ({title, onTouch}: TopicCardProps) => {
   return (
     <TouchableOpacity onPress={onTouch}>
       <Card style={style.card}>
-        <Card.Body>
-          <View
-            style={{
-              padding: 5,
-              paddingLeft: 20,
-            }}>
-            <Text style={myStyle.courseName}>{title}</Text>
-          </View>
-        </Card.Body>
+        <View
+          style={{
+            padding: 10,
+            paddingTop: 15,
+            paddingLeft: 20,
+          }}>
+          <Text style={myStyle.courseName}>{title}</Text>
+        </View>
       </Card>
     </TouchableOpacity>
   );

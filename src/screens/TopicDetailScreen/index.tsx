@@ -16,7 +16,6 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
     pdf: {
       flex: 1,
       width: '100%',
-      height: ScreenHeight,
       borderColor: color.grey,
       borderWidth: 1,
     },
@@ -28,59 +27,61 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
   };
 
   return (
-    <>
-      <ScrollView style={{backgroundColor: 'white'}}>
-        <Image
-          source={{
-            uri: 'https://hub.fullsail.edu/assets/ext/share/key-careers-in-art-animation-and-design-a-beginners-guide-share.jpg',
-          }}
-          style={{
-            width: '100%',
-            height: 200,
-          }}
-        />
-        <View style={style.container}>
-          <Text style={style.pageTitle}>Life in the Internet Age</Text>
-          <WhiteSpace size="lg" />
-          <Flex>
-            <Icon
-              name="file-o"
-              type="font-awesome"
-              size={16}
-              style={{marginRight: 10}}
-              color={color.primaryColor}
-            />
+    <View>
+      <Image
+        source={{
+          uri: 'https://hub.fullsail.edu/assets/ext/share/key-careers-in-art-animation-and-design-a-beginners-guide-share.jpg',
+        }}
+        style={{
+          width: '100%',
+          height: 200,
+        }}
+      />
+      <View
+        style={{
+          backgroundColor: 'white',
+          padding: 30,
+          height: ScreenHeight - 200,
+        }}>
+        <Text style={style.pageTitle}>Life in the Internet Age</Text>
+        <WhiteSpace size="lg" />
+        <Flex>
+          <Icon
+            name="file-o"
+            type="font-awesome"
+            size={16}
+            style={{marginRight: 10}}
+            color={color.primaryColor}
+          />
 
-            <Text style={myStyle.headline}>
-              Topic 1. Introduction to the Internet
-            </Text>
-          </Flex>
-          <WhiteSpace size="lg" />
-          <Divider />
-          <WhiteSpace size="lg" />
-          <ScrollView>
-            <Pdf
-              trustAllCerts={false}
-              source={source}
-              onLoadComplete={(numberOfPages, filePath) => {
-                console.log(`Number of pages: ${numberOfPages}`);
-              }}
-              onPageChanged={(page, numberOfPages) => {
-                console.log(`Current page: ${page}`);
-              }}
-              onError={error => {
-                console.log(error);
-              }}
-              onPressLink={uri => {
-                console.log(`Link pressed: ${uri}`);
-              }}
-              fitPolicy={0}
-              style={myStyle.pdf}
-            />
-          </ScrollView>
-        </View>
-      </ScrollView>
-    </>
+          <Text style={myStyle.headline}>
+            Topic 1. Introduction to the Internet
+          </Text>
+        </Flex>
+        <WhiteSpace size="lg" />
+        <Divider />
+        <WhiteSpace size="lg" />
+
+        <Pdf
+          trustAllCerts={false}
+          source={source}
+          onLoadComplete={(numberOfPages, filePath) => {
+            console.log(`Number of pages: ${numberOfPages}`);
+          }}
+          onPageChanged={(page, numberOfPages) => {
+            console.log(`Current page: ${page}`);
+          }}
+          onError={error => {
+            console.log(error);
+          }}
+          onPressLink={uri => {
+            console.log(`Link pressed: ${uri}`);
+          }}
+          fitPolicy={0}
+          style={myStyle.pdf}
+        />
+      </View>
+    </View>
   );
 };
 
