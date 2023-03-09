@@ -1,7 +1,9 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
+  Alert,
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -126,7 +128,13 @@ export default function SettingScreen({
           </Button>
 
           <WhiteSpace size="lg" />
-          <Button style={myStyle.button}>
+          <Button
+            style={myStyle.button}
+            onPress={() => {
+              Linking.openURL('https://lettutor.com/').catch(err =>
+                Alert.alert("Couldn't load page", err),
+              );
+            }}>
             <Flex justify="start" style={style.w100}>
               <Icon
                 name="globe"
@@ -138,7 +146,13 @@ export default function SettingScreen({
             </Flex>
           </Button>
 
-          <Button style={myStyle.button}>
+          <Button
+            style={myStyle.button}
+            onPress={() => {
+              Linking.openURL('https://www.facebook.com/lettutorvn').catch(
+                err => Alert.alert("Couldn't load page", err),
+              );
+            }}>
             <Flex justify="start" style={style.w100}>
               <Icon
                 name="social-facebook"
