@@ -1,5 +1,5 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
-import React, {useCallback} from 'react';
+import React from 'react';
 import {
   Alert,
   Image,
