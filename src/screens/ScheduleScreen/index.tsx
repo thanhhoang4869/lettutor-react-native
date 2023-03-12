@@ -122,11 +122,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
       <WhiteSpace size="xl" />
       <WhiteSpace size="xl" />
 
-      <ScrollView
-        style={{
-          height: '100%',
-          width: '100%',
-        }}>
+      <ScrollView style={style.wh100}>
         <ScheduleCard
           teacher={scheduleProps.teacher}
           time={scheduleProps.time}

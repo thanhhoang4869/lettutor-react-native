@@ -85,7 +85,10 @@ export const style = StyleSheet.create({
   w100: {
     width: '100%',
   },
-
+  wh100: {
+    width: '100%',
+    height: '100%',
+  },
   dropdown2BtnStyle: {
     flex: 1,
     height: 50,

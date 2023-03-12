@@ -319,20 +319,12 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
           <Text style={style.textBoldPrimary}>Suggested courses</Text>
           <WhiteSpace />
           <View>
-            <Flex
-              justify="between"
-              style={{
-                width: '100%',
-              }}>
+            <Flex justify="between" style={style.w100}>
               <Text style={style.textBold}>Life in the Internet Age</Text>
               <Text style={style.textPrimary}>View</Text>
             </Flex>
             <WhiteSpace />
-            <Flex
-              justify="between"
-              style={{
-                width: '100%',
-              }}>
+            <Flex justify="between" style={style.w100}>
               <Text style={style.textBold}>Life in the Internet Age</Text>
               <Text style={style.textPrimary}>View</Text>
             </Flex>

@@ -7,12 +7,7 @@ import {style} from 'style';
 const ReviewCard = () => {
   return (
     <>
-      <Flex
-        direction="column"
-        align="start"
-        style={{
-          width: '100%',
-        }}>
+      <Flex direction="column" align="start" style={style.w100}>
         <Text style={style.textBold}>Thanh Hoang</Text>
         <WhiteSpace size="sm" />
         <AirbnbRating

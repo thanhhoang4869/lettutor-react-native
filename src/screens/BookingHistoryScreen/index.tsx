@@ -56,11 +56,7 @@ const BookingHistoryScreen = ({navigation: {navigate}}: any) => {
 
             <WhiteSpace size="lg" />
 
-            <Flex
-              justify="center"
-              style={{
-                width: '100%',
-              }}>
+            <Flex justify="center" style={style.w100}>
               <AirbnbRating
                 count={5}
                 reviews={['Terrible', 'Bad', 'Fair', 'Good', 'Excellent']}

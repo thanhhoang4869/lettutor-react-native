@@ -80,10 +80,7 @@ const ScheduleCard = ({
 
           <WhiteSpace />
 
-          <Flex
-            style={{
-              width: '100%',
-            }}>
+          <Flex style={style.w100}>
             <Button
               round
               onPress={onCancel}

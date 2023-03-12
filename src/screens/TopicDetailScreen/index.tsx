@@ -22,7 +22,7 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
   });
 
   const source = {
-    uri: 'https://dl.ebooksworld.ir/books/Spring.in.Action.6th.Edition.Craig.Walls.Manning.9781617297571.EBooksWorld.ir.pdf',
+    uri: 'https://www.tutorialspoint.com/graphql/graphql_tutorial.pdf',
     cache: true,
   };
 
@@ -41,7 +41,7 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
         style={{
           backgroundColor: 'white',
           padding: 30,
-          height: ScreenHeight - 200,
+          height: ScreenHeight - 220,
         }}>
         <Text style={style.pageTitle}>Life in the Internet Age</Text>
         <WhiteSpace size="lg" />
@@ -65,18 +65,6 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
         <Pdf
           trustAllCerts={false}
           source={source}
-          onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`Number of pages: ${numberOfPages}`);
-          }}
-          onPageChanged={(page, numberOfPages) => {
-            console.log(`Current page: ${page}`);
-          }}
-          onError={error => {
-            console.log(error);
-          }}
-          onPressLink={uri => {
-            console.log(`Link pressed: ${uri}`);
-          }}
           fitPolicy={0}
           style={myStyle.pdf}
         />
