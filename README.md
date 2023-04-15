@@ -12,14 +12,6 @@ In this project, I build a mobile application named LetTutor for Android and iOS
 
 # Milestone 2
 
-- See milestone progress: check out to the `` branch
-
-# Milestone 3
-
-- See milestone progress: check out to the `` branch
-
-# Milestone 4
-
 - Final demo video
 - See milestone progress: check out to the `` branch
 
