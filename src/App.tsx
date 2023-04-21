@@ -7,6 +7,7 @@ import {
 import {ThemeProp} from 'react-native-paper/lib/typescript/types';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import LoginScreen from 'screens/LoginScreen';
 import SignupScreen from 'screens/SignupScreen';
@@ -28,15 +29,15 @@ import CourseDetailScreen from 'screens/CourseDetailScreen';
 import TopicDetailScreen from 'screens/TopicDetailScreen/index';
 import MeetingScreen from 'screens/MeetingScreen';
 
-// const theme: ThemeProp = {
-//   ...DefaultTheme,
-//   colors: {
-//     primary: '#1677ff',
-//   },
-// };
+const theme: ThemeProp = {
+  ...DefaultTheme,
+  colors: {
+    primary: '#1677ff',
+  },
+};
 
-// export type AppTheme = typeof theme;
-// export const useAppTheme = () => useTheme<AppTheme>();
+export type AppTheme = typeof theme;
+export const useAppTheme = () => useTheme<AppTheme>();
 
 type RootStackParamList = {
   Start: undefined;
@@ -65,6 +66,14 @@ type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 export default function App(): JSX.Element {
   // const [language, setLanguage] = useState('en');
 
@@ -75,31 +84,36 @@ export default function App(): JSX.Element {
   return (
     // <PaperProvider theme={theme}>
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName="Main">
-        <Stack.Screen name="Start" component={StartingScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="AccVerify" component={AccountVerifyScreen} />
-        <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
-        <Stack.Screen name="Main" component={MainLayout} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Tutor" component={TutorScreen} />
-        <Stack.Screen name="Settings" component={SettingScreen} />
-        <Stack.Screen name="Course" component={CourseScreen} />
-        <Stack.Screen name="Advance" component={AdvancedScreen} />
-        <Stack.Screen name="Account" component={AccountScreen} />
-        <Stack.Screen name="BecomeTutor" component={BecomeTutorScreen} />
-        <Stack.Screen name="TutorProfile" component={TutorProfileScreen} />
-        <Stack.Screen name="BookingPicker" component={BookingPickerScreen} />
-        <Stack.Screen name="CourseDetail" component={CourseDetailScreen} />
-        <Stack.Screen name="BookingHistory" component={BookingHistoryScreen} />
-        <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />
-        <Stack.Screen name="Meeting" component={MeetingScreen} />
-      </Stack.Navigator>
+      <QueryClientProvider client={queryClient}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+          initialRouteName="Login">
+          <Stack.Screen name="Start" component={StartingScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen name="AccVerify" component={AccountVerifyScreen} />
+          <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
+          <Stack.Screen name="Main" component={MainLayout} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Tutor" component={TutorScreen} />
+          <Stack.Screen name="Settings" component={SettingScreen} />
+          <Stack.Screen name="Course" component={CourseScreen} />
+          <Stack.Screen name="Advance" component={AdvancedScreen} />
+          <Stack.Screen name="Account" component={AccountScreen} />
+          <Stack.Screen name="BecomeTutor" component={BecomeTutorScreen} />
+          <Stack.Screen name="TutorProfile" component={TutorProfileScreen} />
+          <Stack.Screen name="BookingPicker" component={BookingPickerScreen} />
+          <Stack.Screen name="CourseDetail" component={CourseDetailScreen} />
+          <Stack.Screen
+            name="BookingHistory"
+            component={BookingHistoryScreen}
+          />
+          <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />
+          <Stack.Screen name="Meeting" component={MeetingScreen} />
+        </Stack.Navigator>
+      </QueryClientProvider>
     </NavigationContainer>
     // </PaperProvider>
   );
