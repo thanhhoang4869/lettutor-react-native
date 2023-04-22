@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect} from 'react';
 
 import {Flex, Text, WhiteSpace} from '@ant-design/react-native';
 import {Button, Input} from 'galio-framework';
@@ -27,7 +28,7 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const {login} = useContext(AuthContext);
+  const {login, checkToken} = useContext(AuthContext);
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -49,7 +50,7 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
       const response = await authService.login(data);
 
       if (response.status === 200) {
-        const access_token = response.data.tokens.access.token;
+        const access_token = response.data.tokens.access;
         const user = response.data.user;
 
         await login(access_token, user);
@@ -65,6 +66,27 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
     setLoginInfo({...loginInfo, password: ''});
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    const autoLogin = async () => {
+      setIsLoading(true);
+
+      try {
+        const isTokenValid = await checkToken();
+
+        if (isTokenValid) {
+          navigate('Main');
+        }
+      } catch (error: any) {
+        setIsLoading(false);
+        console.log(error);
+      }
+
+      setIsLoading(false);
+    };
+
+    autoLogin();
+  }, []);
 
   return (
     <>

@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import storageService from 'services/storageService';
 
 export const AuthContext = React.createContext({
-  login: async (token: string, user: any) => {},
+  login: async (token: any, user: any) => {},
   logout: async () => {},
+  checkToken: async (): Promise<any> => {},
   isLogin: false,
   account: {},
 });
@@ -21,9 +21,9 @@ export const AuthProvider = ({children}: any) => {
     setAccount(user);
   };
 
-  const login = async (token: string, user: any) => {
+  const login = async (token: any, user: any) => {
     await storeAccount(user);
-    await storageService.storeString('access_token', token);
+    await storageService.storeObject('access_token', token);
     setIsLogin(true);
   };
 
@@ -32,6 +32,21 @@ export const AuthProvider = ({children}: any) => {
     await storageService.removeItem('user');
     setIsLogin(false);
     setAccount({});
+  };
+
+  const checkToken = async (): Promise<boolean> => {
+    const access_token = await storageService.getObject('access_token');
+    if (access_token) {
+      const expires = new Date(access_token.expires).getTime();
+      const now = new Date().getTime();
+      if (now < expires) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   };
 
   useEffect(() => {
@@ -45,6 +60,7 @@ export const AuthProvider = ({children}: any) => {
         account,
         login,
         logout,
+        checkToken,
       }}>
       {children}
     </AuthContext.Provider>
