@@ -8,10 +8,12 @@ import {Icon} from 'react-native-elements';
 import {useAppTheme} from 'App';
 import {color, style} from 'style';
 
+import Loading from 'components/Loading';
 import MultilangButton from 'components/MultilangButton';
 import {Alert} from 'react-native';
-import Loading from 'components/Loading';
 
+import {AuthContext} from 'context/AuthContext';
+import {useContext} from 'react';
 import authService from 'services/authService';
 
 export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
@@ -25,7 +27,9 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const login = async () => {
+  const {login, storeAccount} = useContext(AuthContext);
+
+  const handleLogin = async () => {
     setIsLoading(true);
 
     const {email, password} = loginInfo;
@@ -45,8 +49,12 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
       const response = await authService.login(data);
 
       if (response.status === 200) {
-        // navigate('Main');
-        Alert.alert('Success', 'Login success');
+        const access_token = response.data.tokens.access.token;
+        const user = response.data.user;
+        await login(access_token);
+        await storeAccount(user);
+
+        navigate('Main');
       } else {
         Alert.alert('Something went wrong');
       }
@@ -98,7 +106,7 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
 
         <WhiteSpace />
 
-        <Button round style={style.primaryButton} onPress={login}>
+        <Button round style={style.primaryButton} onPress={handleLogin}>
           Login
         </Button>
 

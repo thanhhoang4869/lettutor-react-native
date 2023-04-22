@@ -1,4 +1,6 @@
 import axios from 'axios';
+import storageService from 'services/storageService';
+import {Alert} from 'react-native';
 
 const api = axios.create({
   baseURL: 'https://sandbox.api.lettutor.com',
@@ -8,5 +10,29 @@ const api = axios.create({
     Referer: 'https://sandbox.app.lettutor.com/',
   },
 });
+
+// Add a request interceptor
+api.interceptors.request.use(async config => {
+  const token = await storageService.getString('access_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  res => res,
+  async err => {
+    const originalConfig = err.config;
+    if (originalConfig.url !== '/auth/login' && err.response) {
+      if (err.response.status === 401) {
+        storageService.removeItem('access_token');
+        Alert.alert(
+          'Your session has expired. Please login again to continue.',
+        );
+      }
+    }
+  },
+);
 
 export default api;

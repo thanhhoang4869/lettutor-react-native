@@ -28,6 +28,7 @@ import BookingHistoryScreen from 'screens/BookingHistoryScreen';
 import CourseDetailScreen from 'screens/CourseDetailScreen';
 import TopicDetailScreen from 'screens/TopicDetailScreen/index';
 import MeetingScreen from 'screens/MeetingScreen';
+import {AuthProvider} from 'context/AuthContext';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -83,38 +84,44 @@ export default function App(): JSX.Element {
 
   return (
     // <PaperProvider theme={theme}>
-    <NavigationContainer>
-      <QueryClientProvider client={queryClient}>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName="Login">
-          <Stack.Screen name="Start" component={StartingScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
-          <Stack.Screen name="AccVerify" component={AccountVerifyScreen} />
-          <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
-          <Stack.Screen name="Main" component={MainLayout} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Tutor" component={TutorScreen} />
-          <Stack.Screen name="Settings" component={SettingScreen} />
-          <Stack.Screen name="Course" component={CourseScreen} />
-          <Stack.Screen name="Advance" component={AdvancedScreen} />
-          <Stack.Screen name="Account" component={AccountScreen} />
-          <Stack.Screen name="BecomeTutor" component={BecomeTutorScreen} />
-          <Stack.Screen name="TutorProfile" component={TutorProfileScreen} />
-          <Stack.Screen name="BookingPicker" component={BookingPickerScreen} />
-          <Stack.Screen name="CourseDetail" component={CourseDetailScreen} />
-          <Stack.Screen
-            name="BookingHistory"
-            component={BookingHistoryScreen}
-          />
-          <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />
-          <Stack.Screen name="Meeting" component={MeetingScreen} />
-        </Stack.Navigator>
-      </QueryClientProvider>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName="Login">
+            <Stack.Screen name="Start" component={StartingScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
+            <Stack.Screen name="AccVerify" component={AccountVerifyScreen} />
+            <Stack.Screen name="ForgetPass" component={ForgetPasswordScreen} />
+            <Stack.Screen name="Main" component={MainLayout} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Tutor" component={TutorScreen} />
+            <Stack.Screen name="Settings" component={SettingScreen} />
+            <Stack.Screen name="Course" component={CourseScreen} />
+            <Stack.Screen name="Advance" component={AdvancedScreen} />
+            <Stack.Screen name="Account" component={AccountScreen} />
+            <Stack.Screen name="BecomeTutor" component={BecomeTutorScreen} />
+            <Stack.Screen name="TutorProfile" component={TutorProfileScreen} />
+            <Stack.Screen
+              name="BookingPicker"
+              component={BookingPickerScreen}
+            />
+            <Stack.Screen name="CourseDetail" component={CourseDetailScreen} />
+            <Stack.Screen
+              name="BookingHistory"
+              component={BookingHistoryScreen}
+            />
+            <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />
+            <Stack.Screen name="Meeting" component={MeetingScreen} />
+          </Stack.Navigator>
+        </QueryClientProvider>
+      </NavigationContainer>
+    </AuthProvider>
+
     // </PaperProvider>
   );
 }
