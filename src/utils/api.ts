@@ -11,7 +11,6 @@ const api = axios.create({
   },
 });
 
-// Add a request interceptor
 api.interceptors.request.use(async config => {
   const token = await storageService.getString('access_token');
   if (token) {

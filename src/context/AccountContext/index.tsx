@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import storageService from 'services/storageService';
 
-export const AuthContext = React.createContext({
+export const AccountContext = React.createContext({
   login: async (token: any, user: any) => {},
   logout: async () => {},
   checkToken: async (): Promise<any> => {},
@@ -10,21 +10,17 @@ export const AuthContext = React.createContext({
   account: {},
 });
 
-export const AuthProvider = ({children}: any) => {
+export const AccountProvider = ({children}: any) => {
   const [isLogin, setIsLogin] = useState(
     storageService.getString('access_token') !== undefined,
   );
   const [account, setAccount] = useState({});
 
-  const storeAccount = async (user: any) => {
-    await storageService.storeObject('user', user);
-    setAccount(user);
-  };
-
   const login = async (token: any, user: any) => {
-    await storeAccount(user);
     await storageService.storeObject('access_token', token);
+    await storageService.storeObject('user', user);
     setIsLogin(true);
+    setAccount(user);
   };
 
   const logout = async () => {
@@ -50,11 +46,11 @@ export const AuthProvider = ({children}: any) => {
   };
 
   useEffect(() => {
-    console.log('AuthContext');
+    console.log('AccountContext');
   }, [isLogin]);
 
   return (
-    <AuthContext.Provider
+    <AccountContext.Provider
       value={{
         isLogin,
         account,
@@ -63,6 +59,6 @@ export const AuthProvider = ({children}: any) => {
         checkToken,
       }}>
       {children}
-    </AuthContext.Provider>
+    </AccountContext.Provider>
   );
 };

@@ -13,7 +13,7 @@ import {color, style} from 'style';
 
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
-import {AuthContext} from 'context/AuthContext';
+import {AccountContext} from 'context/AccountContext';
 import Loading from 'components/Loading';
 
 export default function SettingScreen({
@@ -59,7 +59,7 @@ export default function SettingScreen({
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const {logout} = useContext(AuthContext);
+  const {logout} = useContext(AccountContext);
 
   const handleLogout = async () => {
     setIsLoading(true);

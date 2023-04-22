@@ -28,7 +28,7 @@ import BookingHistoryScreen from 'screens/BookingHistoryScreen';
 import CourseDetailScreen from 'screens/CourseDetailScreen';
 import TopicDetailScreen from 'screens/TopicDetailScreen/index';
 import MeetingScreen from 'screens/MeetingScreen';
-import {AuthProvider} from 'context/AuthContext';
+import {AccountProvider} from 'context/AccountContext';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -84,7 +84,7 @@ export default function App(): JSX.Element {
 
   return (
     // <PaperProvider theme={theme}>
-    <AuthProvider>
+    <AccountProvider>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           <Stack.Navigator
@@ -120,7 +120,7 @@ export default function App(): JSX.Element {
           </Stack.Navigator>
         </QueryClientProvider>
       </NavigationContainer>
-    </AuthProvider>
+    </AccountProvider>
 
     // </PaperProvider>
   );
