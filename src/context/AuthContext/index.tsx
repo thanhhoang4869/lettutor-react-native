@@ -4,9 +4,8 @@ import {useState} from 'react';
 import storageService from 'services/storageService';
 
 export const AuthContext = React.createContext({
-  login: async (token: string) => {},
+  login: async (token: string, user: any) => {},
   logout: async () => {},
-  storeAccount: async (user: any) => {},
   isLogin: false,
   account: {},
 });
@@ -22,8 +21,8 @@ export const AuthProvider = ({children}: any) => {
     setAccount(user);
   };
 
-  const login = async (token: string) => {
-    console.log('login', token);
+  const login = async (token: string, user: any) => {
+    await storeAccount(user);
     await storageService.storeString('access_token', token);
     setIsLogin(true);
   };
@@ -44,7 +43,6 @@ export const AuthProvider = ({children}: any) => {
       value={{
         isLogin,
         account,
-        storeAccount,
         login,
         logout,
       }}>

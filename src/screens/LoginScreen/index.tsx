@@ -27,7 +27,7 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const {login, storeAccount} = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -51,8 +51,8 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
       if (response.status === 200) {
         const access_token = response.data.tokens.access.token;
         const user = response.data.user;
-        await login(access_token);
-        await storeAccount(user);
+
+        await login(access_token, user);
 
         navigate('Main');
       } else {
@@ -62,6 +62,7 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
       Alert.alert(error.response.data.message);
     }
 
+    setLoginInfo({...loginInfo, password: ''});
     setIsLoading(false);
   };
 
