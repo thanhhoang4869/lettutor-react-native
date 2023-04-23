@@ -13,8 +13,8 @@ import Loading from 'components/Loading';
 import MultilangButton from 'components/MultilangButton';
 import {Alert} from 'react-native';
 
-import {AccountContext} from 'context/AccountContext';
 import {useContext} from 'react';
+import {AccountContext} from 'context/AccountContext';
 import authService from 'services/authService';
 
 export function LoginScreen({navigation: {navigate}}: any): JSX.Element {

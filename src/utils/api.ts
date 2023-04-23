@@ -12,11 +12,17 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(async config => {
-  const token = await storageService.getString('access_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  try {
+    const access_token = await storageService.getObject('access_token');
+
+    if (access_token.token) {
+      config.headers.Authorization = `Bearer ${access_token.token}`;
+    }
+
+    return config;
+  } catch (err) {
+    return config;
   }
-  return config;
 });
 
 api.interceptors.response.use(
@@ -26,6 +32,8 @@ api.interceptors.response.use(
     if (originalConfig.url !== '/auth/login' && err.response) {
       if (err.response.status === 401) {
         storageService.removeItem('access_token');
+        storageService.removeItem('user');
+
         Alert.alert(
           'Your session has expired. Please login again to continue.',
         );

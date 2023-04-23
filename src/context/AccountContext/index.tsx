@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
+import specialtiesService from 'services/specialtiesService';
 
 import storageService from 'services/storageService';
 
@@ -8,6 +10,7 @@ export const AccountContext = React.createContext({
   checkToken: async (): Promise<any> => {},
   isLogin: false,
   account: {},
+  specialties: [],
 });
 
 export const AccountProvider = ({children}: any) => {
@@ -15,6 +18,7 @@ export const AccountProvider = ({children}: any) => {
     storageService.getString('access_token') !== undefined,
   );
   const [account, setAccount] = useState({});
+  const [specialties, setSpecialties] = useState([]);
 
   const login = async (token: any, user: any) => {
     await storageService.storeObject('access_token', token);
@@ -45,8 +49,24 @@ export const AccountProvider = ({children}: any) => {
     }
   };
 
+  const getSpecialties = async () => {
+    if (!isLogin) {
+      return;
+    }
+
+    const learnTopicsRes = await specialtiesService.fetchLearnTopics();
+    const testPrepsRes = await specialtiesService.fetchTestPreps();
+
+    const learnTopics = learnTopicsRes.data;
+    const testPreps = testPrepsRes.data;
+
+    const specialtiesResult = learnTopics.concat(testPreps);
+
+    setSpecialties(specialtiesResult);
+  };
+
   useEffect(() => {
-    console.log('AccountContext');
+    getSpecialties();
   }, [isLogin]);
 
   return (
@@ -54,6 +74,7 @@ export const AccountProvider = ({children}: any) => {
       value={{
         isLogin,
         account,
+        specialties,
         login,
         logout,
         checkToken,

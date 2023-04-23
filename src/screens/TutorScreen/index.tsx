@@ -91,12 +91,6 @@ export default function TutorScreen({
   const from = page * numberOfItemsPerPage;
   const to = Math.min((page + 1) * numberOfItemsPerPage, items.length);
 
-  const tutorCardProps: TutorCardProps = {
-    onTouch: () => {
-      navigate('TutorProfile');
-    },
-  };
-
   return (
     <>
       <View>
@@ -199,7 +193,7 @@ export default function TutorScreen({
             height: '80%',
             width: '100%',
           }}>
-          <TutorCard onTouch={tutorCardProps.onTouch} />
+          {/* <TutorCard onTouch={tutorCardProps.onTouch} />
           <WhiteSpace size="lg" />
 
           <TutorCard onTouch={tutorCardProps.onTouch} />
@@ -209,7 +203,7 @@ export default function TutorScreen({
           <WhiteSpace size="lg" />
 
           <TutorCard onTouch={tutorCardProps.onTouch} />
-          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg" /> */}
 
           <DataTable.Pagination
             style={{

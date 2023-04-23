@@ -1,12 +1,20 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
-import React from 'react';
-import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {color} from 'style';
 
 import Header, {HeaderProps} from 'components/Header';
-import TutorHomeCard, {TutorHomeCardProps} from 'components/TutorHomeCard';
+import TutorCard from 'components/TutorCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
+import tutorService from 'services/tutorService';
+import Loading from 'components/Loading';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const myStyle = StyleSheet.create({
@@ -53,6 +61,10 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
       color: color.primaryColor,
       fontWeight: '500',
     },
+    scrollView: {
+      width: '100%',
+      height: '60%',
+    },
   });
 
   const headerProps: HeaderProps = {
@@ -62,99 +74,120 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     },
   };
 
-  const tutorHomeCardProps: TutorHomeCardProps = {
-    onTouch: () => {
-      navigate('TutorProfile');
-    },
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const [tutors, setTutors] = React.useState([{}]);
+
+  const getTutors = async () => {
+    console.log('HomeScreen fetchTutorList');
+
+    setIsLoading(true);
+
+    const options = {
+      page: 1,
+      perPage: 5,
+    };
+
+    try {
+      const response = await tutorService.fetchTutorList(options);
+
+      if (response.status === 200) {
+        setTutors(response.data.rows);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getTutors();
+  }, []);
+
+  const renderTutorCards = () => {
+    return tutors.map((tutor: any) => {
+      return (
+        <React.Fragment key={tutor.id}>
+          <TutorCard
+            tutor={tutor}
+            onTouch={() => navigate('TutorProfile', {tutor: tutor})}
+          />
+          <WhiteSpace size="lg" />
+        </React.Fragment>
+      );
+    });
   };
 
   return (
-    <Flex direction="column" align="start" style={myStyle.container}>
-      <Header title={headerProps.title} onTouch={headerProps.onTouch} />
+    <>
+      {isLoading && <Loading />}
 
-      <WhiteSpace size="lg" />
+      <Flex direction="column" align="start" style={myStyle.container}>
+        <Header title={headerProps.title} onTouch={headerProps.onTouch} />
 
-      <Flex
-        style={myStyle.welcomeBadge}
-        direction="column"
-        align="center"
-        justify="center">
-        <Text style={myStyle.welcomeBadgeText}>Upcoming Lesson</Text>
-        <WhiteSpace />
-        <Text style={myStyle.welcomeBadgeCourseName}>English for Business</Text>
-        <WhiteSpace />
-        <Text style={myStyle.welcomeBadgeText}>2023-02-24 at 18:30</Text>
-        <WhiteSpace />
-        <Button
-          style={myStyle.welcomeBadgeButton}
-          onPress={() => navigate('Meeting')}>
-          <Text style={myStyle.welcomeBadgeButtonText}>Join lesson</Text>
-        </Button>
+        <WhiteSpace size="lg" />
+
+        <Flex
+          style={myStyle.welcomeBadge}
+          direction="column"
+          align="center"
+          justify="center">
+          <Text style={myStyle.welcomeBadgeText}>Upcoming Lesson</Text>
+          <WhiteSpace />
+          <Text style={myStyle.welcomeBadgeCourseName}>
+            English for Business
+          </Text>
+          <WhiteSpace />
+          <Text style={myStyle.welcomeBadgeText}>2023-02-24 at 18:30</Text>
+          <WhiteSpace />
+          <Button
+            style={myStyle.welcomeBadgeButton}
+            onPress={() => navigate('Meeting')}>
+            <Text style={myStyle.welcomeBadgeButtonText}>Join lesson</Text>
+          </Button>
+        </Flex>
+
+        <WhiteSpace size="lg" />
+
+        <Flex direction="row" justify="between" style={{width: '100%'}}>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 16,
+              fontWeight: 'bold',
+            }}>
+            Recommended Tutors
+          </Text>
+
+          <TouchableOpacity onPress={() => navigate('Tutor')}>
+            <Flex align="center">
+              <Text
+                style={{
+                  color: color.primaryColor,
+                }}>
+                See all
+              </Text>
+
+              <Icon
+                name="arrow-right"
+                type="antd"
+                color={color.primaryColor}
+                style={{marginLeft: -5, marginRight: -5}}
+              />
+            </Flex>
+          </TouchableOpacity>
+        </Flex>
+
+        <WhiteSpace size="lg" />
+
+        <ScrollView style={myStyle.scrollView}>
+          {renderTutorCards()}
+
+          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg" />
+        </ScrollView>
       </Flex>
-
-      <WhiteSpace size="lg" />
-
-      <Flex direction="row" justify="between" style={{width: '100%'}}>
-        <Text
-          style={{
-            color: 'black',
-            fontSize: 16,
-            fontWeight: 'bold',
-            // textDecorationLine: 'underline',
-          }}>
-          Recommended Tutors
-        </Text>
-
-        <TouchableOpacity onPress={() => navigate('Tutor')}>
-          <Flex align="center">
-            <Text
-              style={{
-                color: color.primaryColor,
-              }}>
-              See all
-            </Text>
-
-            <Icon
-              name="arrow-right"
-              type="antd"
-              color={color.primaryColor}
-              style={{marginLeft: -5, marginRight: -5}}
-            />
-          </Flex>
-        </TouchableOpacity>
-      </Flex>
-
-      <WhiteSpace size="lg" />
-
-      <ScrollView
-        style={{
-          height: '60%',
-          width: '100%',
-        }}>
-        <TutorHomeCard onTouch={tutorHomeCardProps.onTouch} />
-        <WhiteSpace size="lg" />
-
-        <TutorHomeCard onTouch={tutorHomeCardProps.onTouch} />
-        <WhiteSpace size="lg" />
-
-        <TutorHomeCard onTouch={tutorHomeCardProps.onTouch} />
-        <WhiteSpace size="lg" />
-
-        <TutorHomeCard onTouch={tutorHomeCardProps.onTouch} />
-        <WhiteSpace size="lg" />
-
-        <TutorHomeCard onTouch={tutorHomeCardProps.onTouch} />
-        <WhiteSpace size="lg" />
-
-        <TutorHomeCard onTouch={tutorHomeCardProps.onTouch} />
-        <WhiteSpace size="lg" />
-
-        <TutorHomeCard onTouch={tutorHomeCardProps.onTouch} />
-
-        <WhiteSpace size="lg" />
-        <WhiteSpace size="lg" />
-        <WhiteSpace size="lg" />
-      </ScrollView>
-    </Flex>
+    </>
   );
 }
