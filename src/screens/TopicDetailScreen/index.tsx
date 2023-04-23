@@ -1,6 +1,6 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React from 'react';
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Divider, Icon, Image} from 'react-native-elements';
 import {ScreenHeight} from 'react-native-elements/dist/helpers';
 import Pdf from 'react-native-pdf';

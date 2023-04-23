@@ -57,9 +57,11 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
 
         navigate('Main');
       } else {
+        setIsLoading(false);
         Alert.alert('Something went wrong');
       }
     } catch (error: any) {
+      setIsLoading(false);
       Alert.alert(error.response.data.message);
     }
 

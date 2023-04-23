@@ -1,20 +1,14 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React, {useEffect} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {color} from 'style';
 
 import Header, {HeaderProps} from 'components/Header';
+import Loading from 'components/Loading';
 import TutorCard from 'components/TutorCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
 import tutorService from 'services/tutorService';
-import Loading from 'components/Loading';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const myStyle = StyleSheet.create({
@@ -106,9 +100,9 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   }, []);
 
   const renderTutorCards = () => {
-    return tutors.map((tutor: any) => {
+    return tutors.map((tutor: any, index: number) => {
       return (
-        <React.Fragment key={tutor.id}>
+        <React.Fragment key={index}>
           <TutorCard
             tutor={tutor}
             onTouch={() => navigate('TutorProfile', {tutor: tutor})}

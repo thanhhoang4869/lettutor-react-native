@@ -119,7 +119,7 @@ export const style = StyleSheet.create({
 
   modalText: {
     color: primaryColor,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 

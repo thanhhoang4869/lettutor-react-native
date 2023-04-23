@@ -1,11 +1,13 @@
 import React from 'react';
 
-import {Button, Input} from 'galio-framework';
-import {Image, TouchableOpacity} from 'react-native';
 import {Flex, Text, WhiteSpace} from '@ant-design/react-native';
-import {style, color} from 'style';
 import {useAppTheme} from 'App';
+import Loading from 'components/Loading';
 import MultilangButton from 'components/MultilangButton';
+import {Button, Input} from 'galio-framework';
+import {Alert, Image, TouchableOpacity} from 'react-native';
+import userService from 'services/userService';
+import {color, style} from 'style';
 
 export function ForgetPasswordScreen({
   navigation: {navigate},
@@ -13,8 +15,34 @@ export function ForgetPasswordScreen({
   const logo = require('assets/logo.png');
   const theme = useAppTheme();
 
+  const [email, setEmail] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    try {
+      const response = await userService.forgotPassword(email);
+      if (response.status === 200) {
+        setLoading(false);
+        Alert.alert('Please check your email to recover your password', '', [
+          {text: 'OK', onPress: () => navigate('Login')},
+        ]);
+      } else {
+        setLoading(false);
+        Alert.alert("Your email is invalid or doesn't exist");
+      }
+    } catch (error: any) {
+      setLoading(false);
+      Alert.alert("Your email is invalid or doesn't exist");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
+      {loading && <Loading />}
       <MultilangButton />
 
       <Flex direction="column" style={style.containerMul}>
@@ -27,7 +55,9 @@ export function ForgetPasswordScreen({
 
         <Input
           placeholder="Email"
+          value={email}
           rounded
+          onChangeText={text => setEmail(text)}
           placeholderTextColor={color.grey}
           family="AntDesign"
           icon="mail"
@@ -36,7 +66,7 @@ export function ForgetPasswordScreen({
 
         <WhiteSpace />
 
-        <Button round style={style.primaryButton}>
+        <Button round style={style.primaryButton} onPress={handleSubmit}>
           Send recovery code
         </Button>
 

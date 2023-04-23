@@ -42,7 +42,7 @@ export default function TutorCard({
       return (
         <React.Fragment key={index}>
           <FieldChip
-            key={index}
+            value={speciality.key || speciality}
             label={speciality.name || speciality}
             color={color.primaryColor}
           />

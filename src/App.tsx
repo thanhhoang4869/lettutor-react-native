@@ -28,11 +28,12 @@ import CourseDetailScreen from 'screens/CourseDetailScreen';
 import TopicDetailScreen from 'screens/TopicDetailScreen/index';
 import MeetingScreen from 'screens/MeetingScreen';
 import {AccountProvider} from 'context/AccountContext';
+import {color} from 'style';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
   colors: {
-    primary: '#1677ff',
+    primary: color.primaryColor,
   },
 };
 
@@ -65,14 +66,6 @@ type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-});
-
 export default function App(): JSX.Element {
   // const [language, setLanguage] = useState('en');
 
@@ -81,10 +74,9 @@ export default function App(): JSX.Element {
   // };
 
   return (
-    // <PaperProvider theme={theme}>
-    <AccountProvider>
-      <NavigationContainer>
-        <QueryClientProvider client={queryClient}>
+    <PaperProvider theme={theme}>
+      <AccountProvider>
+        <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
@@ -115,10 +107,8 @@ export default function App(): JSX.Element {
             <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />
             <Stack.Screen name="Meeting" component={MeetingScreen} />
           </Stack.Navigator>
-        </QueryClientProvider>
-      </NavigationContainer>
-    </AccountProvider>
-
-    // </PaperProvider>
+        </NavigationContainer>
+      </AccountProvider>
+    </PaperProvider>
   );
 }
