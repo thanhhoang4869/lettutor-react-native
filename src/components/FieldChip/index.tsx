@@ -1,9 +1,8 @@
 import {Chip} from '@react-native-material/core';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
 
 export interface FieldChipProps {
-  value: string;
+  value?: string;
   label: string;
   color: string;
   onSelected?: () => void;

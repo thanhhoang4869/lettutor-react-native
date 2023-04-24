@@ -8,8 +8,15 @@ async function fetchTutorList(options: any) {
   return response;
 }
 
+async function fetchTutorById(id: string) {
+  const response = await api.get(`/tutor/${id}`);
+
+  return response;
+}
+
 const tutorService = {
   fetchTutorList,
+  fetchTutorById,
 };
 
 export default tutorService;

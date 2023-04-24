@@ -105,7 +105,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
         <React.Fragment key={index}>
           <TutorCard
             tutor={tutor}
-            onTouch={() => navigate('TutorProfile', {tutor: tutor})}
+            onTouch={() => navigate('TutorProfile', {tutorId: tutor.userId})}
           />
           <WhiteSpace size="lg" />
         </React.Fragment>
