@@ -14,9 +14,24 @@ async function fetchTutorById(id: string) {
   return response;
 }
 
+async function fetchTutorSchedule(params: ScheduleParams) {
+  const response = await api.get('/schedule', {
+    params,
+  });
+
+  return response;
+}
+
 const tutorService = {
   fetchTutorList,
   fetchTutorById,
+  fetchTutorSchedule,
 };
+
+export interface ScheduleParams {
+  tutorId: string;
+  startTimestamp: number;
+  endTimestamp: number;
+}
 
 export default tutorService;

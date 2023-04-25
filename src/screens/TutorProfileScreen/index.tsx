@@ -264,7 +264,10 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
               <Button
                 style={style.primaryButton}
                 onPress={() => {
-                  navigate('BookingPicker');
+                  navigate('BookingPicker', {
+                    tutorId: tutorId,
+                    tutorName: tutor?.User?.name,
+                  });
                 }}>
                 Book this tutor
               </Button>
