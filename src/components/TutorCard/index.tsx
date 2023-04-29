@@ -54,18 +54,26 @@ export default function TutorCard({
 
   const extra: React.ReactNode = (
     <Flex direction="row" justify="end">
-      {tutor.rating && (
+      {tutor?.rating && (
         <View
           style={{
             marginRight: 10,
           }}>
-          <AirbnbRating
-            count={tutor.rating}
-            isDisabled={true}
-            defaultRating={5}
-            size={15}
-            showRating={false}
-          />
+          <Flex direction="row">
+            <Text
+              style={{
+                ...style.textBold,
+                marginRight: 5,
+              }}>
+              {tutor.rating.toFixed(2)}
+            </Text>
+            <Icon
+              name="star"
+              type="material-community"
+              color="gold"
+              size={25}
+            />
+          </Flex>
         </View>
       )}
 

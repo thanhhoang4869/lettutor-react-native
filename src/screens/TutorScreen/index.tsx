@@ -23,10 +23,13 @@ import {DataTable, RadioButton} from 'react-native-paper';
 import tutorService from 'services/tutorService';
 import {useContext} from 'react';
 import {AccountContext} from 'context/AccountContext';
+import {useIsFocused} from '@react-navigation/native';
 
 export default function TutorScreen({
   navigation: {navigate},
 }: any): JSX.Element {
+  const isFocused = useIsFocused();
+
   const {specialties} = useContext(AccountContext);
 
   const [selectedNationality, setSelectedNationality] = React.useState('');
@@ -73,6 +76,26 @@ export default function TutorScreen({
     }
 
     setIsLoading(false);
+  };
+
+  const getTutorsNoLoading = async () => {
+    const options = {
+      page: page + 1,
+      perPage: numberOfItemsPerPage,
+      filters: constructFilter(),
+      search: tutorName,
+    };
+
+    try {
+      const response = await tutorService.fetchTutorList(options);
+
+      if (response.status === 200) {
+        setTotalTutors(response.data.count);
+        setTutors(response.data.rows);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getTutorsReset = async () => {
@@ -164,6 +187,10 @@ export default function TutorScreen({
   useEffect(() => {
     getTutors();
   }, [page]);
+
+  useEffect(() => {
+    getTutorsNoLoading();
+  }, [isFocused]);
 
   const renderTutorCards = () => {
     return tutors.map((tutor: any, index: number) => {

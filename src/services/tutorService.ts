@@ -22,10 +22,32 @@ async function fetchTutorSchedule(params: ScheduleParams) {
   return response;
 }
 
+async function reportTutor(option: any) {
+  const response = await api.post('/report', {
+    ...option,
+  });
+
+  return response;
+}
+
+async function getReviewByTutorId(params: any) {
+  const tutorId = params.tutorId;
+  const page = params.page;
+  const perPage = params.perPage;
+
+  const response = await api.get(
+    `/feedback/v2/${tutorId}?page=${page}&perPage=${perPage}`,
+  );
+
+  return response;
+}
+
 const tutorService = {
   fetchTutorList,
   fetchTutorById,
   fetchTutorSchedule,
+  reportTutor,
+  getReviewByTutorId,
 };
 
 export interface ScheduleParams {

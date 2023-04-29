@@ -9,6 +9,7 @@ import TutorCard from 'components/TutorCard';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
 import tutorService from 'services/tutorService';
+import {useIsFocused} from '@react-navigation/native';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const myStyle = StyleSheet.create({
@@ -72,6 +73,8 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
 
   const [tutors, setTutors] = React.useState([{}]);
 
+  const isFocused = useIsFocused();
+
   const getTutors = async () => {
     console.log('HomeScreen fetchTutorList');
 
@@ -95,9 +98,30 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     setIsLoading(false);
   };
 
+  const getTutorsNoLoading = async () => {
+    const options = {
+      page: 1,
+      perPage: 5,
+    };
+
+    try {
+      const response = await tutorService.fetchTutorList(options);
+
+      if (response.status === 200) {
+        setTutors(response.data.rows);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getTutors();
   }, []);
+
+  useEffect(() => {
+    getTutorsNoLoading();
+  }, [isFocused]);
 
   const renderTutorCards = () => {
     return tutors.map((tutor: any, index: number) => {

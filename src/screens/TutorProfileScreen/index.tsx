@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Icon, Image} from 'react-native-elements';
+import {Divider, Icon, Image} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {AirbnbRating} from 'react-native-ratings';
 import VideoPlayer from 'react-native-video-player';
@@ -21,6 +21,7 @@ import tutorService from 'services/tutorService';
 import {Alert} from 'react-native';
 import Loading from 'components/Loading';
 import {AccountContext} from 'context/AccountContext';
+import userService from 'services/userService';
 
 interface TutorProfileRouteParams {
   tutorId: string;
@@ -45,8 +46,11 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
 
   const [tutor, setTutor] = React.useState<any>({});
   const [courses, setCourses] = React.useState<any[]>([]);
-
+  const [isFavorite, setIsFavorite] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [reportContent, setReportContent] = React.useState('');
+  const [reviews, setReviews] = React.useState<any>([]);
+  const [reviewLoading, setReviewLoading] = React.useState(false);
 
   const fetchTutor = async () => {
     console.log(tutorId);
@@ -56,6 +60,7 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
       if (tutorResponse.status === 200) {
         const tutorInfo = tutorResponse.data;
         setTutor(tutorInfo);
+        setIsFavorite(tutorInfo?.isFavorite);
         setCourses(tutorInfo.User.courses);
       } else {
         setLoading(false);
@@ -107,8 +112,94 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
     return <Text>No courses</Text>;
   };
 
+  const manageFavorite = async () => {
+    try {
+      const response = await userService.manageFavoriteTutor({tutorId});
+      if (response.status === 200) {
+        setIsFavorite(!isFavorite);
+      } else {
+        Alert.alert(response.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const reportTutor = async () => {
+    try {
+      const option = {
+        tutorId,
+        content: reportContent,
+      };
+      const response = await tutorService.reportTutor(option);
+      if (response.status === 200) {
+        toggleReportModal();
+        Alert.alert('Reported successfully');
+      } else {
+        Alert.alert('Something went wrong. Please try again later.');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const renderReviews = () => {
+    const total = reviews?.count;
+    const reviewsArr = reviews?.rows;
+
+    if (total > 0) {
+      return reviewsArr.map((review: any, index: any) => (
+        <View
+          key={index}
+          style={{
+            marginTop: 10,
+            marginBottom: 10,
+          }}>
+          <ReviewCard
+            name={review.firstInfo.name}
+            rating={review.rating}
+            content={review.content}
+          />
+
+          {index === 20 - 1 ? null : <Divider />}
+        </View>
+      ));
+    } else {
+      return (
+        <Image
+          source={require('assets/nodata.png')}
+          style={{
+            marginTop: 20,
+            width: '100%',
+            height: 250,
+          }}
+        />
+      );
+    }
+  };
+
+  const fetchReviews = async () => {
+    try {
+      const reviewParams = {
+        tutorId,
+        page: 1,
+        perPage: 20,
+      };
+
+      const response = await tutorService.getReviewByTutorId(reviewParams);
+      if (response.status === 200) {
+        setReviews(response.data.data);
+      } else {
+        Alert.alert("Can't get reviews");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     fetchTutor();
+    fetchReviews();
   }, [tutorId]);
 
   return (
@@ -145,6 +236,8 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                 <WhiteSpace size="lg" />
 
                 <Input
+                  value={reportContent}
+                  onChangeText={text => setReportContent(text)}
                   multiline={true}
                   cursorColor={color.primaryColor}
                   style={style.textArea}
@@ -161,7 +254,7 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                   </TouchableOpacity>
                   <Button
                     style={style.primaryButtonNoWidth}
-                    onPress={toggleReportModal}>
+                    onPress={reportTutor}>
                     Submit
                   </Button>
                 </Flex>
@@ -174,21 +267,19 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
           <View>
             <Modal isVisible={isReviewModalVisible}>
               <Flex style={style.modal} direction="column" align="start">
-                <Text style={style.modalTitle}>Reviews</Text>
+                <Flex justify="between" style={style.w100}>
+                  <Text style={style.modalTitle}>Reviews</Text>
+                  <Text style={style.textBold}>Total: {reviews?.count}</Text>
+                </Flex>
 
                 <WhiteSpace size="xl" />
 
                 <ScrollView
                   style={{
-                    height: 300,
                     width: '100%',
+                    height: 300,
                   }}>
-                  <ReviewCard />
-                  <ReviewCard />
-
-                  <ReviewCard />
-                  <ReviewCard />
-                  <ReviewCard />
+                  {renderReviews()}
                 </ScrollView>
 
                 <WhiteSpace size="lg" />
@@ -235,20 +326,33 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                 <View style={{width: '75%', marginLeft: 20}}>
                   <Flex justify="between">
                     <Text style={myStyle.tutorName}>{tutor?.User?.name}</Text>
-                    <AirbnbRating
-                      count={tutor?.rating}
-                      isDisabled={true}
-                      defaultRating={5}
-                      size={20}
-                      showRating={false}
-                    />
+
+                    {tutor?.rating > 0 ? (
+                      <Flex direction="row">
+                        <Text
+                          style={{
+                            ...style.textBold,
+                            marginRight: 5,
+                          }}>
+                          {tutor?.rating?.toFixed(2)}
+                        </Text>
+                        <Icon
+                          name="star"
+                          type="material-community"
+                          color="gold"
+                          size={25}
+                        />
+                      </Flex>
+                    ) : (
+                      <Text>No ratings</Text>
+                    )}
                   </Flex>
 
                   <Flex justify="between">
                     <Text style={style.textBold}>{tutor?.profession}</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={manageFavorite}>
                       <Icon
-                        name={tutor?.isFavorite ? 'heart' : 'heart-outline'}
+                        name={isFavorite ? 'heart' : 'heart-outline'}
                         type="material-community"
                         color="red"
                       />

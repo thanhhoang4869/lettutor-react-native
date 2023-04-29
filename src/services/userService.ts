@@ -8,8 +8,17 @@ async function forgotPassword(email: string) {
   return response;
 }
 
+async function manageFavoriteTutor(options: any) {
+  const response = await api.post('/user/manageFavoriteTutor', {
+    ...options,
+  });
+
+  return response;
+}
+
 const userService = {
   forgotPassword,
+  manageFavoriteTutor,
 };
 
 export default userService;
