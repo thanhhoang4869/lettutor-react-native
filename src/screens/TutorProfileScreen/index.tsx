@@ -324,17 +324,6 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
 
               <WhiteSpace size="lg" />
 
-              <Text style={style.textBoldPrimary}>Schedule</Text>
-              <WhiteSpace />
-              <View>
-                <Text style={style.textPrimary}>Today</Text>
-
-                <WhiteSpace />
-                <Text>10:00 - 12:00 | 13:00 - 15:00 | 17:00 - 19:00</Text>
-              </View>
-
-              <WhiteSpace size="lg" />
-
               <Text style={style.textBoldPrimary}>Experience</Text>
               <WhiteSpace />
               <Text>{tutor?.experience}</Text>

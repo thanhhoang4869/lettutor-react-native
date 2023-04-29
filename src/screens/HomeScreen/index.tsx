@@ -117,71 +117,73 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     <>
       {isLoading && <Loading />}
 
-      <Flex direction="column" align="start" style={myStyle.container}>
-        <Header title={headerProps.title} onTouch={headerProps.onTouch} />
-
-        <WhiteSpace size="lg" />
-
-        <Flex
-          style={myStyle.welcomeBadge}
-          direction="column"
-          align="center"
-          justify="center">
-          <Text style={myStyle.welcomeBadgeText}>Upcoming Lesson</Text>
-          <WhiteSpace />
-          <Text style={myStyle.welcomeBadgeCourseName}>
-            English for Business
-          </Text>
-          <WhiteSpace />
-          <Text style={myStyle.welcomeBadgeText}>2023-02-24 at 18:30</Text>
-          <WhiteSpace />
-          <Button
-            style={myStyle.welcomeBadgeButton}
-            onPress={() => navigate('Meeting')}>
-            <Text style={myStyle.welcomeBadgeButtonText}>Join lesson</Text>
-          </Button>
-        </Flex>
-
-        <WhiteSpace size="lg" />
-
-        <Flex direction="row" justify="between" style={{width: '100%'}}>
-          <Text
-            style={{
-              color: 'black',
-              fontSize: 16,
-              fontWeight: 'bold',
-            }}>
-            Recommended Tutors
-          </Text>
-
-          <TouchableOpacity onPress={() => navigate('Tutor')}>
-            <Flex align="center">
-              <Text
-                style={{
-                  color: color.primaryColor,
-                }}>
-                See all
-              </Text>
-
-              <Icon
-                name="arrow-right"
-                type="antd"
-                color={color.primaryColor}
-                style={{marginLeft: -5, marginRight: -5}}
-              />
-            </Flex>
-          </TouchableOpacity>
-        </Flex>
-
-        <WhiteSpace size="lg" />
-
-        <ScrollView style={myStyle.scrollView}>
-          {renderTutorCards()}
+      {!isLoading && tutors?.length > 0 && (
+        <Flex direction="column" align="start" style={myStyle.container}>
+          <Header title={headerProps.title} onTouch={headerProps.onTouch} />
 
           <WhiteSpace size="lg" />
+
+          <Flex
+            style={myStyle.welcomeBadge}
+            direction="column"
+            align="center"
+            justify="center">
+            <Text style={myStyle.welcomeBadgeText}>Upcoming Lesson</Text>
+            <WhiteSpace />
+            <Text style={myStyle.welcomeBadgeCourseName}>
+              English for Business
+            </Text>
+            <WhiteSpace />
+            <Text style={myStyle.welcomeBadgeText}>2023-02-24 at 18:30</Text>
+            <WhiteSpace />
+            <Button
+              style={myStyle.welcomeBadgeButton}
+              onPress={() => navigate('Meeting')}>
+              <Text style={myStyle.welcomeBadgeButtonText}>Join lesson</Text>
+            </Button>
+          </Flex>
+
           <WhiteSpace size="lg" />
-        </ScrollView>
-      </Flex>
+
+          <Flex direction="row" justify="between" style={{width: '100%'}}>
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 16,
+                fontWeight: 'bold',
+              }}>
+              Recommended Tutors
+            </Text>
+
+            <TouchableOpacity onPress={() => navigate('Tutor')}>
+              <Flex align="center">
+                <Text
+                  style={{
+                    color: color.primaryColor,
+                  }}>
+                  See all
+                </Text>
+
+                <Icon
+                  name="arrow-right"
+                  type="antd"
+                  color={color.primaryColor}
+                  style={{marginLeft: -5, marginRight: -5}}
+                />
+              </Flex>
+            </TouchableOpacity>
+          </Flex>
+
+          <WhiteSpace size="lg" />
+
+          <ScrollView style={myStyle.scrollView}>
+            {renderTutorCards()}
+
+            <WhiteSpace size="lg" />
+            <WhiteSpace size="lg" />
+          </ScrollView>
+        </Flex>
+      )}
     </>
   );
 }

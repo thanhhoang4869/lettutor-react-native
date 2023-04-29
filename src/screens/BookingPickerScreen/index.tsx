@@ -7,16 +7,18 @@ import moment from 'moment';
 import React, {useEffect} from 'react';
 import {
   Alert,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import CalendarStrip, {TDateRange} from 'react-native-calendar-strip';
+import CalendarStrip from 'react-native-calendar-strip';
 import {Icon} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {RadioButton} from 'react-native-paper';
+import scheduleService from 'services/scheduleService';
 import tutorService, {ScheduleParams} from 'services/tutorService';
 import {color, style} from 'style';
 import dateTimeUtils from 'utils/dateTimeUtils';
@@ -32,7 +34,7 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
   const tutorId = params?.tutorId;
   const tutorName = params?.tutorName;
 
-  const [selectedTime, setSelectedTime] = React.useState('');
+  const [selectedSchedule, setSelectedSchedule] = React.useState<any>({});
 
   const [isConfirmModalVisible, setConfirmModalVisible] = React.useState(false);
   const toggleConfirmModal = () => {
@@ -42,6 +44,8 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
   const [loading, setLoading] = React.useState(false);
 
   const [selectedDate, setSelectedDate] = React.useState(moment());
+
+  const [note, setNote] = React.useState('');
 
   const fetchSchedule = async (period: any) => {
     setLoading(true);
@@ -72,19 +76,63 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
     fetchSchedule(period);
   };
 
+  const renderBookingInfo = () => {
+    return (
+      selectedDate.format('DD/MM/YYYY') +
+      '  ' +
+      dateTimeUtils.toLetTutorTimeString(+selectedSchedule?.startTimestamp) +
+      ' - ' +
+      dateTimeUtils.toLetTutorTimeString(+selectedSchedule?.endTimestamp)
+    );
+  };
+
+  const bookSchedule = async () => {
+    const scheduleParams = {
+      scheduleDetailIds: [selectedSchedule.scheduleDetails[0]?.id],
+      note: note,
+    };
+
+    console.log(scheduleParams);
+
+    try {
+      const response = await scheduleService.bookSchedule(scheduleParams);
+      if (response.status === 200) {
+        console.log(response.data);
+        toggleConfirmModal();
+        Alert.alert('Success', 'Booking success', [
+          {
+            text: 'OK',
+            onPress: () => {
+              navigate('Schedule');
+            },
+          },
+        ]);
+      } else {
+        toggleConfirmModal();
+        Alert.alert('Error', 'Something went wrong');
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const period = dateTimeUtils.toPeriodTimeStampOfDay(moment());
+    console.log(period);
 
     fetchSchedule(period);
   }, []);
 
   const renderSchedule = () => {
-    //render only if !isBooked
-    return schedule.map((s: any, index: number) => {
+    const scheduleSorted = schedule.sort((s: any, sNext: any) => {
+      return s.startTimestamp - sNext.startTimestamp;
+    });
+
+    return scheduleSorted.map((s: any, index: number) => {
       return (
         <React.Fragment key={index}>
           <Flex>
-            <RadioButton value={s?.id} disabled={s.isBooked} />
+            <RadioButton value={s} disabled={s.isBooked} />
             <Text
               style={{
                 color: s.isBooked ? color.darkGrey : color.primaryColor,
@@ -102,7 +150,7 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
     <>
       {loading && <Loading />}
       <View style={styles.container}>
-        {/* rp modal start */}
+        {/* booking modal start */}
         <View>
           <Modal isVisible={isConfirmModalVisible}>
             <Flex style={style.modal} direction="column" align="start">
@@ -117,7 +165,7 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
                   marginLeft: 5,
                   ...style.textBoldPrimary,
                 }}>
-                Booking time: 22/02/2023 - 18:30 - 20:00
+                {renderBookingInfo()}
               </Text>
 
               <WhiteSpace />
@@ -127,7 +175,7 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
                   marginLeft: 5,
                   marginTop: 5,
                 }}>
-                Balance: 1088 lessons left
+                Balance: 9970 lessons left
               </Text>
 
               <WhiteSpace />
@@ -161,6 +209,10 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
               <WhiteSpace size="lg" />
 
               <Input
+                value={note}
+                onChangeText={(text: string) => {
+                  setNote(text);
+                }}
                 cursorColor={color.primaryColor}
                 multiline={true}
                 style={style.textArea}
@@ -177,16 +229,14 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
                 </TouchableOpacity>
                 <Button
                   style={style.primaryButtonNoWidth}
-                  onPress={() => {
-                    navigate('Schedule');
-                  }}>
+                  onPress={bookSchedule}>
                   Confirm
                 </Button>
               </Flex>
             </Flex>
           </Modal>
         </View>
-        {/* rp modal end */}
+        {/* booking modal end */}
 
         <Text style={styles.pageTitle}>{tutorName}'s schedule</Text>
 
@@ -202,6 +252,7 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
           calendarHeaderStyle={{color: 'white'}}
           calendarColor={color.primaryColor}
           dateNumberStyle={{color: 'white'}}
+          disabledDateOpacity={0}
           dateNameStyle={{color: 'white'}}
           highlightDateNumberStyle={{color: 'yellow'}}
           highlightDateNameStyle={{color: 'yellow'}}
@@ -222,13 +273,13 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
         />
 
         <WhiteSpace size="lg" />
-        {!loading && schedule && (
+        {!loading && schedule.length > 0 && (
           <View style={style.container}>
             <RadioButton.Group
               onValueChange={(value: any) => {
-                setSelectedTime(value);
+                setSelectedSchedule(value);
               }}
-              value={selectedTime}>
+              value={selectedSchedule}>
               <ScrollView style={{height: 250, width: '100%'}}>
                 {renderSchedule()}
               </ScrollView>
@@ -241,6 +292,17 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
               Book class
             </Button>
           </View>
+        )}
+
+        {schedule.length === 0 && (
+          <Image
+            source={require('assets/nodata.png')}
+            style={{
+              marginTop: 20,
+              width: '100%',
+              height: '30%',
+            }}
+          />
         )}
       </View>
     </>

@@ -114,7 +114,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
         />
 
         <Text style={style.textBold}>
-          Here isa list of the sessions you have booked. You can track when the
+          Here is a list of the sessions you have booked. You can track when the
           meeting starts.
         </Text>
       </Flex>
