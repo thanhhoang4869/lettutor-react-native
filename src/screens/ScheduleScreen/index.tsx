@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import Header, {HeaderProps} from 'components/Header';
 import Loading from 'components/Loading';

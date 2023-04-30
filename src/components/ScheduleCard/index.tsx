@@ -47,11 +47,11 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
             <Flex>
               <Image
                 source={{
-                  uri: props.tutor.avatar,
+                  uri: props.tutor?.avatar,
                 }}
                 style={{width: 50, height: 50, borderRadius: 50}}
               />
-              <Text style={myStyle.tutorName}>{props.tutor.name}</Text>
+              <Text style={myStyle.tutorName}>{props.tutor?.name}</Text>
             </Flex>
 
             <TouchableOpacity onPress={props.onEdit}>

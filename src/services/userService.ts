@@ -40,10 +40,19 @@ export interface FetchHistoryParams {
   sortBy: string;
 }
 
+async function fetchHistory(params: FetchHistoryParams) {
+  const response = await api.get('/booking/list/student', {
+    params,
+  });
+
+  return response;
+}
+
 const userService = {
   forgotPassword,
   manageFavoriteTutor,
   fetchSchedules,
+  fetchHistory,
 };
 
 export default userService;

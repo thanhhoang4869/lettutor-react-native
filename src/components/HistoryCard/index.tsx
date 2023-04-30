@@ -5,49 +5,36 @@ import {color, style} from 'style';
 
 import {Divider, Icon, Image} from 'react-native-elements';
 import {AirbnbRating} from 'react-native-ratings';
+import dateTimeUtils from 'utils/dateTimeUtils';
+import moment from 'moment';
 
-export interface HistoryCardProps {
-  teacher: string;
+export interface HistoryCardChildProps {
+  id: string;
+  tutor: any;
   date: string;
-  time: string;
+  startPeriodTimestamp: number;
+  endPeriodTimestamp: number;
+  meetingLink: string;
   notes: string;
   onEdit: () => void;
   onCancel: () => void;
+  onReview: () => void;
 }
 
-const HistoryCard = ({
-  teacher,
-  date,
-  time,
-  notes,
-  onEdit,
-  onCancel,
-}: HistoryCardProps) => {
-  const myStyle = StyleSheet.create({
-    cardContent: {
-      height: 70,
-    },
-    cardContentText: {
-      marginLeft: 16,
-    },
+export interface HistoryCardProps {
+  props: HistoryCardChildProps;
+}
 
-    card: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 8,
-        height: 8,
-      },
-      shadowOpacity: 0.27,
-      shadowRadius: 3.65,
-      elevation: 5,
-    },
-    tutorName: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      marginLeft: 15,
-      color: 'black',
-    },
-  });
+const HistoryCard = ({props}: HistoryCardProps) => {
+  const renderDateTime = () => {
+    const start = dateTimeUtils.toLetTutorTimeString(
+      props.startPeriodTimestamp,
+    );
+    const end = dateTimeUtils.toLetTutorTimeString(props.endPeriodTimestamp);
+    const date = moment(props.date).format('DD-MM-YYYY');
+    return `${date}  ${start} - ${end}`;
+  };
+
   return (
     <Card style={style.card}>
       <Card.Body>
@@ -60,14 +47,14 @@ const HistoryCard = ({
             <Flex>
               <Image
                 source={{
-                  uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
+                  uri: props.tutor?.avatar,
                 }}
                 style={{width: 50, height: 50, borderRadius: 50}}
               />
-              <Text style={myStyle.tutorName}>{teacher}</Text>
+              <Text style={myStyle.tutorName}>{props.tutor?.name}</Text>
             </Flex>
 
-            <TouchableOpacity onPress={onEdit}>
+            <TouchableOpacity onPress={props.onEdit}>
               <Flex>
                 <Text style={{marginRight: 5, ...style.textBoldPrimary}}>
                   Review
@@ -83,12 +70,12 @@ const HistoryCard = ({
               fontSize: 16,
               ...style.textBoldBlack,
             }}>
-            {`${date} at ${time}`}
+            {renderDateTime()}
           </Text>
 
           <WhiteSpace />
 
-          <Text>Notes: {notes}</Text>
+          <Text>{props.notes ? `Notes: ${props.notes}` : 'No notes'}</Text>
 
           <WhiteSpace size="lg" />
 
@@ -98,8 +85,8 @@ const HistoryCard = ({
 
           <Text style={style.textBoldBlack}>Tutor's review</Text>
           <WhiteSpace />
-          <Text>Lesson progress: Completed</Text>
-          <Text>Comment: Good job!</Text>
+          <Text>Tutor has not reviewed</Text>
+          {/* <Text>Comment: Good job!</Text>
           <Flex>
             <Text>Student's skills: </Text>
             <AirbnbRating
@@ -109,11 +96,37 @@ const HistoryCard = ({
               size={15}
               showRating={false}
             />
-          </Flex>
+          </Flex> */}
         </View>
       </Card.Body>
     </Card>
   );
 };
+
+const myStyle = StyleSheet.create({
+  cardContent: {
+    height: 70,
+  },
+  cardContentText: {
+    marginLeft: 16,
+  },
+
+  card: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 8,
+      height: 8,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 3.65,
+    elevation: 5,
+  },
+  tutorName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginLeft: 15,
+    color: 'black',
+  },
+});
 
 export default HistoryCard;
