@@ -78,26 +78,6 @@ export default function TutorScreen({
     setIsLoading(false);
   };
 
-  const getTutorsNoLoading = async () => {
-    const options = {
-      page: page + 1,
-      perPage: numberOfItemsPerPage,
-      filters: constructFilter(),
-      search: tutorName,
-    };
-
-    try {
-      const response = await tutorService.fetchTutorList(options);
-
-      if (response.status === 200) {
-        setTotalTutors(response.data.count);
-        setTutors(response.data.rows);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getTutorsReset = async () => {
     setIsLoading(true);
 
@@ -186,11 +166,7 @@ export default function TutorScreen({
 
   useEffect(() => {
     getTutors();
-  }, [page]);
-
-  useEffect(() => {
-    getTutorsNoLoading();
-  }, [isFocused]);
+  }, [isFocused, page]);
 
   const renderTutorCards = () => {
     return tutors.map((tutor: any, index: number) => {

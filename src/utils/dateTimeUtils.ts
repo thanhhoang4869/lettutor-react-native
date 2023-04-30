@@ -40,10 +40,15 @@ const toLetTutorTimeString = (timestamp: number): string => {
   return `${hours}:${minutes}`;
 };
 
+const getCurrentTimeStamp = (): number => {
+  return new Date().getTime();
+};
+
 const dateTimeUtils = {
   toPeriodTimeStamp,
   toPeriodTimeStampOfDay,
   toLetTutorTimeString,
+  getCurrentTimeStamp,
 };
 
 export default dateTimeUtils;

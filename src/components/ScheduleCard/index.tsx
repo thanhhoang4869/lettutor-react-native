@@ -5,41 +5,35 @@ import {color, style} from 'style';
 
 import {Button} from 'galio-framework';
 import {Icon, Image} from 'react-native-elements';
+import dateTimeUtils from 'utils/dateTimeUtils';
+import moment from 'moment';
 
 export interface ScheduleCardProps {
-  teacher: string;
+  props: ScheduleCardChildProps;
+}
+
+export interface ScheduleCardChildProps {
+  id: string;
+  tutor: any;
   date: string;
-  time: string;
+  startPeriodTimestamp: number;
+  endPeriodTimestamp: number;
+  meetingLink: string;
   notes: string;
   onEdit: () => void;
   onCancel: () => void;
   onJoin: () => void;
 }
 
-const ScheduleCard = ({
-  teacher,
-  date,
-  time,
-  notes,
-  onEdit,
-  onCancel,
-  onJoin,
-}: ScheduleCardProps) => {
-  const myStyle = StyleSheet.create({
-    cardContent: {
-      height: 70,
-    },
-    cardContentText: {
-      marginLeft: 16,
-    },
-
-    tutorName: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      marginLeft: 15,
-      color: 'black',
-    },
-  });
+const ScheduleCard = ({props}: ScheduleCardProps) => {
+  const renderDateTime = () => {
+    const start = dateTimeUtils.toLetTutorTimeString(
+      props.startPeriodTimestamp,
+    );
+    const end = dateTimeUtils.toLetTutorTimeString(props.endPeriodTimestamp);
+    const date = moment(props.date).format('DD-MM-YYYY');
+    return `${date}  ${start} - ${end}`;
+  };
 
   return (
     <Card style={style.card}>
@@ -53,14 +47,14 @@ const ScheduleCard = ({
             <Flex>
               <Image
                 source={{
-                  uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
+                  uri: props.tutor.avatar,
                 }}
                 style={{width: 50, height: 50, borderRadius: 50}}
               />
-              <Text style={myStyle.tutorName}>{teacher}</Text>
+              <Text style={myStyle.tutorName}>{props.tutor.name}</Text>
             </Flex>
 
-            <TouchableOpacity onPress={onEdit}>
+            <TouchableOpacity onPress={props.onEdit}>
               <Icon name="edit" color={color.primaryColor} />
             </TouchableOpacity>
           </Flex>
@@ -71,19 +65,19 @@ const ScheduleCard = ({
               fontSize: 16,
               ...style.textBoldBlack,
             }}>
-            {`${date} at ${time}`}
+            {renderDateTime()}
           </Text>
 
           <WhiteSpace />
 
-          <Text>Notes: {notes}</Text>
+          <Text>{props.notes ? `Notes: ${props.notes}` : 'No notes'}</Text>
 
           <WhiteSpace />
 
           <Flex style={style.w100}>
             <Button
               round
-              onPress={onCancel}
+              onPress={props.onCancel}
               style={{
                 width: '45%',
                 marginLeft: -2,
@@ -104,7 +98,7 @@ const ScheduleCard = ({
                 width: '45%',
                 backgroundColor: color.primaryColor,
               }}
-              onPress={onJoin}>
+              onPress={props.onJoin}>
               Join lesson
             </Button>
           </Flex>
@@ -113,5 +107,21 @@ const ScheduleCard = ({
     </Card>
   );
 };
+
+const myStyle = StyleSheet.create({
+  cardContent: {
+    height: 70,
+  },
+  cardContentText: {
+    marginLeft: 16,
+  },
+
+  tutorName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginLeft: 15,
+    color: 'black',
+  },
+});
 
 export default ScheduleCard;
