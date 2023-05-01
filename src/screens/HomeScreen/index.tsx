@@ -10,17 +10,16 @@ import {
 } from 'react-native';
 import {color} from 'style';
 
+import {useIsFocused} from '@react-navigation/native';
 import Header, {HeaderProps} from 'components/Header';
 import Loading from 'components/Loading';
 import TutorCard from 'components/TutorCard';
 import {Button} from 'galio-framework';
-import {Icon} from 'react-native-elements';
-import tutorService from 'services/tutorService';
-import {useIsFocused} from '@react-navigation/native';
-import scheduleService from 'services/scheduleService';
-import dateTimeUtils from 'utils/dateTimeUtils';
 import moment from 'moment';
-import CourseCard from 'components/CourseCard';
+import {Icon} from 'react-native-elements';
+import scheduleService from 'services/scheduleService';
+import tutorService from 'services/tutorService';
+import dateTimeUtils from 'utils/dateTimeUtils';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const headerProps: HeaderProps = {
