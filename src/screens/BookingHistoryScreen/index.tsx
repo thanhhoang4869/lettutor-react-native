@@ -17,7 +17,7 @@ import {Image} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {DataTable} from 'react-native-paper';
 import {AirbnbRating} from 'react-native-ratings';
-import userService, {FetchHistoryParams} from 'services/userService';
+import scheduleService, {FetchHistoryParams} from 'services/scheduleService';
 import {color, style} from 'style';
 import dateTimeUtils from 'utils/dateTimeUtils';
 
@@ -45,7 +45,7 @@ const BookingHistoryScreen = ({navigation: {navigate}}: any) => {
         orderBy: 'meeting',
       };
 
-      const response = await userService.fetchHistory(params);
+      const response = await scheduleService.fetchHistory(params);
 
       if (response.status === 200) {
         setStudyHistory(response.data.data);
@@ -93,117 +93,122 @@ const BookingHistoryScreen = ({navigation: {navigate}}: any) => {
   return (
     <>
       {loading && <Loading />}
-      <Flex direction="column" align="start" style={myStyle.container}>
-        {/* review modal start */}
-        <View>
-          <Modal isVisible={isReviewModalVisible}>
-            <Flex style={style.modal} direction="column" align="start">
-              <Text style={{margin: 5, ...style.modalTitle}}>
-                Review this lesson
-              </Text>
 
-              <WhiteSpace size="lg" />
+      {studyHistory?.rows?.length > 0 && (
+        <Flex direction="column" align="start" style={myStyle.container}>
+          {/* review modal start */}
+          <View>
+            <Modal isVisible={isReviewModalVisible}>
+              <Flex style={style.modal} direction="column" align="start">
+                <Text style={{margin: 5, ...style.modalTitle}}>
+                  Review this lesson
+                </Text>
 
-              <Flex justify="center" style={style.w100}>
-                <AirbnbRating
-                  count={5}
-                  reviews={['Terrible', 'Bad', 'Fair', 'Good', 'Excellent']}
-                  defaultRating={5}
-                  size={30}
-                  reviewSize={16}
-                  reviewColor={color.primaryColor}
+                <WhiteSpace size="lg" />
+
+                <Flex justify="center" style={style.w100}>
+                  <AirbnbRating
+                    count={5}
+                    reviews={['Terrible', 'Bad', 'Fair', 'Good', 'Excellent']}
+                    defaultRating={5}
+                    size={30}
+                    reviewSize={16}
+                    reviewColor={color.primaryColor}
+                  />
+                </Flex>
+
+                <WhiteSpace size="lg" />
+
+                <Input
+                  multiline={true}
+                  cursorColor={color.primaryColor}
+                  style={style.textArea}
                 />
-              </Flex>
 
-              <WhiteSpace size="lg" />
+                <WhiteSpace size="lg" />
 
-              <Input
-                multiline={true}
-                cursorColor={color.primaryColor}
-                style={style.textArea}
-              />
-
-              <WhiteSpace size="lg" />
-
-              <Flex
-                justify="between"
-                style={{
-                  width: '100%',
-                  marginLeft: 10,
-                }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    toggleReviewModal();
+                <Flex
+                  justify="between"
+                  style={{
+                    width: '100%',
+                    marginLeft: 10,
                   }}>
-                  <Text style={style.textBold}>Cancel</Text>
-                </TouchableOpacity>
-                <Button
-                  style={style.primaryButtonNoWidth}
-                  onPress={toggleReviewModal}>
-                  Submit
-                </Button>
+                  <TouchableOpacity
+                    onPress={() => {
+                      toggleReviewModal();
+                    }}>
+                    <Text style={style.textBold}>Cancel</Text>
+                  </TouchableOpacity>
+                  <Button
+                    style={style.primaryButtonNoWidth}
+                    onPress={toggleReviewModal}>
+                    Submit
+                  </Button>
+                </Flex>
               </Flex>
-            </Flex>
-          </Modal>
-        </View>
-        {/* review modal end */}
+            </Modal>
+          </View>
+          {/* review modal end */}
 
-        <Text style={style.pageTitle}>Booking History</Text>
+          <Text style={style.pageTitle}>Booking History</Text>
 
-        <WhiteSpace size="xl" />
+          <WhiteSpace size="xl" />
 
-        <Flex
-          align="center"
-          style={{
-            width: '100%',
-            paddingRight: 50,
-          }}>
-          <Image
-            resizeMode={'contain'}
-            source={image}
+          <Flex
+            align="center"
             style={{
-              width: 50,
-              height: 50,
-              marginRight: 20,
-            }}
-          />
-
-          <Text style={style.textBold}>
-            Here is a list of previous lessons. You can view feedbacks from your
-            tutors and write reviews.
-          </Text>
-        </Flex>
-
-        <WhiteSpace size="xl" />
-        <WhiteSpace size="xl" />
-
-        {studyHistory?.rows?.length > 0 && (
-          <ScrollView
-            style={{
-              height: '80%',
               width: '100%',
+              paddingRight: 50,
             }}>
-            {renderHistory()}
-
-            <WhiteSpace size="lg" />
-
-            <DataTable.Pagination
+            <Image
+              resizeMode={'contain'}
+              source={image}
               style={{
-                justifyContent: 'flex-end',
-                marginRight: -12,
+                width: 50,
+                height: 50,
+                marginRight: 20,
               }}
-              page={0}
-              numberOfPages={5}
-              onPageChange={tarPage => {}}
-              // label={getPagingLabel()}
-              showFastPaginationControls
-              numberOfItemsPerPage={12}
-              selectPageDropdownLabel={'Rows per page'}
             />
-            <WhiteSpace size="lg" />
-          </ScrollView>
-        )}
-      </Flex>
+
+            <Text style={style.textBold}>
+              Here is a list of previous lessons. You can view feedbacks from
+              your tutors and write reviews.
+            </Text>
+          </Flex>
+
+          <WhiteSpace size="xl" />
+          <WhiteSpace size="xl" />
+
+          {studyHistory?.rows?.length > 0 ? (
+            <ScrollView
+              style={{
+                height: '80%',
+                width: '100%',
+              }}>
+              {renderHistory()}
+
+              <WhiteSpace size="lg" />
+
+              <DataTable.Pagination
+                style={{
+                  justifyContent: 'flex-end',
+                  marginRight: -12,
+                }}
+                page={0}
+                numberOfPages={5}
+                onPageChange={tarPage => {}}
+                // label={getPagingLabel()}
+                showFastPaginationControls
+                numberOfItemsPerPage={12}
+                selectPageDropdownLabel={'Rows per page'}
+              />
+              <WhiteSpace size="lg" />
+            </ScrollView>
+          ) : (
+            <Text>No history</Text>
+          )}
+        </Flex>
+      )}
     </>
   );
 };

@@ -15,10 +15,10 @@ import {
 import {Image} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {DataTable} from 'react-native-paper';
-import userService, {FetchSchedulesParams} from 'services/userService';
 import {color, style} from 'style';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import {useIsFocused} from '@react-navigation/native';
+import scheduleService, {FetchSchedulesParams} from 'services/scheduleService';
 
 const UpcomingScreen = ({navigation: {navigate}}: any) => {
   const image = require('assets/calendar.png');
@@ -51,7 +51,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
         orderBy: 'meeting',
       };
 
-      const response = await userService.fetchSchedules(params);
+      const response = await scheduleService.fetchSchedules(params);
 
       if (response.status === 200) {
         setSchedules(response.data.data);
