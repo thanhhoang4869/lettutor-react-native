@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
   useTheme,
 } from 'react-native-paper';
-import {ThemeProp} from 'react-native-paper/lib/typescript/types';
+import {ThemeProp} from 'react-native-paper/lib/typescript/src/types';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import LoginScreen from 'screens/LoginScreen';
 import SignupScreen from 'screens/SignupScreen';
@@ -29,6 +28,10 @@ import TopicDetailScreen from 'screens/TopicDetailScreen/index';
 import MeetingScreen from 'screens/MeetingScreen';
 import {AccountProvider} from 'context/AccountContext';
 import {color} from 'style';
+// @ts-ignore
+import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
+import {View} from '@ant-design/react-native';
+import {requireNativeComponent} from 'react-native';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -67,12 +70,10 @@ type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App(): JSX.Element {
-  // const [language, setLanguage] = useState('en');
-
-  // const changeLanguage = (lang: string) => {
-  //   setLanguage(lang);
-  // };
-
+  const [language, setLanguage] = useState('en');
+  const changeLanguage = (lang: string) => {
+    setLanguage(lang);
+  };
   return (
     <PaperProvider theme={theme}>
       <AccountProvider>
