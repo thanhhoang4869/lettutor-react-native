@@ -24,12 +24,7 @@ import tutorService from 'services/tutorService';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import jitsiService from 'services/jitsiService';
 
-import {useContext} from 'react';
-import {AccountContext} from 'context/AccountContext';
-
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
-  const {account} = useContext(AccountContext);
-
   const headerProps: HeaderProps = {
     title: 'Home',
     onTouch: () => {
