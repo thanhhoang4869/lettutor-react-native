@@ -19,6 +19,7 @@ import {color, style} from 'style';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import {useIsFocused} from '@react-navigation/native';
 import scheduleService, {FetchSchedulesParams} from 'services/scheduleService';
+import jitsiService from 'services/jitsiService';
 
 const UpcomingScreen = ({navigation: {navigate}}: any) => {
   const image = require('assets/calendar.png');
@@ -35,6 +36,10 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
   const toggleEditModal = () => {
     setEditModalVisible(!isEditModalVisible);
+  };
+
+  const joinMeeting = async (params: any) => {
+    await jitsiService.startJitsi(params);
   };
 
   const [schedules, setSchedules] = React.useState<any>([]);
@@ -82,7 +87,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
           toggleEditModal();
         },
         onCancel: () => {},
-        onJoin: () => {},
+        onJoin: joinMeeting,
       };
 
       return (

@@ -31,8 +31,12 @@ const HistoryCard = ({props}: HistoryCardProps) => {
       props.startPeriodTimestamp,
     );
     const end = dateTimeUtils.toLetTutorTimeString(props.endPeriodTimestamp);
-    const date = moment(props.date).format('DD-MM-YYYY');
-    return `${date}  ${start} - ${end}`;
+
+    const getDate = dateTimeUtils.timeStampToDateString(
+      props.startPeriodTimestamp,
+    );
+    const dateFormat = moment(getDate).format('DD MMM');
+    return `${dateFormat}  ${start} - ${end}`;
   };
 
   return (

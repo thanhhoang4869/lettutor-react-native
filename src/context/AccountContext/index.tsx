@@ -9,7 +9,7 @@ export const AccountContext = React.createContext({
   logout: async () => {},
   checkToken: async (): Promise<any> => {},
   isLogin: false,
-  account: {},
+  account: {} as any,
   specialties: [],
 });
 
@@ -17,7 +17,7 @@ export const AccountProvider = ({children}: any) => {
   const [isLogin, setIsLogin] = useState(
     storageService.getString('access_token') !== undefined,
   );
-  const [account, setAccount] = useState({});
+  const [account, setAccount] = useState<any>({});
   const [specialties, setSpecialties] = useState([]);
 
   const login = async (token: any, user: any) => {
@@ -65,8 +65,14 @@ export const AccountProvider = ({children}: any) => {
     setSpecialties(specialtiesResult);
   };
 
-  useEffect(() => {
+  const getAccount = async () => {
+    const user = await storageService.getObject('user');
+    setAccount(user);
     getSpecialties();
+  };
+
+  useEffect(() => {
+    getAccount();
   }, [isLogin]);
 
   return (

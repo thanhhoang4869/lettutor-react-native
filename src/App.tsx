@@ -24,14 +24,10 @@ import TutorProfileScreen from 'screens/TutorProfileScreen';
 import BookingPickerScreen from 'screens/BookingPickerScreen';
 import BookingHistoryScreen from 'screens/BookingHistoryScreen';
 import CourseDetailScreen from 'screens/CourseDetailScreen';
-import TopicDetailScreen from 'screens/TopicDetailScreen/index';
-import MeetingScreen from 'screens/MeetingScreen';
+import MessageScreen from 'screens/MessageScreen';
+import TopicDetailScreen from 'screens/TopicDetailScreen';
 import {AccountProvider} from 'context/AccountContext';
 import {color} from 'style';
-// @ts-ignore
-import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
-import {View} from '@ant-design/react-native';
-import {requireNativeComponent} from 'react-native';
 
 const theme: ThemeProp = {
   ...DefaultTheme,
@@ -52,7 +48,6 @@ type RootStackParamList = {
   Home: undefined;
   AccVerify: undefined;
   Settings: undefined;
-  Message: undefined;
   Schedule: undefined;
   Tutor: undefined;
   Course: undefined;
@@ -64,7 +59,7 @@ type RootStackParamList = {
   BookingHistory: undefined;
   CourseDetail: undefined;
   TopicDetail: undefined;
-  Meeting: undefined;
+  Message: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -106,7 +101,7 @@ export default function App(): JSX.Element {
               component={BookingHistoryScreen}
             />
             <Stack.Screen name="TopicDetail" component={TopicDetailScreen} />
-            <Stack.Screen name="Meeting" component={MeetingScreen} />
+            <Stack.Screen name="Message" component={MessageScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </AccountProvider>

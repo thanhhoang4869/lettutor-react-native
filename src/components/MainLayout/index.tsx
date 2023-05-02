@@ -7,6 +7,7 @@ import CourseScreen from 'screens/CourseScreen';
 import HomeScreen from 'screens/HomeScreen';
 import TutorScreen from 'screens/TutorScreen';
 import UpcomingScreen from 'screens/ScheduleScreen';
+import MessageScreen from 'screens/MessageScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,13 +43,13 @@ export default function MainLayout() {
               iconType = 'material-community';
 
               break;
-            // case 'Message':
-            //   iconName = focused
-            //     ? 'message-processing'
-            //     : 'message-processing-outline';
-            //   iconType = 'material-community';
+            case 'Message':
+              iconName = focused
+                ? 'message-processing'
+                : 'message-processing-outline';
+              iconType = 'material-community';
 
-            //   break;
+              break;
             default:
               iconName = 'home';
               iconType = 'ionicons';
@@ -67,6 +68,7 @@ export default function MainLayout() {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Tutor" component={TutorScreen} />
       <Tab.Screen name="Schedule" component={UpcomingScreen} />
+      <Tab.Screen name="Message" component={MessageScreen} />
       <Tab.Screen name="Course" component={CourseScreen} />
     </Tab.Navigator>
   );

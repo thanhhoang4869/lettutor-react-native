@@ -7,6 +7,7 @@ import {Button} from 'galio-framework';
 import {Icon, Image} from 'react-native-elements';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import moment from 'moment';
+import jwt_decode from 'jwt-decode';
 
 export interface ScheduleCardProps {
   props: ScheduleCardChildProps;
@@ -22,7 +23,7 @@ export interface ScheduleCardChildProps {
   notes: string;
   onEdit: () => void;
   onCancel: () => void;
-  onJoin: () => void;
+  onJoin: (params: any) => void;
 }
 
 const ScheduleCard = ({props}: ScheduleCardProps) => {
@@ -31,8 +32,19 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
       props.startPeriodTimestamp,
     );
     const end = dateTimeUtils.toLetTutorTimeString(props.endPeriodTimestamp);
-    const date = moment(props.date).format('DD-MM-YYYY');
-    return `${date}  ${start} - ${end}`;
+    const getDate = dateTimeUtils.timeStampToDateString(
+      props.startPeriodTimestamp,
+    );
+    const dateFormat = moment(getDate).format('DD MMM');
+    return `${dateFormat}  ${start} - ${end}`;
+  };
+
+  const joinMeeting = async () => {
+    const studentMeetingLink = props.meetingLink;
+    const token = studentMeetingLink.split('=')[1];
+    const jitsiParams = jwt_decode(token) as any;
+
+    props.onJoin(jitsiParams);
   };
 
   return (
@@ -98,7 +110,7 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
                 width: '45%',
                 backgroundColor: color.primaryColor,
               }}
-              onPress={props.onJoin}>
+              onPress={joinMeeting}>
               Join lesson
             </Button>
           </Flex>

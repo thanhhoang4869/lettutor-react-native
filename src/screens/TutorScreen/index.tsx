@@ -165,7 +165,9 @@ export default function TutorScreen({
   };
 
   useEffect(() => {
-    getTutors();
+    if (isFocused) {
+      getTutors();
+    }
   }, [isFocused, page]);
 
   const renderTutorCards = () => {

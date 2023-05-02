@@ -17,11 +17,19 @@ import TutorCard from 'components/TutorCard';
 import {Button} from 'galio-framework';
 import moment from 'moment';
 import {Icon} from 'react-native-elements';
+import jwt_decode from 'jwt-decode';
+
 import scheduleService from 'services/scheduleService';
 import tutorService from 'services/tutorService';
 import dateTimeUtils from 'utils/dateTimeUtils';
+import jitsiService from 'services/jitsiService';
+
+import {useContext} from 'react';
+import {AccountContext} from 'context/AccountContext';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
+  const {account} = useContext(AccountContext);
+
   const headerProps: HeaderProps = {
     title: 'Home',
     onTouch: () => {
@@ -75,6 +83,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   };
 
   const getUpcomingLesson = async () => {
+    console.log(dateTimeUtils.getCurrentTimeStamp());
     try {
       const response = await scheduleService.getUpcomingLessons({
         dateTime: dateTimeUtils.getCurrentTimeStamp(),
@@ -85,7 +94,8 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
         const startTime = upcoming?.scheduleDetailInfo?.startPeriodTimestamp;
         const current = dateTimeUtils.getCurrentTimeStamp();
         const diff = startTime - current;
-        if (diff <= 0) {
+
+        if (diff === 0) {
           getUpcomingLesson();
           return;
         }
@@ -99,14 +109,24 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     }
   };
 
+  const startJitsi = async () => {
+    const studentMeetingLink = upcomingLesson?.studentMeetingLink;
+    const token = studentMeetingLink.split('=')[1];
+    const jitsiParams = jwt_decode(token) as any;
+
+    await jitsiService.startJitsi(jitsiParams);
+  };
+
   useEffect(() => {
-    getUpcomingLesson();
-    getTotalStudyTime();
-    getTutors();
+    if (isFocused) {
+      getUpcomingLesson();
+      getTotalStudyTime();
+      getTutors();
+    }
   }, [isFocused]);
 
   useEffect(() => {
-    if (timerCount <= 0) {
+    if (timerCount === 0) {
       getUpcomingLesson();
     }
   }, [timerCount]);
@@ -155,11 +175,12 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     const scheduleDetailInfo = upcomingLesson?.scheduleDetailInfo;
     const startTime = scheduleDetailInfo?.startPeriodTimestamp;
     const endTime = scheduleDetailInfo?.endPeriodTimestamp;
-    const date = scheduleDetailInfo?.scheduleInfo?.date;
 
     const start = dateTimeUtils.toLetTutorTimeString(startTime);
     const end = dateTimeUtils.toLetTutorTimeString(endTime);
-    const dateFormat = moment(date).format('DD MMM');
+
+    const getDate = dateTimeUtils.timeStampToDateString(startTime);
+    const dateFormat = moment(getDate).format('DD MMM');
 
     return `${dateFormat} at ${start} - ${end}`;
   };
@@ -193,9 +214,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
                   {renderTimer()} left
                 </Text>
                 <WhiteSpace />
-                <Button
-                  style={myStyle.welcomeBadgeButton}
-                  onPress={() => navigate('Meeting')}>
+                <Button style={myStyle.welcomeBadgeButton} onPress={startJitsi}>
                   <Text style={myStyle.welcomeBadgeButtonText}>
                     Join lesson
                   </Text>

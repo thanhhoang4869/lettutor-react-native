@@ -44,11 +44,25 @@ const getCurrentTimeStamp = (): number => {
   return new Date().getTime();
 };
 
+const timeStampToDateString = (timestamp: number): string => {
+  const date = new Date(timestamp);
+
+  const dateString = date.getDate().toString();
+  const monthString = (date.getMonth() + 1).toString();
+  const yearString = date.getFullYear().toString();
+
+  const dateFormatted = `${dateString.length === 1 ? '0' : ''}${dateString}`;
+  const monthFormatted = `${monthString.length === 1 ? '0' : ''}${monthString}`;
+
+  return `${date.getFullYear()}-${monthFormatted}-${dateFormatted}`;
+};
+
 const dateTimeUtils = {
   toPeriodTimeStamp,
   toPeriodTimeStampOfDay,
   toLetTutorTimeString,
   getCurrentTimeStamp,
+  timeStampToDateString,
 };
 
 export default dateTimeUtils;
