@@ -10,9 +10,15 @@ async function fetchTestPreps() {
   return response;
 }
 
+async function fetchMajors() {
+  const response = await api.get('/major');
+  return response;
+}
+
 const specialtiesService = {
   fetchLearnTopics,
   fetchTestPreps,
+  fetchMajors,
 };
 
 export default specialtiesService;

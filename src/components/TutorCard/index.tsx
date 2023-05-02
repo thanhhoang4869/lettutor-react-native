@@ -38,12 +38,12 @@ export default function TutorCard({
       return specialtyObj || specialty;
     });
 
-    return specialtiesArr.map((speciality: any, index: number) => {
+    return specialtiesArr.map((specialty: any, index: number) => {
       return (
         <React.Fragment key={index}>
           <FieldChip
-            value={speciality.key || speciality}
-            label={speciality.name || speciality}
+            value={specialty.key || specialty}
+            label={specialty.name || specialty.englishName || specialty}
             color={color.primaryColor}
           />
           <Text style={{marginRight: 5}} />

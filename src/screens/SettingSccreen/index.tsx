@@ -14,52 +14,15 @@ import {color, style} from 'style';
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
 import {AccountContext} from 'context/AccountContext';
+
 import Loading from 'components/Loading';
 
 export default function SettingScreen({
   navigation: {navigate},
 }: any): JSX.Element {
-  const myStyle = StyleSheet.create({
-    container: {
-      backgroundColor: 'white',
-      width: '100%',
-      height: '100%',
-      padding: 30,
-      paddingTop: 15,
-    },
-    name: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: 'black',
-    },
-    button: {
-      backgroundColor: 'white',
-      borderColor: color.lightGrey,
-      width: '95%',
-      borderRadius: 50,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 8,
-        height: 8,
-      },
-      shadowOpacity: 0.27,
-      shadowRadius: 3.65,
-      elevation: 5,
-    },
-    logOutButton: {
-      backgroundColor: color.primaryColor,
-      borderRadius: 50,
-      width: '95%',
-    },
-    buttonText: {
-      marginLeft: 15,
-      color: 'black',
-    },
-  });
-
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const {logout} = useContext(AccountContext);
+  const {logout, account} = useContext(AccountContext);
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -85,13 +48,13 @@ export default function SettingScreen({
             <Flex>
               <Image
                 source={{
-                  uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
+                  uri: account?.avatar,
                 }}
-                style={{width: 70, height: 70}}
+                style={{width: 70, height: 70, borderRadius: 50}}
               />
               <Flex direction="column" align="start" style={{marginLeft: 20}}>
-                <Text style={myStyle.name}>John Doe</Text>
-                <Text>john.doe@gmail.com</Text>
+                <Text style={myStyle.name}>{account.name}</Text>
+                <Text>{account.email}</Text>
               </Flex>
             </Flex>
           </TouchableOpacity>
@@ -189,3 +152,41 @@ export default function SettingScreen({
     </>
   );
 }
+
+const myStyle = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    width: '100%',
+    height: '100%',
+    padding: 30,
+    paddingTop: 15,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  button: {
+    backgroundColor: 'white',
+    borderColor: color.lightGrey,
+    width: '95%',
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 8,
+      height: 8,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 3.65,
+    elevation: 5,
+  },
+  logOutButton: {
+    backgroundColor: color.primaryColor,
+    borderRadius: 50,
+    width: '95%',
+  },
+  buttonText: {
+    marginLeft: 15,
+    color: 'black',
+  },
+});

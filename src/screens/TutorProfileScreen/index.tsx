@@ -85,13 +85,13 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
       return specialtyObj || specialty;
     });
 
-    return specialtiesArr.map((speciality: any, index: number) => {
+    return specialtiesArr.map((specialty: any, index: number) => {
       return (
         <React.Fragment key={index}>
           <View style={{margin: 5, marginLeft: 0}}>
             <FieldChip
-              value={speciality.key || speciality}
-              label={speciality.name || speciality}
+              value={specialty.key || specialty}
+              label={specialty.name || specialty.englishName || specialty}
               color={color.primaryColor}
             />
           </View>
@@ -435,9 +435,7 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
 
               <Text style={style.textBoldPrimary}>Languages</Text>
               <WhiteSpace />
-              <Text>
-                {tutor?.User?.language}, {tutor?.languages}
-              </Text>
+              <Text>{tutor?.languages}</Text>
 
               <WhiteSpace size="lg" />
 

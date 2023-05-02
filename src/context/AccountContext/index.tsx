@@ -8,9 +8,13 @@ export const AccountContext = React.createContext({
   login: async (token: any, user: any) => {},
   logout: async () => {},
   checkToken: async (): Promise<any> => {},
+  setAccount: (account: any) => {},
   isLogin: false,
   account: {} as any,
   specialties: [],
+  specialtiesNoMajor: [],
+  learnTopics: [],
+  testPreps: [],
 });
 
 export const AccountProvider = ({children}: any) => {
@@ -19,6 +23,9 @@ export const AccountProvider = ({children}: any) => {
   );
   const [account, setAccount] = useState<any>({});
   const [specialties, setSpecialties] = useState([]);
+  const [specialtiesNoMajor, setSpecialtiesNoMajor] = useState([]); // [LearnTopic, TestPrep
+  const [learnTopics, setLearnTopics] = useState([]);
+  const [testPreps, setTestPreps] = useState([]);
 
   const login = async (token: any, user: any) => {
     await storageService.storeObject('access_token', token);
@@ -56,11 +63,22 @@ export const AccountProvider = ({children}: any) => {
 
     const learnTopicsRes = await specialtiesService.fetchLearnTopics();
     const testPrepsRes = await specialtiesService.fetchTestPreps();
+    const majorRes = await specialtiesService.fetchMajors();
 
-    const learnTopics = learnTopicsRes.data;
-    const testPreps = testPrepsRes.data;
+    setLearnTopics(learnTopicsRes.data);
+    setTestPreps(testPrepsRes.data);
 
-    const specialtiesResult = learnTopics.concat(testPreps);
+    const newlearnTopics = learnTopicsRes.data;
+    const newtestPreps = testPrepsRes.data;
+    const majors = majorRes.data;
+
+    const specialtiesNoMajorResult = newlearnTopics.concat(newtestPreps);
+
+    setSpecialtiesNoMajor(specialtiesNoMajorResult);
+
+    const specialtiesResult = newlearnTopics
+      .concat(newtestPreps)
+      .concat(majors);
 
     setSpecialties(specialtiesResult);
   };
@@ -81,9 +99,13 @@ export const AccountProvider = ({children}: any) => {
         isLogin,
         account,
         specialties,
+        learnTopics,
+        testPreps,
+        specialtiesNoMajor,
         login,
         logout,
         checkToken,
+        setAccount,
       }}>
       {children}
     </AccountContext.Provider>

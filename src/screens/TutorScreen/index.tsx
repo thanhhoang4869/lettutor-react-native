@@ -227,7 +227,7 @@ export default function TutorScreen({
               style={{
                 fontWeight: 'bold',
               }}>
-              Speciality
+              specialty
             </Text>
 
             <WhiteSpace size="lg" />
