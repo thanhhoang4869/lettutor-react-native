@@ -106,19 +106,19 @@ export default function TutorScreen({
     return `${from}-${to} of ${totalTutors}`;
   };
 
-  const clearFilter = () => {
-    setTutorName('');
-    setSelectedNationality('');
-    setSelectedSpec('all');
-    setIsFilterApplied(false);
-  };
-
   const applyFilter = () => {
     if (selectedSpec !== 'all' && selectedNationality !== '') {
       setIsFilterApplied(true);
     }
 
     getTutors();
+  };
+
+  const clearFilter = () => {
+    setTutorName('');
+    setSelectedNationality('');
+    setSelectedSpec('all');
+    setIsFilterApplied(false);
   };
 
   const clearFilterAndApply = () => {
@@ -356,8 +356,7 @@ export default function TutorScreen({
                 selectPageDropdownLabel={'Rows per page'}
               />
 
-              <WhiteSpace size="lg" />
-              <WhiteSpace size="lg" />
+              <WhiteSpace size="xl" />
             </ScrollView>
           </>
         ) : (

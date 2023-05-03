@@ -1,4 +1,5 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
+import {useRoute} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Divider, Icon, Image} from 'react-native-elements';
@@ -6,23 +7,13 @@ import {ScreenHeight} from 'react-native-elements/dist/helpers';
 import Pdf from 'react-native-pdf';
 import {color, style} from 'style';
 
-const TopicDetailScreen = ({navigation: {navigate}}: any) => {
-  const myStyle = StyleSheet.create({
-    headline: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      color: color.primaryColor,
-    },
-    pdf: {
-      flex: 1,
-      width: '100%',
-      borderColor: color.grey,
-      borderWidth: 1,
-    },
-  });
+const TopicDetailScreen = () => {
+  const route = useRoute();
+  const params = route.params as any;
+  const topic = params.topic || [];
 
   const source = {
-    uri: 'https://www.tutorialspoint.com/graphql/graphql_tutorial.pdf',
+    uri: topic.nameFile,
     cache: true,
   };
 
@@ -30,7 +21,7 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
     <View>
       <Image
         source={{
-          uri: 'https://hub.fullsail.edu/assets/ext/share/key-careers-in-art-animation-and-design-a-beginners-guide-share.jpg',
+          uri: topic.courseImage,
         }}
         style={{
           width: '100%',
@@ -41,9 +32,9 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
         style={{
           backgroundColor: 'white',
           padding: 30,
-          height: ScreenHeight - 220,
+          height: ScreenHeight - 200,
         }}>
-        <Text style={style.pageTitle}>Life in the Internet Age</Text>
+        <Text style={style.pageTitle}>{topic.courseName}</Text>
         <WhiteSpace size="lg" />
         <Flex>
           <Icon
@@ -55,7 +46,7 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
           />
 
           <Text style={myStyle.headline}>
-            Topic 1. Introduction to the Internet
+            Topic {topic.number}. {topic.name}
           </Text>
         </Flex>
         <WhiteSpace size="lg" />
@@ -72,5 +63,19 @@ const TopicDetailScreen = ({navigation: {navigate}}: any) => {
     </View>
   );
 };
+
+const myStyle = StyleSheet.create({
+  headline: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: color.primaryColor,
+  },
+  pdf: {
+    flex: 1,
+    width: '100%',
+    borderColor: color.grey,
+    borderWidth: 1,
+  },
+});
 
 export default TopicDetailScreen;

@@ -6,24 +6,26 @@ import {style} from 'style';
 import {Image} from 'react-native-elements';
 
 export interface CourseCardProps {
+  props: CourseCardChildProps;
+}
+
+export interface CourseCardChildProps {
+  id: string;
+  name: string;
+  imageUrl: string;
+  description: string;
+  topicNumber: number;
+  level: string;
   onTouch: () => void;
 }
 
-const CourseCard = ({onTouch}: CourseCardProps) => {
-  const myStyle = StyleSheet.create({
-    courseName: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      color: 'black',
-    },
-  });
-
+const CourseCard = ({props}: CourseCardProps) => {
   return (
-    <TouchableOpacity onPress={onTouch}>
+    <TouchableOpacity onPress={props.onTouch}>
       <Card style={style.card}>
         <Image
           source={{
-            uri: 'https://hub.fullsail.edu/assets/ext/share/key-careers-in-art-animation-and-design-a-beginners-guide-share.jpg',
+            uri: props.imageUrl,
           }}
           style={{
             width: '100%',
@@ -38,17 +40,17 @@ const CourseCard = ({onTouch}: CourseCardProps) => {
               padding: 5,
               paddingLeft: 20,
             }}>
-            <Text style={myStyle.courseName}>Life in The Internet Age</Text>
+            <Text style={myStyle.courseName}>{props.name}</Text>
 
             <WhiteSpace />
 
-            <Text>
-              Let's discuss how technology is changing the way we live
+            <Text>{props.description}</Text>
+
+            <WhiteSpace />
+
+            <Text style={style.textBlack}>
+              {props.level} &bull; {props.topicNumber} topics
             </Text>
-
-            <WhiteSpace />
-
-            <Text style={style.textBlack}>Intermediate &bull; 9 lessons</Text>
 
             <WhiteSpace />
           </View>
@@ -57,5 +59,13 @@ const CourseCard = ({onTouch}: CourseCardProps) => {
     </TouchableOpacity>
   );
 };
+
+const myStyle = StyleSheet.create({
+  courseName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+});
 
 export default CourseCard;
