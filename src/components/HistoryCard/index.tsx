@@ -7,6 +7,7 @@ import {Divider, Icon, Image} from 'react-native-elements';
 import {AirbnbRating} from 'react-native-ratings';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 
 export interface HistoryCardChildProps {
   id: string;
@@ -26,6 +27,8 @@ export interface HistoryCardProps {
 }
 
 const HistoryCard = ({props}: HistoryCardProps) => {
+  const {t} = useTranslation();
+
   const renderDateTime = () => {
     const start = dateTimeUtils.toLetTutorTimeString(
       props.startPeriodTimestamp,
@@ -35,7 +38,7 @@ const HistoryCard = ({props}: HistoryCardProps) => {
     const getDate = dateTimeUtils.timeStampToDateString(
       props.startPeriodTimestamp,
     );
-    const dateFormat = moment(getDate).format('DD MMM');
+    const dateFormat = moment(getDate).format('DD-MM-YYYY');
     return `${dateFormat}  ${start} - ${end}`;
   };
 
@@ -61,7 +64,7 @@ const HistoryCard = ({props}: HistoryCardProps) => {
             <TouchableOpacity onPress={props.onEdit}>
               <Flex>
                 <Text style={{marginRight: 5, ...style.textBoldPrimary}}>
-                  Review
+                  {t('history_card.review')}
                 </Text>
                 <Icon name="edit" color={color.primaryColor} />
               </Flex>
@@ -79,7 +82,11 @@ const HistoryCard = ({props}: HistoryCardProps) => {
 
           <WhiteSpace />
 
-          <Text>{props.notes ? `Notes: ${props.notes}` : 'No notes'}</Text>
+          <Text>
+            {props.notes
+              ? `${t('history_card.note')}: ${props.notes}`
+              : t('history_card.no_note')}
+          </Text>
 
           <WhiteSpace size="lg" />
 
@@ -87,9 +94,11 @@ const HistoryCard = ({props}: HistoryCardProps) => {
 
           <WhiteSpace size="lg" />
 
-          <Text style={style.textBoldBlack}>Tutor's review</Text>
+          <Text style={style.textBoldBlack}>
+            {t('history_card.tutor_review')}
+          </Text>
           <WhiteSpace />
-          <Text>Tutor has not reviewed</Text>
+          <Text>{t('history_card.no_review')}</Text>
           {/* <Text>Comment: Good job!</Text>
           <Flex>
             <Text>Student's skills: </Text>

@@ -4,7 +4,7 @@ import {Image, Text, TouchableOpacity} from 'react-native';
 import {style} from 'style';
 
 import {useContext} from 'react';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 
 export interface HeaderProps {
   title: string;
@@ -12,7 +12,7 @@ export interface HeaderProps {
 }
 
 const Header = ({title, onTouch}: HeaderProps) => {
-  const {account} = useContext(AccountContext);
+  const {account} = useContext(ApplicationContext);
 
   return (
     <Flex justify="between" style={{width: '100%', backgroundColor: 'white'}}>

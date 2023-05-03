@@ -8,6 +8,7 @@ import {Icon, Image} from 'react-native-elements';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import moment from 'moment';
 import jwt_decode from 'jwt-decode';
+import {useTranslation} from 'react-i18next';
 
 export interface ScheduleCardProps {
   props: ScheduleCardChildProps;
@@ -27,6 +28,7 @@ export interface ScheduleCardChildProps {
 }
 
 const ScheduleCard = ({props}: ScheduleCardProps) => {
+  const {t} = useTranslation();
   const renderDateTime = () => {
     const start = dateTimeUtils.toLetTutorTimeString(
       props.startPeriodTimestamp,
@@ -35,7 +37,7 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
     const getDate = dateTimeUtils.timeStampToDateString(
       props.startPeriodTimestamp,
     );
-    const dateFormat = moment(getDate).format('DD MMM');
+    const dateFormat = moment(getDate).format('DD-MM-YYYY');
     return `${dateFormat}  ${start} - ${end}`;
   };
 
@@ -82,7 +84,11 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
 
           <WhiteSpace />
 
-          <Text>{props.notes ? `Notes: ${props.notes}` : 'No notes'}</Text>
+          <Text>
+            {props.notes
+              ? `${t('schedule_card.note')}: ${props.notes}`
+              : t('schedule_card.no_note')}
+          </Text>
 
           <WhiteSpace />
 
@@ -100,7 +106,7 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
                   color: 'black',
                   fontSize: 16,
                 }}>
-                Cancel
+                {t('schedule_card.cancel')}
               </Text>
             </Button>
 
@@ -111,7 +117,7 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
                 backgroundColor: color.primaryColor,
               }}
               onPress={joinMeeting}>
-              Join lesson
+              {t('schedule_card.join')}
             </Button>
           </Flex>
         </View>

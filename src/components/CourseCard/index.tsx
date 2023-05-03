@@ -4,6 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {style} from 'style';
 
 import {Image} from 'react-native-elements';
+import {useTranslation} from 'react-i18next';
 
 export interface CourseCardProps {
   props: CourseCardChildProps;
@@ -20,6 +21,28 @@ export interface CourseCardChildProps {
 }
 
 const CourseCard = ({props}: CourseCardProps) => {
+  const {t} = useTranslation();
+
+  const renderLevel = () => {
+    switch (props.level) {
+      case '1':
+        return 'Beginner';
+      case '2':
+        return 'Upper Beginner';
+      case '3':
+        return 'Pre Intermediate';
+      case '4':
+        return 'Intermediate';
+      case '5':
+        return 'Upper Intermediate';
+      case '6':
+        return 'Pre Advanced';
+      case '7':
+        return 'Advanced';
+      case '8':
+        return 'Very Advanced';
+    }
+  };
   return (
     <TouchableOpacity onPress={props.onTouch}>
       <Card style={style.card}>
@@ -49,7 +72,8 @@ const CourseCard = ({props}: CourseCardProps) => {
             <WhiteSpace />
 
             <Text style={style.textBlack}>
-              {props.level} &bull; {props.topicNumber} topics
+              {renderLevel()} &bull; {props.topicNumber}{' '}
+              {t('course_card.topics')}
             </Text>
 
             <WhiteSpace />

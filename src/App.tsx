@@ -26,7 +26,7 @@ import BookingHistoryScreen from 'screens/BookingHistoryScreen';
 import CourseDetailScreen from 'screens/CourseDetailScreen';
 import MessageScreen from 'screens/MessageScreen';
 import TopicDetailScreen from 'screens/TopicDetailScreen';
-import {AccountProvider} from 'context/AccountContext';
+import {ApplicationProvider} from 'context/ApplicationContext';
 import {color} from 'style';
 
 const theme: ThemeProp = {
@@ -71,7 +71,7 @@ export default function App(): JSX.Element {
   };
   return (
     <PaperProvider theme={theme}>
-      <AccountProvider>
+      <ApplicationProvider>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -104,7 +104,7 @@ export default function App(): JSX.Element {
             <Stack.Screen name="Message" component={MessageScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-      </AccountProvider>
+      </ApplicationProvider>
     </PaperProvider>
   );
 }

@@ -19,14 +19,18 @@ import moment from 'moment';
 import {Icon} from 'react-native-elements';
 import jwt_decode from 'jwt-decode';
 
+import {useTranslation} from 'react-i18next';
+
 import scheduleService from 'services/scheduleService';
 import tutorService from 'services/tutorService';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import jitsiService from 'services/jitsiService';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
+  const {t, i18n} = useTranslation();
+
   const headerProps: HeaderProps = {
-    title: 'Home',
+    title: t('home_screen.title'),
     onTouch: () => {
       navigate('Settings');
     },
@@ -175,7 +179,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     const end = dateTimeUtils.toLetTutorTimeString(endTime);
 
     const getDate = dateTimeUtils.timeStampToDateString(startTime);
-    const dateFormat = moment(getDate).format('DD MMM');
+    const dateFormat = moment(getDate).format('DD-MM');
 
     return `${dateFormat} at ${start} - ${end}`;
   };
@@ -196,7 +200,9 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
             align="center"
             justify="center">
             <Text style={myStyle.welcomeBadgeText}>
-              {upcomingLesson ? 'Upcoming lesson' : 'No upcoming lesson'}
+              {upcomingLesson
+                ? t('home_screen.banner.upcoming_lesson')
+                : t('home_screen.banner.no_upcoming_lesson')}
             </Text>
             <WhiteSpace />
             {upcomingLesson ? (
@@ -206,12 +212,12 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
                 </Text>
                 <WhiteSpace />
                 <Text style={myStyle.welcomeBadgeCountdown}>
-                  {renderTimer()} left
+                  {renderTimer()}
                 </Text>
                 <WhiteSpace />
                 <Button style={myStyle.welcomeBadgeButton} onPress={startJitsi}>
                   <Text style={myStyle.welcomeBadgeButtonText}>
-                    Join lesson
+                    {t('home_screen.banner.join_lesson')}
                   </Text>
                 </Button>
               </>
@@ -219,7 +225,8 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
 
             <WhiteSpace />
             <Text style={myStyle.welcomeBadgeText}>
-              Your total lesson time: {renderTotalStudyTime()}
+              {t('home_screen.banner.total_study_time')}:{' '}
+              {renderTotalStudyTime()}
             </Text>
           </Flex>
 
@@ -232,7 +239,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
                 fontSize: 16,
                 fontWeight: 'bold',
               }}>
-              Recommended Tutors
+              {t('home_screen.recommended_tutors')}
             </Text>
 
             <TouchableOpacity onPress={() => navigate('Tutor')}>
@@ -241,7 +248,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
                   style={{
                     color: color.primaryColor,
                   }}>
-                  See all
+                  {t('home_screen.see_all')}
                 </Text>
 
                 <Icon

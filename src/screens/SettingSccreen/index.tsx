@@ -13,16 +13,18 @@ import {color, style} from 'style';
 
 import {Button} from 'galio-framework';
 import {Icon} from 'react-native-elements';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 
 import Loading from 'components/Loading';
+import {useTranslation} from 'react-i18next';
 
 export default function SettingScreen({
   navigation: {navigate},
 }: any): JSX.Element {
+  const {t} = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const {logout, account} = useContext(AccountContext);
+  const {logout, account} = useContext(ApplicationContext);
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -36,7 +38,7 @@ export default function SettingScreen({
       {isLoading && <Loading />}
       <ScrollView style={myStyle.container}>
         <Flex direction="column" align="start">
-          <Text style={style.pageTitle}>Settings</Text>
+          <Text style={style.pageTitle}>{t('setting_screen.title')}</Text>
 
           <WhiteSpace size="lg" />
           <WhiteSpace size="lg" />
@@ -63,7 +65,7 @@ export default function SettingScreen({
           <WhiteSpace size="lg" />
 
           <Flex direction="column" style={style.w100} align="start">
-            <Button
+            {/* <Button
               style={myStyle.button}
               onPress={() => navigate('BecomeTutor')}>
               <Flex justify="start" style={style.w100}>
@@ -75,7 +77,7 @@ export default function SettingScreen({
                 />
                 <Text style={myStyle.buttonText}>Become a Tutor</Text>
               </Flex>
-            </Button>
+            </Button> */}
 
             <Button
               style={myStyle.button}
@@ -87,7 +89,9 @@ export default function SettingScreen({
                   color="black"
                   style={style.ml5}
                 />
-                <Text style={myStyle.buttonText}>Booking History</Text>
+                <Text style={myStyle.buttonText}>
+                  {t('setting_screen.booking_history')}
+                </Text>
               </Flex>
             </Button>
 
@@ -101,7 +105,9 @@ export default function SettingScreen({
                   color="black"
                   style={style.ml5}
                 />
-                <Text style={myStyle.buttonText}>Advanced Settings</Text>
+                <Text style={myStyle.buttonText}>
+                  {t('setting_screen.advanced_setting')}
+                </Text>
               </Flex>
             </Button>
 
@@ -120,7 +126,9 @@ export default function SettingScreen({
                   color="black"
                   style={style.ml5}
                 />
-                <Text style={myStyle.buttonText}>Our website</Text>
+                <Text style={myStyle.buttonText}>
+                  {t('setting_screen.our_website')}
+                </Text>
               </Flex>
             </Button>
 
@@ -144,7 +152,7 @@ export default function SettingScreen({
             <WhiteSpace size="lg" />
 
             <Button style={myStyle.logOutButton} onPress={handleLogout}>
-              Logout
+              {t('setting_screen.logout')}
             </Button>
           </Flex>
         </Flex>

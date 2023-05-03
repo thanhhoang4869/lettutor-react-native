@@ -4,7 +4,7 @@ import specialtiesService from 'services/specialtiesService';
 
 import storageService from 'services/storageService';
 
-export const AccountContext = React.createContext({
+export const ApplicationContext = React.createContext({
   login: async (token: any, user: any) => {},
   logout: async () => {},
   checkToken: async (): Promise<any> => {},
@@ -17,7 +17,7 @@ export const AccountContext = React.createContext({
   testPreps: [],
 });
 
-export const AccountProvider = ({children}: any) => {
+export const ApplicationProvider = ({children}: any) => {
   const [isLogin, setIsLogin] = useState(
     storageService.getString('access_token') !== undefined,
   );
@@ -94,7 +94,7 @@ export const AccountProvider = ({children}: any) => {
   }, [isLogin]);
 
   return (
-    <AccountContext.Provider
+    <ApplicationContext.Provider
       value={{
         isLogin,
         account,
@@ -108,6 +108,6 @@ export const AccountProvider = ({children}: any) => {
         setAccount,
       }}>
       {children}
-    </AccountContext.Provider>
+    </ApplicationContext.Provider>
   );
 };

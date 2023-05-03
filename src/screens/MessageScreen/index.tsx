@@ -20,14 +20,17 @@ import {Icon, Image} from 'react-native-elements';
 import {Input} from 'galio-framework';
 
 import {useContext} from 'react';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 import {useIsFocused} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const MessageScreen = () => {
-  const {account} = useContext(AccountContext);
+  const {account} = useContext(ApplicationContext);
   const [messages, setMessages] = useState<any>([]);
   const [myMessages, setMyMessages] = useState<any>([]);
   const [textMessage, setTextMessage] = useState<string>('');
+
+  const {t} = useTranslation();
 
   const isFocused = useIsFocused();
 
@@ -81,7 +84,7 @@ const MessageScreen = () => {
       setMessages([
         {
           role: ChatCompletionRequestMessageRoleEnum.System,
-          content: 'Hi, I am ChatGPT Assistant. How can I help you?',
+          content: t('chat_screen.init_message'),
         },
       ]);
     }
@@ -147,7 +150,7 @@ const MessageScreen = () => {
             style={{width: 40, height: 40}}
           />
           <Text style={{marginLeft: 15, ...style.modalTitle}}>
-            ChatGPT Assistant
+            {t('chat_screen.title')}
           </Text>
         </Flex>
       </Flex>
@@ -162,7 +165,7 @@ const MessageScreen = () => {
           onChangeText={(text: string) => setTextMessage(text)}
           cursorColor={color.primaryColor}
           multiline={true}
-          placeholder="Type your message here"
+          placeholder={t('chat_screen.placeholder') + '...'}
           style={{
             width: '125%',
           }}

@@ -8,10 +8,13 @@ import HomeScreen from 'screens/HomeScreen';
 import TutorScreen from 'screens/TutorScreen';
 import UpcomingScreen from 'screens/ScheduleScreen';
 import MessageScreen from 'screens/MessageScreen';
+import {useTranslation} from 'react-i18next';
 
 const Tab = createBottomTabNavigator();
 
 export default function MainLayout() {
+  const {t} = useTranslation();
+
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -65,11 +68,41 @@ export default function MainLayout() {
           );
         },
       })}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Tutor" component={TutorScreen} />
-      <Tab.Screen name="Schedule" component={UpcomingScreen} />
-      <Tab.Screen name="Message" component={MessageScreen} />
-      <Tab.Screen name="Course" component={CourseScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: t('navigator.home')!,
+        }}
+      />
+      <Tab.Screen
+        options={{
+          title: t('navigator.tutor')!,
+        }}
+        name="Tutor"
+        component={TutorScreen}
+      />
+      <Tab.Screen
+        options={{
+          title: t('navigator.schedule')!,
+        }}
+        name="Schedule"
+        component={UpcomingScreen}
+      />
+      <Tab.Screen
+        options={{
+          title: t('navigator.message')!,
+        }}
+        name="Message"
+        component={MessageScreen}
+      />
+      <Tab.Screen
+        options={{
+          title: t('navigator.course')!,
+        }}
+        name="Course"
+        component={CourseScreen}
+      />
     </Tab.Navigator>
   );
 }

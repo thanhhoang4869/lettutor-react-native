@@ -20,13 +20,16 @@ import dateTimeUtils from 'utils/dateTimeUtils';
 import {useIsFocused} from '@react-navigation/native';
 import scheduleService, {FetchSchedulesParams} from 'services/scheduleService';
 import jitsiService from 'services/jitsiService';
+import {useTranslation} from 'react-i18next';
 
 const UpcomingScreen = ({navigation: {navigate}}: any) => {
   const image = require('assets/calendar.png');
   const isFocused = useIsFocused();
 
+  const {t} = useTranslation();
+
   const headerProps: HeaderProps = {
-    title: 'Schedule',
+    title: t('schedule_screen.title'),
     onTouch: () => {
       navigate('Settings');
     },
@@ -112,7 +115,9 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
         <View>
           <Modal isVisible={isEditModalVisible}>
             <Flex style={style.modal} direction="column" align="start">
-              <Text style={{margin: 5, ...style.modalTitle}}>Edit notes</Text>
+              <Text style={{margin: 5, ...style.modalTitle}}>
+                {t('schedule_screen.modal.edit_note')}
+              </Text>
 
               <WhiteSpace size="lg" />
 
@@ -130,7 +135,9 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
                   onPress={() => {
                     toggleEditModal();
                   }}>
-                  <Text style={style.textBold}>Cancel</Text>
+                  <Text style={style.textBold}>
+                    {t('schedule_screen.modal.cancel')}
+                  </Text>
                 </TouchableOpacity>
                 <Button
                   style={style.primaryButtonNoWidth}
@@ -165,10 +172,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
             }}
           />
 
-          <Text style={style.textBold}>
-            Here is a list of the sessions you have booked. You can track when
-            the meeting starts.
-          </Text>
+          <Text style={style.textBold}>{t('schedule_screen.description')}</Text>
         </Flex>
 
         <WhiteSpace size="xl" />
@@ -193,7 +197,14 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
             />
           </ScrollView>
         ) : (
-          <Text>No upcoming schedule</Text>
+          <Image
+            source={require('assets/nodata.png')}
+            style={{
+              marginTop: 20,
+              width: 300,
+              height: 300,
+            }}
+          />
         )}
       </Flex>
     </>

@@ -21,12 +21,15 @@ import Modal from 'react-native-modal';
 import {DataTable} from 'react-native-paper';
 import courseService from 'services/courseService';
 import Loading from 'components/Loading';
+import {useTranslation} from 'react-i18next';
 
 export default function CourseScreen({
   navigation: {navigate},
 }: any): JSX.Element {
+  const {t} = useTranslation();
+
   const searchBarProps: SearchBarProps = {
-    placeHolder: 'Search for courses',
+    placeHolder: t('course_screen.placeholder'),
     value: '',
     onSearch: function (): void {
       fetchCourses();
@@ -37,7 +40,7 @@ export default function CourseScreen({
   };
 
   const headerProps: HeaderProps = {
-    title: 'Courses',
+    title: t('course_screen.title'),
     onTouch: () => {
       navigate('Settings');
     },
@@ -66,7 +69,7 @@ export default function CourseScreen({
   const getPagingLabel = () => {
     const from = page * numberOfItemsPerPage + 1;
     const to = Math.min((page + 1) * numberOfItemsPerPage, totalCourses);
-    return `${from}-${to} of ${totalCourses}`;
+    return `${from}-${to} ${t('course_screen.of')} ${totalCourses}`;
   };
 
   const fetchCourses = async () => {
@@ -195,7 +198,7 @@ export default function CourseScreen({
           <Flex style={style.modal} direction="column" align="start">
             <Flex style={{width: '100%'}} justify="between" direction="row">
               <Text style={{margin: 5, ...style.modalTitle}}>
-                Filter courses
+                {t('course_screen.filter.title')}
               </Text>
               <TouchableOpacity onPress={toggleModal}>
                 <Icon name="close" type="material-community" />
@@ -208,7 +211,7 @@ export default function CourseScreen({
               style={{
                 fontWeight: 'bold',
               }}>
-              Category
+              {t('course_screen.filter.category')}
             </Text>
 
             <WhiteSpace size="lg" />
@@ -221,7 +224,7 @@ export default function CourseScreen({
               style={{
                 fontWeight: 'bold',
               }}>
-              Level
+              {t('course_screen.filter.level')}
             </Text>
 
             <WhiteSpace />
@@ -324,7 +327,9 @@ export default function CourseScreen({
                 onPress={() => {
                   clearFilter();
                 }}>
-                <Text style={style.modalText}>Reset</Text>
+                <Text style={style.modalText}>
+                  {t('course_screen.filter.reset')}
+                </Text>
               </TouchableOpacity>
               <Button
                 style={style.primaryButtonNoWidth}
@@ -332,7 +337,7 @@ export default function CourseScreen({
                   toggleModal();
                   fetchCourses();
                 }}>
-                Apply
+                {t('course_screen.filter.apply')}
               </Button>
             </Flex>
           </Flex>
@@ -369,9 +374,12 @@ export default function CourseScreen({
           }}
           justify="between"
           direction="row">
-          <Text style={myStyle.text}>Total: {totalCourses} courses</Text>
+          <Text style={myStyle.text}>
+            {t('course_screen.total')}: {totalCourses}{' '}
+            {t('course_screen.course')}
+          </Text>
           <TouchableOpacity onPress={clearFilterAndApply}>
-            <Text style={style.modalText}>Reset</Text>
+            <Text style={style.modalText}>{t('course_screen.reset')}</Text>
           </TouchableOpacity>
         </Flex>
 

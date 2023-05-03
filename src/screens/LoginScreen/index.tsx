@@ -14,7 +14,7 @@ import MultilangButton from 'components/MultilangButton';
 import {Alert} from 'react-native';
 
 import {useContext} from 'react';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 import authService from 'services/authService';
 
 export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
@@ -28,7 +28,7 @@ export function LoginScreen({navigation: {navigate}}: any): JSX.Element {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const {login, checkToken} = useContext(AccountContext);
+  const {login, checkToken} = useContext(ApplicationContext);
 
   const handleLogin = async () => {
     setIsLoading(true);

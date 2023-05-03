@@ -16,7 +16,7 @@ import {Icon, Image} from 'react-native-elements';
 import SelectDropdown from 'react-native-select-dropdown';
 
 import {useContext} from 'react';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 
 import {color, style} from 'style';
 import userService from 'services/userService';
@@ -27,7 +27,7 @@ const AccountScreen = () => {
   const [open, setOpen] = useState(false);
 
   const {account, setAccount, learnTopics, testPreps} =
-    useContext(AccountContext);
+    useContext(ApplicationContext);
 
   const [levels, setLevels] = useState([
     {label: 'Pre A1 - Beginner', value: 'BEGINNER'},

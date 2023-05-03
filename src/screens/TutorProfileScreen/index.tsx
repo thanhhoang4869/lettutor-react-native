@@ -20,19 +20,22 @@ import {useRoute} from '@react-navigation/native';
 import tutorService from 'services/tutorService';
 import {Alert} from 'react-native';
 import Loading from 'components/Loading';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 import userService from 'services/userService';
+import {useTranslation} from 'react-i18next';
 
 interface TutorProfileRouteParams {
   tutorId: string;
 }
 
 const TutorProfileScreen = ({navigation: {navigate}}: any) => {
+  const {t} = useTranslation();
+
   const route = useRoute();
   const params = route.params as TutorProfileRouteParams;
   const tutorId = params?.tutorId;
 
-  const {specialties} = useContext(AccountContext);
+  const {specialties} = useContext(ApplicationContext);
 
   const [isReportModalVisible, setReportModalVisible] = React.useState(false);
   const toggleReportModal = () => {
@@ -212,7 +215,7 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
             <Modal isVisible={isReportModalVisible}>
               <Flex style={style.modal} direction="column" align="start">
                 <Text style={{margin: 5, ...style.modalTitle}}>
-                  Report this tutor
+                  {t('tutor_detail_screen.report_modal.title')}
                 </Text>
 
                 <WhiteSpace size="xl" />
@@ -229,7 +232,7 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                       fontWeight: 'bold',
                       marginLeft: 5,
                     }}>
-                    Tell us what's wrong
+                    {t('tutor_detail_screen.report_modal.description')}
                   </Text>
                 </Flex>
 
@@ -250,12 +253,14 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                     onPress={() => {
                       toggleReportModal();
                     }}>
-                    <Text style={style.textBold}>Cancel</Text>
+                    <Text style={style.textBold}>
+                      {t('tutor_detail_screen.report_modal.cancel')}
+                    </Text>
                   </TouchableOpacity>
                   <Button
                     style={style.primaryButtonNoWidth}
                     onPress={reportTutor}>
-                    Submit
+                    {t('tutor_detail_screen.report_modal.submit')}
                   </Button>
                 </Flex>
               </Flex>
@@ -268,8 +273,13 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
             <Modal isVisible={isReviewModalVisible}>
               <Flex style={style.modal} direction="column" align="start">
                 <Flex justify="between" style={style.w100}>
-                  <Text style={style.modalTitle}>Reviews</Text>
-                  <Text style={style.textBold}>Total: {reviews?.count}</Text>
+                  <Text style={style.modalTitle}>
+                    {t('tutor_detail_screen.review_modal.title')}
+                  </Text>
+                  <Text style={style.textBold}>
+                    {t('tutor_detail_screen.review_modal.total')}:{' '}
+                    {reviews?.count}
+                  </Text>
                 </Flex>
 
                 <WhiteSpace size="xl" />
@@ -295,7 +305,9 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                     onPress={() => {
                       toggleReviewModal();
                     }}>
-                    <Text style={style.textBold}>Back</Text>
+                    <Text style={style.textBold}>
+                      {t('tutor_detail_screen.review_modal.back')}
+                    </Text>
                   </TouchableOpacity>
                 </Flex>
               </Flex>
@@ -373,7 +385,7 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                     tutorName: tutor?.User?.name,
                   });
                 }}>
-                Book this tutor
+                {t('tutor_detail_screen.book_tutor')}
               </Button>
 
               <WhiteSpace />
@@ -387,7 +399,9 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                       type="material-community"
                       color={color.primaryColor}
                     />
-                    <Text style={style.textBoldPrimary}>Message</Text>
+                    <Text style={style.textBoldPrimary}>
+                      {t('tutor_detail_screen.message')}
+                    </Text>
                   </Flex>
                 </TouchableOpacity>
 
@@ -402,7 +416,9 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                       type="material-icons"
                       color={color.primaryColor}
                     />
-                    <Text style={style.textBoldPrimary}>Reviews</Text>
+                    <Text style={style.textBoldPrimary}>
+                      {t('tutor_detail_screen.review')}
+                    </Text>
                   </Flex>
                 </TouchableOpacity>
 
@@ -417,7 +433,9 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
                       type="material-icons"
                       color={color.primaryColor}
                     />
-                    <Text style={style.textBoldPrimary}>Report</Text>
+                    <Text style={style.textBoldPrimary}>
+                      {t('tutor_detail_screen.report')}
+                    </Text>
                   </Flex>
                 </TouchableOpacity>
               </Flex>
@@ -428,18 +446,22 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
 
               <WhiteSpace size="lg" />
 
-              <Text style={style.textBoldPrimary}>Experience</Text>
+              <Text style={style.textBoldPrimary}>
+                {t('tutor_detail_screen.experience')}
+              </Text>
               <WhiteSpace />
               <Text>{tutor?.experience}</Text>
               <WhiteSpace size="lg" />
 
-              <Text style={style.textBoldPrimary}>Languages</Text>
+              {/* <Text style={style.textBoldPrimary}>Languages</Text>
               <WhiteSpace />
               <Text>{tutor?.languages}</Text>
 
-              <WhiteSpace size="lg" />
+              <WhiteSpace size="lg" /> */}
 
-              <Text style={style.textBoldPrimary}>Specialties</Text>
+              <Text style={style.textBoldPrimary}>
+                {t('tutor_detail_screen.specialties')}
+              </Text>
               <WhiteSpace />
               <Flex direction="row" wrap="wrap">
                 {tutor?.specialties && renderSpecialties()}
@@ -447,12 +469,16 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
 
               <WhiteSpace />
 
-              <Text style={style.textBoldPrimary}>Education</Text>
+              <Text style={style.textBoldPrimary}>
+                {t('tutor_detail_screen.education')}
+              </Text>
               <WhiteSpace />
               <Text>{tutor?.education}</Text>
               <WhiteSpace size="lg" />
 
-              <Text style={style.textBoldPrimary}>Suggested courses</Text>
+              <Text style={style.textBoldPrimary}>
+                {t('tutor_detail_screen.courses')}
+              </Text>
               <WhiteSpace />
               <View>{renderCourse()}</View>
               <WhiteSpace size="lg" />

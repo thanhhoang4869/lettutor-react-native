@@ -5,6 +5,7 @@ import {HistoryCardChildProps} from 'components/HistoryCard';
 import Loading from 'components/Loading';
 import {Button, Input} from 'galio-framework';
 import React, {useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   Alert,
   ScrollView,
@@ -22,6 +23,7 @@ import {color, style} from 'style';
 import dateTimeUtils from 'utils/dateTimeUtils';
 
 const BookingHistoryScreen = ({navigation: {navigate}}: any) => {
+  const {t} = useTranslation();
   const isFocused = useIsFocused();
   const image = require('assets/history.png');
 
@@ -150,7 +152,7 @@ const BookingHistoryScreen = ({navigation: {navigate}}: any) => {
           </View>
           {/* review modal end */}
 
-          <Text style={style.pageTitle}>Booking History</Text>
+          <Text style={style.pageTitle}>{t('history_screen.title')}</Text>
 
           <WhiteSpace size="xl" />
 
@@ -171,8 +173,7 @@ const BookingHistoryScreen = ({navigation: {navigate}}: any) => {
             />
 
             <Text style={style.textBold}>
-              Here is a list of previous lessons. You can view feedbacks from
-              your tutors and write reviews.
+              {t('history_screen.description')}
             </Text>
           </Flex>
 
@@ -205,7 +206,14 @@ const BookingHistoryScreen = ({navigation: {navigate}}: any) => {
               <WhiteSpace size="lg" />
             </ScrollView>
           ) : (
-            <Text>No history</Text>
+            <Image
+              source={require('assets/nodata.png')}
+              style={{
+                marginTop: 20,
+                width: 300,
+                height: 300,
+              }}
+            />
           )}
         </Flex>
       )}

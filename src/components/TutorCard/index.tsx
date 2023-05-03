@@ -13,7 +13,7 @@ import {AirbnbRating} from 'react-native-ratings';
 import {color, style} from 'style';
 
 import {useContext} from 'react';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 
 export interface TutorCardProps {
   onTouch: () => void;
@@ -24,7 +24,7 @@ export default function TutorCard({
   onTouch,
   tutor,
 }: TutorCardProps): JSX.Element {
-  const {specialties} = useContext(AccountContext);
+  const {specialties} = useContext(ApplicationContext);
 
   const renderSpecialties = () => {
     const tutorSpecialties = tutor.specialties;

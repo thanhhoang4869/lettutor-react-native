@@ -22,15 +22,18 @@ import Modal from 'react-native-modal';
 import {DataTable, RadioButton} from 'react-native-paper';
 import tutorService from 'services/tutorService';
 import {useContext} from 'react';
-import {AccountContext} from 'context/AccountContext';
+import {ApplicationContext} from 'context/ApplicationContext';
 import {useIsFocused} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 export default function TutorScreen({
   navigation: {navigate},
 }: any): JSX.Element {
   const isFocused = useIsFocused();
 
-  const {specialties} = useContext(AccountContext);
+  const {t} = useTranslation();
+
+  const {specialties} = useContext(ApplicationContext);
 
   const [selectedNationality, setSelectedNationality] = React.useState('');
   const [selectedSpec, setSelectedSpec] = React.useState('all');
@@ -103,7 +106,7 @@ export default function TutorScreen({
   const getPagingLabel = () => {
     const from = page * numberOfItemsPerPage + 1;
     const to = Math.min((page + 1) * numberOfItemsPerPage, totalTutors);
-    return `${from}-${to} of ${totalTutors}`;
+    return `${from}-${to} ${t('tutor_screen.of')} ${totalTutors}`;
   };
 
   const applyFilter = () => {
@@ -147,7 +150,7 @@ export default function TutorScreen({
   };
 
   const searchBarProps: SearchBarProps = {
-    placeHolder: 'Search for tutors',
+    placeHolder: t('tutor_screen.search_placeholder'),
     value: tutorName,
     onSearch: () => {
       getTutors();
@@ -158,7 +161,7 @@ export default function TutorScreen({
   };
 
   const headerProps: HeaderProps = {
-    title: 'Tutors',
+    title: t('tutor_screen.title'),
     onTouch: () => {
       navigate('Settings');
     },
@@ -214,7 +217,7 @@ export default function TutorScreen({
           <Flex style={style.modal} direction="column" align="start">
             <Flex style={{width: '100%'}} justify="between" direction="row">
               <Text style={{margin: 5, ...style.modalTitle}}>
-                Filter search tutor
+                {t('tutor_screen.filter.title')}
               </Text>
               <TouchableOpacity onPress={toggleModal}>
                 <Icon name="close" type="material-community" />
@@ -227,7 +230,7 @@ export default function TutorScreen({
               style={{
                 fontWeight: 'bold',
               }}>
-              specialty
+              {t('tutor_screen.filter.specialty')}
             </Text>
 
             <WhiteSpace size="lg" />
@@ -254,7 +257,7 @@ export default function TutorScreen({
               style={{
                 fontWeight: 'bold',
               }}>
-              Nationality
+              {t('tutor_screen.filter.nationality')}
             </Text>
 
             <WhiteSpace />
@@ -264,15 +267,15 @@ export default function TutorScreen({
               value={selectedNationality}>
               <Flex>
                 <RadioButton value="for" />
-                <Text>Foreigners</Text>
+                <Text>{t('tutor_screen.filter.foreigner')}</Text>
               </Flex>
               <Flex>
                 <RadioButton value="eng" />
-                <Text>English Native Speaker</Text>
+                <Text>{t('tutor_screen.filter.native')}</Text>
               </Flex>
               <Flex>
                 <RadioButton value="vie" />
-                <Text>Vietnamese</Text>
+                <Text>{t('tutor_screen.filter.vietnamese')}</Text>
               </Flex>
             </RadioButton.Group>
 
@@ -280,7 +283,9 @@ export default function TutorScreen({
 
             <Flex justify="between" style={{width: '100%'}}>
               <TouchableOpacity onPress={clearFilter}>
-                <Text style={style.modalText}>Reset</Text>
+                <Text style={style.modalText}>
+                  {t('tutor_screen.filter.reset')}
+                </Text>
               </TouchableOpacity>
               <Button
                 style={style.primaryButtonNoWidth}
@@ -288,7 +293,7 @@ export default function TutorScreen({
                   toggleModal();
                   applyFilter();
                 }}>
-                Apply
+                {t('tutor_screen.filter.apply')}
               </Button>
             </Flex>
           </Flex>
@@ -325,9 +330,11 @@ export default function TutorScreen({
           }}
           justify="between"
           direction="row">
-          <Text style={myStyle.text}>Total: {totalTutors} tutors</Text>
+          <Text style={myStyle.text}>
+            {t('tutor_screen.total')}: {totalTutors} {t('tutor_screen.tutors')}
+          </Text>
           <TouchableOpacity onPress={clearFilterAndApply}>
-            <Text style={style.modalText}>Reset</Text>
+            <Text style={style.modalText}>{t('tutor_screen.reset')}</Text>
           </TouchableOpacity>
         </Flex>
 
