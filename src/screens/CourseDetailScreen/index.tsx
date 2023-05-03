@@ -1,4 +1,5 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
+import {useRoute} from '@react-navigation/native';
 import TopicCard from 'components/TopicCard';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
@@ -14,12 +15,57 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
     },
   });
 
+  const route = useRoute();
+  const params = route.params as any;
+  const course = params.course || [];
+
+  const renderLevel = () => {
+    switch (+course.level) {
+      case 1:
+        return 'Beginner';
+      case 2:
+        return 'Upper Beginner';
+      case 3:
+        return 'Pre Intermediate';
+      case 4:
+        return 'Intermediate';
+      case 5:
+        return 'Upper Intermediate';
+      case 6:
+        return 'Pre Advanced';
+      case 7:
+        return 'Advanced';
+      case 8:
+        return 'Very Advanced';
+    }
+  };
+
+  const renderTopics = () => {
+    return course.topics?.map((topic: any, index: number) => {
+      topic.courseName = course.name;
+      topic.courseImage = course.imageUrl;
+      topic.number = index + 1;
+      return (
+        <React.Fragment key={index}>
+          <TopicCard
+            number={index + 1}
+            title={topic.name}
+            onTouch={() => {
+              navigate('TopicDetail', {topic});
+            }}
+          />
+          <WhiteSpace size="lg" />
+        </React.Fragment>
+      );
+    });
+  };
+
   return (
     <>
       <ScrollView style={{backgroundColor: 'white'}}>
         <Image
           source={{
-            uri: 'https://hub.fullsail.edu/assets/ext/share/key-careers-in-art-animation-and-design-a-beginners-guide-share.jpg',
+            uri: course.imageUrl,
           }}
           style={{
             width: '100%',
@@ -27,8 +73,9 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
           }}
         />
         <View style={style.container}>
-          <Text style={style.pageTitle}>Life in the Internet Age</Text>
-          <Text>Explore advanced topics about life.</Text>
+          <Text style={style.pageTitle}>{course.name}</Text>
+          <WhiteSpace />
+          <Text>{course.description}</Text>
 
           <WhiteSpace size="lg" />
 
@@ -51,10 +98,7 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
                 <Text style={style.textBlack}>Why take this course</Text>
               </Flex>
               <WhiteSpace />
-              <Text>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut
-                quam porro repellendus reiciendis.
-              </Text>
+              <Text>{course.reason}</Text>
             </View>
 
             <WhiteSpace />
@@ -67,13 +111,10 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
                   type="feather"
                   style={{marginRight: 5}}
                 />
-                <Text style={style.textBlack}>What you will be able to do</Text>
+                <Text style={style.textBlack}>What you will learn</Text>
               </Flex>
               <WhiteSpace />
-              <Text>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut
-                quam porro repellendus reiciendis.
-              </Text>
+              <Text>{course.purpose}</Text>
             </View>
           </View>
 
@@ -82,7 +123,7 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
           <View>
             <Text style={myStyle.headline}>Level</Text>
             <WhiteSpace />
-            <Text style={style.textBlack}>Beginner</Text>
+            <Text style={style.textBlack}>{renderLevel()}</Text>
           </View>
 
           <WhiteSpace size="lg" />
@@ -90,21 +131,11 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
           <View>
             <Text style={myStyle.headline}>Course length</Text>
             <WhiteSpace />
-            <Text style={style.textBlack}>3 topics</Text>
+            <Text style={style.textBlack}>{course.topics.length} topics</Text>
             <WhiteSpace size="lg" />
-            <TopicCard
-              title="1. Introduction to the Internet"
-              onTouch={() => {
-                navigate('TopicDetail');
-              }}
-            />
-            <WhiteSpace size="lg" />
-            <TopicCard title="2. Gamification" onTouch={() => {}} />
-            <WhiteSpace size="lg" />
-            <TopicCard title="3. ChatGPT in action" onTouch={() => {}} />
           </View>
 
-          <WhiteSpace size="lg" />
+          {renderTopics()}
         </View>
       </ScrollView>
     </>

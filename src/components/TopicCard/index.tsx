@@ -4,11 +4,12 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {style} from 'style';
 
 export interface TopicCardProps {
+  number: number;
   title: string;
   onTouch: () => void;
 }
 
-const TopicCard = ({title, onTouch}: TopicCardProps) => {
+const TopicCard = ({title, number, onTouch}: TopicCardProps) => {
   const myStyle = StyleSheet.create({
     courseName: {
       fontWeight: 'bold',
@@ -26,7 +27,9 @@ const TopicCard = ({title, onTouch}: TopicCardProps) => {
             paddingTop: 15,
             paddingLeft: 20,
           }}>
-          <Text style={myStyle.courseName}>{title}</Text>
+          <Text style={myStyle.courseName}>
+            {number}. {title}
+          </Text>
         </View>
       </Card>
     </TouchableOpacity>

@@ -5,41 +5,49 @@ import {color, style} from 'style';
 
 import {Button} from 'galio-framework';
 import {Icon, Image} from 'react-native-elements';
+import dateTimeUtils from 'utils/dateTimeUtils';
+import moment from 'moment';
+import jwt_decode from 'jwt-decode';
+import {useTranslation} from 'react-i18next';
 
 export interface ScheduleCardProps {
-  teacher: string;
+  props: ScheduleCardChildProps;
+}
+
+export interface ScheduleCardChildProps {
+  id: string;
+  tutor: any;
   date: string;
-  time: string;
+  startPeriodTimestamp: number;
+  endPeriodTimestamp: number;
+  meetingLink: string;
   notes: string;
   onEdit: () => void;
   onCancel: () => void;
-  onJoin: () => void;
+  onJoin: (params: any) => void;
 }
 
-const ScheduleCard = ({
-  teacher,
-  date,
-  time,
-  notes,
-  onEdit,
-  onCancel,
-  onJoin,
-}: ScheduleCardProps) => {
-  const myStyle = StyleSheet.create({
-    cardContent: {
-      height: 70,
-    },
-    cardContentText: {
-      marginLeft: 16,
-    },
+const ScheduleCard = ({props}: ScheduleCardProps) => {
+  const {t} = useTranslation();
+  const renderDateTime = () => {
+    const start = dateTimeUtils.toLetTutorTimeString(
+      props.startPeriodTimestamp,
+    );
+    const end = dateTimeUtils.toLetTutorTimeString(props.endPeriodTimestamp);
+    const getDate = dateTimeUtils.timeStampToDateString(
+      props.startPeriodTimestamp,
+    );
+    const dateFormat = moment(getDate).format('DD-MM-YYYY');
+    return `${dateFormat}  ${start} - ${end}`;
+  };
 
-    tutorName: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      marginLeft: 15,
-      color: 'black',
-    },
-  });
+  const joinMeeting = async () => {
+    const studentMeetingLink = props.meetingLink;
+    const token = studentMeetingLink.split('=')[1];
+    const jitsiParams = jwt_decode(token) as any;
+
+    props.onJoin(jitsiParams);
+  };
 
   return (
     <Card style={style.card}>
@@ -53,14 +61,14 @@ const ScheduleCard = ({
             <Flex>
               <Image
                 source={{
-                  uri: 'https://oiir.illinois.edu/sites/prod/files/Profile%20Picture_1.png',
+                  uri: props.tutor?.avatar,
                 }}
                 style={{width: 50, height: 50, borderRadius: 50}}
               />
-              <Text style={myStyle.tutorName}>{teacher}</Text>
+              <Text style={myStyle.tutorName}>{props.tutor?.name}</Text>
             </Flex>
 
-            <TouchableOpacity onPress={onEdit}>
+            <TouchableOpacity onPress={props.onEdit}>
               <Icon name="edit" color={color.primaryColor} />
             </TouchableOpacity>
           </Flex>
@@ -71,19 +79,23 @@ const ScheduleCard = ({
               fontSize: 16,
               ...style.textBoldBlack,
             }}>
-            {`${date} at ${time}`}
+            {renderDateTime()}
           </Text>
 
           <WhiteSpace />
 
-          <Text>Notes: {notes}</Text>
+          <Text>
+            {props.notes
+              ? `${t('schedule_card.note')}: ${props.notes}`
+              : t('schedule_card.no_note')}
+          </Text>
 
           <WhiteSpace />
 
           <Flex style={style.w100}>
             <Button
               round
-              onPress={onCancel}
+              onPress={props.onCancel}
               style={{
                 width: '45%',
                 marginLeft: -2,
@@ -94,7 +106,7 @@ const ScheduleCard = ({
                   color: 'black',
                   fontSize: 16,
                 }}>
-                Cancel
+                {t('schedule_card.cancel')}
               </Text>
             </Button>
 
@@ -104,8 +116,8 @@ const ScheduleCard = ({
                 width: '45%',
                 backgroundColor: color.primaryColor,
               }}
-              onPress={onJoin}>
-              Join lesson
+              onPress={joinMeeting}>
+              {t('schedule_card.join')}
             </Button>
           </Flex>
         </View>
@@ -113,5 +125,21 @@ const ScheduleCard = ({
     </Card>
   );
 };
+
+const myStyle = StyleSheet.create({
+  cardContent: {
+    height: 70,
+  },
+  cardContentText: {
+    marginLeft: 16,
+  },
+
+  tutorName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginLeft: 15,
+    color: 'black',
+  },
+});
 
 export default ScheduleCard;

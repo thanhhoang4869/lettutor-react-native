@@ -4,21 +4,27 @@ import {Text} from 'react-native';
 import {AirbnbRating} from 'react-native-elements';
 import {style} from 'style';
 
-const ReviewCard = () => {
+interface ReviewCardProps {
+  name: string;
+  rating: number;
+  content: string;
+}
+
+const ReviewCard = ({name, rating, content}: ReviewCardProps) => {
   return (
     <>
       <Flex direction="column" align="start" style={style.w100}>
-        <Text style={style.textBold}>Thanh Hoang</Text>
+        <Text style={style.textBold}>{name}</Text>
         <WhiteSpace size="sm" />
         <AirbnbRating
-          count={5}
+          count={rating}
           isDisabled={true}
           defaultRating={5}
           size={20}
           showRating={false}
         />
         <WhiteSpace size="sm" />
-        <Text>Very excellent teacher!</Text>
+        <Text>{content || 'No reviews'}</Text>
       </Flex>
 
       <WhiteSpace size="lg" />

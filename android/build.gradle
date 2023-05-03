@@ -3,7 +3,7 @@
 buildscript {
     ext {
         buildToolsVersion = "31.0.0"
-        minSdkVersion = 26
+        minSdkVersion = 24
         compileSdkVersion = 31
         targetSdkVersion = 31
 
@@ -27,9 +27,31 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
         mavenCentral()
         mavenLocal()
+
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        maven {
+            url "https://maven.google.com"
+        }
+        maven { // <---- Add this block
+            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
+        }
+        maven { url "https://jitpack.io" }
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
+        google()
         jcenter()
     }
+}
+
+subprojects { subproject ->
+   if(project['name'] == 'react-native-reanimated'){
+       project.configurations { compile { } }
+   }
 }
