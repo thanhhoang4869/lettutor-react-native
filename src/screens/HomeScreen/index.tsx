@@ -89,6 +89,13 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
       });
 
       if (response.status === 200) {
+        const upcomingList = response.data?.data;
+        upcomingList.sort((a: any, b: any) => {
+          return (
+            a.scheduleDetailInfo.startPeriodTimestamp -
+            b.scheduleDetailInfo.startPeriodTimestamp
+          );
+        });
         const upcoming = response.data?.data[0];
         const startTime = upcoming?.scheduleDetailInfo?.startPeriodTimestamp;
         const current = dateTimeUtils.getCurrentTimeStamp();
