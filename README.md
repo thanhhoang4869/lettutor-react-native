@@ -12,7 +12,7 @@ In this project, I build a mobile application named LetTutor for Android and iOS
 
 # Milestone 2
 
-- Final demo video
-- See milestone progress: check out to the `` branch
+- Video: https://youtu.be/C2RVcIx-f5I
+- See milestone progress: check out to the `basic-online-app` branch
 
 # Gallery
