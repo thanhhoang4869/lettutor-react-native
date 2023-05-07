@@ -2,6 +2,7 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -25,6 +26,7 @@ import {useContext} from 'react';
 import {ApplicationContext} from 'context/ApplicationContext';
 import {useIsFocused} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import userService from 'services/userService';
 
 export default function TutorScreen({
   navigation: {navigate},
@@ -56,8 +58,6 @@ export default function TutorScreen({
   };
 
   const getTutors = async () => {
-    console.log('TutorScreen fetchTutorList');
-
     setIsLoading(true);
 
     const options = {
@@ -79,6 +79,26 @@ export default function TutorScreen({
     }
 
     setIsLoading(false);
+  };
+
+  const getTutorsNoLoading = async () => {
+    const options = {
+      page: page + 1,
+      perPage: numberOfItemsPerPage,
+      filters: constructFilter(),
+      search: tutorName,
+    };
+
+    try {
+      const response = await tutorService.fetchTutorList(options);
+
+      if (response.status === 200) {
+        setTotalTutors(response.data.count);
+        setTutors(response.data.rows);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getTutorsReset = async () => {
@@ -122,6 +142,19 @@ export default function TutorScreen({
     setSelectedNationality('');
     setSelectedSpec('all');
     setIsFilterApplied(false);
+  };
+
+  const manageFavorite = async (tutorId: string) => {
+    try {
+      const response = await userService.manageFavoriteTutor({tutorId});
+      if (response.status === 200) {
+        getTutorsNoLoading();
+      } else {
+        Alert.alert(response.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const clearFilterAndApply = () => {
@@ -178,6 +211,7 @@ export default function TutorScreen({
       return (
         <React.Fragment key={index}>
           <TutorCard
+            onManageFavorite={manageFavorite}
             tutor={tutor}
             onTouch={() => navigate('TutorProfile', {tutorId: tutor.userId})}
           />

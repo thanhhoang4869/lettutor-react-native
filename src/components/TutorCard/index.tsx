@@ -17,12 +17,14 @@ import {ApplicationContext} from 'context/ApplicationContext';
 
 export interface TutorCardProps {
   onTouch: () => void;
+  onManageFavorite: (tutorId: string) => void;
   tutor: any;
 }
 
 export default function TutorCard({
   onTouch,
   tutor,
+  onManageFavorite,
 }: TutorCardProps): JSX.Element {
   const {specialties} = useContext(ApplicationContext);
 
@@ -77,7 +79,10 @@ export default function TutorCard({
         </View>
       )}
 
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          onManageFavorite(tutor.userId);
+        }}>
         {tutor.isfavoritetutor ? (
           <Icon name="heart" type="material-community" color="red" />
         ) : (

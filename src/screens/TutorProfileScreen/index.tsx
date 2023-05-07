@@ -56,7 +56,6 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
   const [reviewLoading, setReviewLoading] = React.useState(false);
 
   const fetchTutor = async () => {
-    console.log(tutorId);
     setLoading(true);
     try {
       const tutorResponse = await tutorService.fetchTutorById(tutorId);
@@ -108,7 +107,12 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
       return courses.map(course => (
         <Flex justify="between" style={style.w100} key={course.id}>
           <Text style={style.textBold}>{course.name}</Text>
-          <Text style={style.textPrimary}>View</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigate('CourseDetail', {courseId: course.id});
+            }}>
+            <Text style={style.textPrimary}>View</Text>
+          </TouchableOpacity>
         </Flex>
       ));
     }
