@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Flex, Toast, WhiteSpace} from '@ant-design/react-native';
 import Header, {HeaderProps} from 'components/Header';
 import Loading from 'components/Loading';
@@ -27,6 +28,10 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
   const isFocused = useIsFocused();
 
   const {t} = useTranslation();
+  const [page, setPage] = React.useState(0);
+  const [totalSchedules, setTotalSchedules] = React.useState(0);
+
+  const numberOfItemsPerPage = 2;
 
   const headerProps: HeaderProps = {
     title: t('schedule_screen.title'),
@@ -50,12 +55,18 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
   const [loading, setLoading] = React.useState(false);
   const [scheduleToCancel, setScheduleToCancel] = React.useState<string>('');
 
+  const getPagingLabel = () => {
+    const from = page * numberOfItemsPerPage + 1;
+    const to = Math.min((page + 1) * numberOfItemsPerPage, totalSchedules);
+    return `${from}-${to} ${t('tutor_screen.of')} ${totalSchedules}`;
+  };
+
   const fetchSchedule = async () => {
     setLoading(true);
     try {
       const params: FetchSchedulesParams = {
-        page: 1,
-        perPage: 10,
+        page: page + 1,
+        perPage: numberOfItemsPerPage,
         dateTimeGte: dateTimeUtils.getCurrentTimeStamp(),
         sortBy: 'asc',
         orderBy: 'meeting',
@@ -65,6 +76,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
       if (response.status === 200) {
         setSchedules(response.data.data);
+        setTotalSchedules(response.data.data.count);
       } else {
         setLoading(false);
         Alert.alert('Error', 'Something went wrong');
@@ -106,7 +118,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
   useEffect(() => {
     fetchSchedule();
-  }, [isFocused]);
+  }, [isFocused, page]);
 
   const cancelSchedule = async () => {
     try {
@@ -204,12 +216,12 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
                 justifyContent: 'flex-end',
                 marginRight: -12,
               }}
-              page={0}
-              numberOfPages={5}
-              onPageChange={tarPage => {}}
-              // label={getPagingLabel()}
+              page={page}
+              numberOfPages={Math.ceil(totalSchedules / numberOfItemsPerPage)}
+              onPageChange={tarPage => setPage(tarPage)}
+              label={getPagingLabel()}
               showFastPaginationControls
-              numberOfItemsPerPage={12}
+              numberOfItemsPerPage={numberOfItemsPerPage}
               selectPageDropdownLabel={'Rows per page'}
             />
           </ScrollView>

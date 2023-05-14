@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import {Divider, Icon, Image} from 'react-native-elements';
 import Modal from 'react-native-modal';
-import {AirbnbRating} from 'react-native-ratings';
 import VideoPlayer from 'react-native-video-player';
 import {color, style} from 'style';
 import {useRoute} from '@react-navigation/native';
@@ -53,7 +52,6 @@ const TutorProfileScreen = ({navigation: {navigate}}: any) => {
   const [loading, setLoading] = React.useState(false);
   const [reportContent, setReportContent] = React.useState('');
   const [reviews, setReviews] = React.useState<any>([]);
-  const [reviewLoading, setReviewLoading] = React.useState(false);
 
   const fetchTutor = async () => {
     setLoading(true);
