@@ -41,8 +41,9 @@ export default {
       description:
         'Below is the list of lessons you have booked. You can track when the lesson starts.',
       modal: {
-        edit_note: 'Edit note',
-        cancel: 'Cancel',
+        edit_note: 'Do you want to cancel this lesson?',
+        cancel: 'Cancel lesson',
+        back: 'Back',
       },
     },
     schedule_card: {

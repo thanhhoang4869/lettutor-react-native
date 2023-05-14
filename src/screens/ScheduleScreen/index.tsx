@@ -1,4 +1,4 @@
-import {Flex, WhiteSpace} from '@ant-design/react-native';
+import {Flex, Toast, WhiteSpace} from '@ant-design/react-native';
 import Header, {HeaderProps} from 'components/Header';
 import Loading from 'components/Loading';
 import ScheduleCard, {ScheduleCardChildProps} from 'components/ScheduleCard';
@@ -35,10 +35,11 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
     },
   };
 
-  const [isEditModalVisible, setEditModalVisible] = React.useState(false);
+  const [isCancelModalVisible, setCancelModalVisible] = React.useState(false);
 
-  const toggleEditModal = () => {
-    setEditModalVisible(!isEditModalVisible);
+  const toggleCancelModal = (id: string) => {
+    setScheduleToCancel(id);
+    setCancelModalVisible(!isCancelModalVisible);
   };
 
   const joinMeeting = async (params: any) => {
@@ -47,6 +48,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
   const [schedules, setSchedules] = React.useState<any>([]);
   const [loading, setLoading] = React.useState(false);
+  const [scheduleToCancel, setScheduleToCancel] = React.useState<string>('');
 
   const fetchSchedule = async () => {
     setLoading(true);
@@ -86,10 +88,10 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
         endPeriodTimestamp: schedule.scheduleDetailInfo?.endPeriodTimestamp,
         meetingLink: schedule.studentMeetingLink,
         notes: schedule.studentRequest,
-        onEdit: () => {
-          toggleEditModal();
+        onEdit: () => {},
+        onCancel: (id: string) => {
+          toggleCancelModal(id);
         },
-        onCancel: () => {},
         onJoin: joinMeeting,
       };
 
@@ -106,6 +108,32 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
     fetchSchedule();
   }, [isFocused]);
 
+  const cancelSchedule = async () => {
+    try {
+      const options = {
+        scheduleDetailIds: [scheduleToCancel],
+      };
+      const response = await scheduleService.cancelSchedule(options);
+
+      if (response?.status === 200) {
+        Alert.alert('Success', 'Schedule has been canceled', [
+          {
+            text: 'OK',
+            onPress: () => {
+              setCancelModalVisible(false);
+              fetchSchedule();
+            },
+          },
+        ]);
+      } else {
+        Alert.alert('You can only cancel 2 hour before the lesson starts');
+      }
+    } catch (e) {
+      console.log(e);
+      Alert.alert('Error', 'Something went wrong');
+    }
+  };
+
   return (
     <>
       {loading && <Loading />}
@@ -113,38 +141,27 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
       <Flex direction="column" align="start" style={myStyle.container}>
         {/* rp modal start */}
         <View>
-          <Modal isVisible={isEditModalVisible}>
+          <Modal isVisible={isCancelModalVisible}>
             <Flex style={style.modal} direction="column" align="start">
-              <Text style={{margin: 5, ...style.modalTitle}}>
-                {t('schedule_screen.modal.edit_note')}
-              </Text>
-
-              <WhiteSpace size="lg" />
-
-              <Input
-                cursorColor={color.primaryColor}
-                multiline={true}
-                style={style.textArea}
-                value="This is a note"
-              />
+              <Text>{t('schedule_screen.modal.edit_note')}</Text>
 
               <WhiteSpace size="lg" />
 
               <Flex justify="between" style={{width: '100%', marginLeft: 10}}>
                 <TouchableOpacity
                   onPress={() => {
-                    toggleEditModal();
+                    setCancelModalVisible(false);
                   }}>
                   <Text style={style.textBold}>
-                    {t('schedule_screen.modal.cancel')}
+                    {t('schedule_screen.modal.back')}
                   </Text>
                 </TouchableOpacity>
                 <Button
                   style={style.primaryButtonNoWidth}
                   onPress={() => {
-                    toggleEditModal();
+                    cancelSchedule();
                   }}>
-                  OK
+                  {t('schedule_screen.modal.cancel')}
                 </Button>
               </Flex>
             </Flex>

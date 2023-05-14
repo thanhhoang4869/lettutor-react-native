@@ -2,9 +2,10 @@
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import {useRoute} from '@react-navigation/native';
 import Loading from 'components/Loading';
+import {ApplicationContext} from 'context/ApplicationContext';
 import {Button, Input} from 'galio-framework';
 import moment from 'moment';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   Alert,
   Image,
@@ -20,6 +21,7 @@ import Modal from 'react-native-modal';
 import {RadioButton} from 'react-native-paper';
 import scheduleService from 'services/scheduleService';
 import tutorService, {ScheduleParams} from 'services/tutorService';
+import userService from 'services/userService';
 import {color, style} from 'style';
 import dateTimeUtils from 'utils/dateTimeUtils';
 
@@ -46,6 +48,8 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
   const [selectedDate, setSelectedDate] = React.useState(moment());
 
   const [note, setNote] = React.useState('');
+
+  const {account, setAccount} = useContext(ApplicationContext);
 
   const fetchSchedule = async (period: any) => {
     setLoading(true);
@@ -107,6 +111,15 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
             },
           },
         ]);
+        try {
+          const newUserInfo: any = await userService.fetchUserInfo();
+          setAccount({
+            ...account,
+            walletInfo: newUserInfo?.data?.user.walletInfo,
+          });
+        } catch (error: any) {
+          console.log(error);
+        }
       } else {
         toggleConfirmModal();
         Alert.alert('Error', 'Something went wrong');
@@ -175,7 +188,7 @@ const BookingPickerScreen = ({navigation: {navigate}}: any) => {
                   marginLeft: 5,
                   marginTop: 5,
                 }}>
-                Balance: 9970 lessons left
+                Balance: {account.walletInfo?.amount / 100000} lessons left
               </Text>
 
               <WhiteSpace />

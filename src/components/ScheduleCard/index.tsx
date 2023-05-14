@@ -23,7 +23,7 @@ export interface ScheduleCardChildProps {
   meetingLink: string;
   notes: string;
   onEdit: () => void;
-  onCancel: () => void;
+  onCancel: (id: string) => void;
   onJoin: (params: any) => void;
 }
 
@@ -51,77 +51,76 @@ const ScheduleCard = ({props}: ScheduleCardProps) => {
 
   return (
     <Card style={style.card}>
-      <Card.Body>
-        <View
-          style={{
-            padding: 5,
-            paddingLeft: 20,
-          }}>
-          <Flex justify="between" style={{paddingRight: 20}}>
-            <Flex>
-              <Image
-                source={{
-                  uri: props.tutor?.avatar,
-                }}
-                style={{width: 50, height: 50, borderRadius: 50}}
-              />
-              <Text style={myStyle.tutorName}>{props.tutor?.name}</Text>
-            </Flex>
-
-            <TouchableOpacity onPress={props.onEdit}>
-              <Icon name="edit" color={color.primaryColor} />
-            </TouchableOpacity>
-          </Flex>
-          <WhiteSpace size="xl" />
-
-          <Text
-            style={{
-              fontSize: 16,
-              ...style.textBoldBlack,
-            }}>
-            {renderDateTime()}
-          </Text>
-
-          <WhiteSpace />
-
-          <Text>
-            {props.notes
-              ? `${t('schedule_card.note')}: ${props.notes}`
-              : t('schedule_card.no_note')}
-          </Text>
-
-          <WhiteSpace />
-
-          <Flex style={style.w100}>
-            <Button
-              round
-              onPress={props.onCancel}
-              style={{
-                width: '45%',
-                marginLeft: -2,
-                backgroundColor: 'lightgrey',
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 16,
-                }}>
-                {t('schedule_card.cancel')}
-              </Text>
-            </Button>
-
-            <Button
-              round
-              style={{
-                width: '45%',
-                backgroundColor: color.primaryColor,
+      <View
+        style={{
+          padding: 5,
+          paddingLeft: 20,
+          marginTop: 10,
+        }}>
+        <Flex justify="between" style={{paddingRight: 20}}>
+          <Flex>
+            <Image
+              source={{
+                uri: props.tutor?.avatar,
               }}
-              onPress={joinMeeting}>
-              {t('schedule_card.join')}
-            </Button>
+              style={{width: 50, height: 50, borderRadius: 50}}
+            />
+            <Text style={myStyle.tutorName}>{props.tutor?.name}</Text>
           </Flex>
-        </View>
-      </Card.Body>
+
+          <TouchableOpacity onPress={props.onEdit}>
+            <Icon name="edit" color={color.primaryColor} />
+          </TouchableOpacity>
+        </Flex>
+        <WhiteSpace size="xl" />
+
+        <Text
+          style={{
+            fontSize: 16,
+            ...style.textBoldBlack,
+          }}>
+          {renderDateTime()}
+        </Text>
+
+        <WhiteSpace />
+
+        <Text>
+          {props.notes
+            ? `${t('schedule_card.note')}: ${props.notes}`
+            : t('schedule_card.no_note')}
+        </Text>
+
+        <WhiteSpace />
+
+        <Flex style={style.w100}>
+          <Button
+            round
+            onPress={() => props.onCancel(props.id)}
+            style={{
+              width: '45%',
+              marginLeft: -2,
+              backgroundColor: 'lightgrey',
+            }}>
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 16,
+              }}>
+              {t('schedule_card.cancel')}
+            </Text>
+          </Button>
+
+          <Button
+            round
+            style={{
+              width: '45%',
+              backgroundColor: color.primaryColor,
+            }}
+            onPress={joinMeeting}>
+            {t('schedule_card.join')}
+          </Button>
+        </Flex>
+      </View>
     </Card>
   );
 };
