@@ -15,4 +15,7 @@ In this project, I build a mobile application named LetTutor for Android and iOS
 - Video: https://youtu.be/C2RVcIx-f5I
 - See milestone progress: check out to the `basic-online-app` branch
 
-# Gallery
+# Milestone 3
+
+- Video: https://youtu.be/LI6xQFBZNE0
+- See milestone progress: check out to the `advance-online-app` branch
