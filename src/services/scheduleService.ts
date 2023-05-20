@@ -9,11 +9,13 @@ async function bookSchedule(options: any) {
 }
 
 async function cancelSchedule(options: any) {
-  const response = await api.delete('/booking', {
-    ...options,
-  });
-
-  return response;
+  console.log(options);
+  try {
+    const response = await api.delete('/booking', {data: options});
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export interface FetchSchedulesParams {

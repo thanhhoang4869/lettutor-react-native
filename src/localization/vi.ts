@@ -41,8 +41,9 @@ export default {
       description:
         'Dưới đây là danh sách các lớp bạn đã đặt. Bạn có thể theo dõi khi buổi học bắt đầu.',
       modal: {
-        edit_note: 'Sửa ghi chú',
-        cancel: 'Huỷ',
+        edit_note: 'Bạn muốn huỷ lớp?',
+        cancel: 'Huỷ lớp',
+        back: 'Quay lại',
       },
     },
     schedule_card: {

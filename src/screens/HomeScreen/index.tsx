@@ -25,6 +25,7 @@ import scheduleService from 'services/scheduleService';
 import tutorService from 'services/tutorService';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import jitsiService from 'services/jitsiService';
+import userService from 'services/userService';
 
 export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const {t, i18n} = useTranslation();
@@ -45,8 +46,6 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
   const isFocused = useIsFocused();
 
   const getTutors = async () => {
-    console.log('HomeScreen fetchTutorList');
-
     setIsLoading(true);
 
     const options = {
@@ -65,6 +64,23 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     }
 
     setIsLoading(false);
+  };
+
+  const getTutorsNoLoading = async () => {
+    const options = {
+      page: 1,
+      perPage: 5,
+    };
+
+    try {
+      const response = await tutorService.fetchTutorList(options);
+
+      if (response.status === 200) {
+        setTutors(response.data.rows);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getTotalStudyTime = async () => {
@@ -89,6 +105,13 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
       });
 
       if (response.status === 200) {
+        const upcomingList = response.data?.data;
+        upcomingList.sort((a: any, b: any) => {
+          return (
+            a.scheduleDetailInfo.startPeriodTimestamp -
+            b.scheduleDetailInfo.startPeriodTimestamp
+          );
+        });
         const upcoming = response.data?.data[0];
         const startTime = upcoming?.scheduleDetailInfo?.startPeriodTimestamp;
         const current = dateTimeUtils.getCurrentTimeStamp();
@@ -114,6 +137,19 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
     const jitsiParams = jwt_decode(token) as any;
 
     await jitsiService.startJitsi(jitsiParams);
+  };
+
+  const manageFavorite = async (tutorId: string) => {
+    try {
+      const response = await userService.manageFavoriteTutor({tutorId});
+      if (response.status === 200) {
+        getTutorsNoLoading();
+      } else {
+        Alert.alert(response.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -162,6 +198,7 @@ export default function HomeScreen({navigation: {navigate}}: any): JSX.Element {
         <React.Fragment key={index}>
           <TutorCard
             tutor={tutor}
+            onManageFavorite={manageFavorite}
             onTouch={() => navigate('TutorProfile', {tutorId: tutor.userId})}
           />
           <WhiteSpace size="lg" />

@@ -4,7 +4,6 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {color, style} from 'style';
 
 import {Divider, Icon, Image} from 'react-native-elements';
-import {AirbnbRating} from 'react-native-ratings';
 import dateTimeUtils from 'utils/dateTimeUtils';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
@@ -44,62 +43,62 @@ const HistoryCard = ({props}: HistoryCardProps) => {
 
   return (
     <Card style={style.card}>
-      <Card.Body>
-        <View
-          style={{
-            padding: 5,
-            paddingLeft: 20,
-          }}>
-          <Flex justify="between" style={{paddingRight: 20}}>
-            <Flex>
-              <Image
-                source={{
-                  uri: props.tutor?.avatar,
-                }}
-                style={{width: 50, height: 50, borderRadius: 50}}
-              />
-              <Text style={myStyle.tutorName}>{props.tutor?.name}</Text>
-            </Flex>
-
-            <TouchableOpacity onPress={props.onEdit}>
-              <Flex>
-                <Text style={{marginRight: 5, ...style.textBoldPrimary}}>
-                  {t('history_card.review')}
-                </Text>
-                <Icon name="edit" color={color.primaryColor} />
-              </Flex>
-            </TouchableOpacity>
+      <View
+        style={{
+          padding: 5,
+          paddingLeft: 20,
+          marginTop: 10,
+        }}>
+        <Flex justify="between" style={{paddingRight: 20}}>
+          <Flex>
+            <Image
+              source={{
+                uri: props.tutor?.avatar,
+              }}
+              style={{width: 50, height: 50, borderRadius: 50}}
+            />
+            <Text style={myStyle.tutorName}>{props.tutor?.name}</Text>
           </Flex>
-          <WhiteSpace size="xl" />
 
-          <Text
-            style={{
-              fontSize: 16,
-              ...style.textBoldBlack,
-            }}>
-            {renderDateTime()}
-          </Text>
+          <TouchableOpacity onPress={props.onEdit}>
+            <Flex>
+              <Text style={{marginRight: 5, ...style.textBoldPrimary}}>
+                {t('history_card.review')}
+              </Text>
+              <Icon name="edit" color={color.primaryColor} />
+            </Flex>
+          </TouchableOpacity>
+        </Flex>
+        <WhiteSpace size="xl" />
 
-          <WhiteSpace />
+        <Text
+          style={{
+            fontSize: 16,
+            ...style.textBoldBlack,
+          }}>
+          {renderDateTime()}
+        </Text>
 
-          <Text>
-            {props.notes
-              ? `${t('history_card.note')}: ${props.notes}`
-              : t('history_card.no_note')}
-          </Text>
+        <WhiteSpace />
 
-          <WhiteSpace size="lg" />
+        <Text>
+          {props.notes
+            ? `${t('history_card.note')}: ${props.notes}`
+            : t('history_card.no_note')}
+        </Text>
 
-          <Divider />
+        <WhiteSpace size="lg" />
 
-          <WhiteSpace size="lg" />
+        <Divider />
 
-          <Text style={style.textBoldBlack}>
-            {t('history_card.tutor_review')}
-          </Text>
-          <WhiteSpace />
-          <Text>{t('history_card.no_review')}</Text>
-          {/* <Text>Comment: Good job!</Text>
+        <WhiteSpace size="lg" />
+
+        <Text style={style.textBoldBlack}>
+          {t('history_card.tutor_review')}
+        </Text>
+        <WhiteSpace />
+        <Text>{t('history_card.no_review')}</Text>
+        {/* <Text>Comment: Good job!</Text>
           <Flex>
             <Text>Student's skills: </Text>
             <AirbnbRating
@@ -110,8 +109,7 @@ const HistoryCard = ({props}: HistoryCardProps) => {
               showRating={false}
             />
           </Flex> */}
-        </View>
-      </Card.Body>
+      </View>
     </Card>
   );
 };

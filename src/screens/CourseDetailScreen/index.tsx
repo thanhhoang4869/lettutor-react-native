@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Flex, WhiteSpace} from '@ant-design/react-native';
 import {useRoute} from '@react-navigation/native';
 import TopicCard from 'components/TopicCard';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Divider, Icon, Image} from 'react-native-elements';
+import courseService from 'services/courseService';
 import {color, style} from 'style';
 
 const CourseDetailScreen = ({navigation: {navigate}}: any) => {
@@ -17,7 +19,29 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
 
   const route = useRoute();
   const params = route.params as any;
-  const course = params.course || [];
+
+  const [course, setCourse] = React.useState<any>({});
+
+  const fetchCourse = async (courseId: string) => {
+    try {
+      const response = await courseService.fetchCourseById(courseId);
+      if (response.status === 200) {
+        setCourse(response.data.data);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    if (params.course) {
+      setCourse(params.course);
+      return;
+    } else {
+      const courseId = params.courseId;
+      fetchCourse(courseId);
+    }
+  }, []);
 
   const renderLevel = () => {
     switch (+course.level) {
@@ -62,82 +86,86 @@ const CourseDetailScreen = ({navigation: {navigate}}: any) => {
 
   return (
     <>
-      <ScrollView style={{backgroundColor: 'white'}}>
-        <Image
-          source={{
-            uri: course.imageUrl,
-          }}
-          style={{
-            width: '100%',
-            height: 200,
-          }}
-        />
-        <View style={style.container}>
-          <Text style={style.pageTitle}>{course.name}</Text>
-          <WhiteSpace />
-          <Text>{course.description}</Text>
-
-          <WhiteSpace size="lg" />
-
-          <Divider />
-
-          <WhiteSpace size="lg" />
-
-          <View>
-            <Text style={myStyle.headline}>Overview</Text>
+      {course && (
+        <ScrollView style={{backgroundColor: 'white'}}>
+          <Image
+            source={{
+              uri: course.imageUrl,
+            }}
+            style={{
+              width: '100%',
+              height: 200,
+            }}
+          />
+          <View style={style.container}>
+            <Text style={style.pageTitle}>{course.name}</Text>
             <WhiteSpace />
+            <Text>{course.description}</Text>
 
-            <View>
-              <Flex>
-                <Icon
-                  size={16}
-                  name="info"
-                  type="feather"
-                  style={{marginRight: 5}}
-                />
-                <Text style={style.textBlack}>Why take this course</Text>
-              </Flex>
-              <WhiteSpace />
-              <Text>{course.reason}</Text>
-            </View>
-
-            <WhiteSpace />
-
-            <View>
-              <Flex>
-                <Icon
-                  size={16}
-                  name="info"
-                  type="feather"
-                  style={{marginRight: 5}}
-                />
-                <Text style={style.textBlack}>What you will learn</Text>
-              </Flex>
-              <WhiteSpace />
-              <Text>{course.purpose}</Text>
-            </View>
-          </View>
-
-          <WhiteSpace size="lg" />
-
-          <View>
-            <Text style={myStyle.headline}>Level</Text>
-            <WhiteSpace />
-            <Text style={style.textBlack}>{renderLevel()}</Text>
-          </View>
-
-          <WhiteSpace size="lg" />
-
-          <View>
-            <Text style={myStyle.headline}>Course length</Text>
-            <WhiteSpace />
-            <Text style={style.textBlack}>{course.topics.length} topics</Text>
             <WhiteSpace size="lg" />
-          </View>
 
-          {renderTopics()}
-        </View>
-      </ScrollView>
+            <Divider />
+
+            <WhiteSpace size="lg" />
+
+            <View>
+              <Text style={myStyle.headline}>Overview</Text>
+              <WhiteSpace />
+
+              <View>
+                <Flex>
+                  <Icon
+                    size={16}
+                    name="info"
+                    type="feather"
+                    style={{marginRight: 5}}
+                  />
+                  <Text style={style.textBlack}>Why take this course</Text>
+                </Flex>
+                <WhiteSpace />
+                <Text>{course.reason}</Text>
+              </View>
+
+              <WhiteSpace />
+
+              <View>
+                <Flex>
+                  <Icon
+                    size={16}
+                    name="info"
+                    type="feather"
+                    style={{marginRight: 5}}
+                  />
+                  <Text style={style.textBlack}>What you will learn</Text>
+                </Flex>
+                <WhiteSpace />
+                <Text>{course.purpose}</Text>
+              </View>
+            </View>
+
+            <WhiteSpace size="lg" />
+
+            <View>
+              <Text style={myStyle.headline}>Level</Text>
+              <WhiteSpace />
+              <Text style={style.textBlack}>{renderLevel()}</Text>
+            </View>
+
+            <WhiteSpace size="lg" />
+
+            <View>
+              <Text style={myStyle.headline}>Course length</Text>
+              <WhiteSpace />
+              <Text style={style.textBlack}>
+                {course.topics?.length} topics
+              </Text>
+              <WhiteSpace size="lg" />
+            </View>
+
+            {renderTopics()}
+          </View>
+        </ScrollView>
+      )}
     </>
   );
 };

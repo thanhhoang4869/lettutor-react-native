@@ -1,4 +1,5 @@
-import {Flex, WhiteSpace} from '@ant-design/react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {Flex, Toast, WhiteSpace} from '@ant-design/react-native';
 import Header, {HeaderProps} from 'components/Header';
 import Loading from 'components/Loading';
 import ScheduleCard, {ScheduleCardChildProps} from 'components/ScheduleCard';
@@ -27,6 +28,10 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
   const isFocused = useIsFocused();
 
   const {t} = useTranslation();
+  const [page, setPage] = React.useState(0);
+  const [totalSchedules, setTotalSchedules] = React.useState(0);
+
+  const numberOfItemsPerPage = 2;
 
   const headerProps: HeaderProps = {
     title: t('schedule_screen.title'),
@@ -35,10 +40,11 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
     },
   };
 
-  const [isEditModalVisible, setEditModalVisible] = React.useState(false);
+  const [isCancelModalVisible, setCancelModalVisible] = React.useState(false);
 
-  const toggleEditModal = () => {
-    setEditModalVisible(!isEditModalVisible);
+  const toggleCancelModal = (id: string) => {
+    setScheduleToCancel(id);
+    setCancelModalVisible(!isCancelModalVisible);
   };
 
   const joinMeeting = async (params: any) => {
@@ -47,13 +53,20 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
   const [schedules, setSchedules] = React.useState<any>([]);
   const [loading, setLoading] = React.useState(false);
+  const [scheduleToCancel, setScheduleToCancel] = React.useState<string>('');
+
+  const getPagingLabel = () => {
+    const from = page * numberOfItemsPerPage + 1;
+    const to = Math.min((page + 1) * numberOfItemsPerPage, totalSchedules);
+    return `${from}-${to} ${t('tutor_screen.of')} ${totalSchedules}`;
+  };
 
   const fetchSchedule = async () => {
     setLoading(true);
     try {
       const params: FetchSchedulesParams = {
-        page: 1,
-        perPage: 10,
+        page: page + 1,
+        perPage: numberOfItemsPerPage,
         dateTimeGte: dateTimeUtils.getCurrentTimeStamp(),
         sortBy: 'asc',
         orderBy: 'meeting',
@@ -63,6 +76,7 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
       if (response.status === 200) {
         setSchedules(response.data.data);
+        setTotalSchedules(response.data.data.count);
       } else {
         setLoading(false);
         Alert.alert('Error', 'Something went wrong');
@@ -86,10 +100,10 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
         endPeriodTimestamp: schedule.scheduleDetailInfo?.endPeriodTimestamp,
         meetingLink: schedule.studentMeetingLink,
         notes: schedule.studentRequest,
-        onEdit: () => {
-          toggleEditModal();
+        onEdit: () => {},
+        onCancel: (id: string) => {
+          toggleCancelModal(id);
         },
-        onCancel: () => {},
         onJoin: joinMeeting,
       };
 
@@ -104,7 +118,33 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
 
   useEffect(() => {
     fetchSchedule();
-  }, [isFocused]);
+  }, [isFocused, page]);
+
+  const cancelSchedule = async () => {
+    try {
+      const options = {
+        scheduleDetailIds: [scheduleToCancel],
+      };
+      const response = await scheduleService.cancelSchedule(options);
+
+      if (response?.status === 200) {
+        Alert.alert('Success', 'Schedule has been canceled', [
+          {
+            text: 'OK',
+            onPress: () => {
+              setCancelModalVisible(false);
+              fetchSchedule();
+            },
+          },
+        ]);
+      } else {
+        Alert.alert('You can only cancel 2 hour before the lesson starts');
+      }
+    } catch (e) {
+      console.log(e);
+      Alert.alert('Error', 'Something went wrong');
+    }
+  };
 
   return (
     <>
@@ -113,38 +153,27 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
       <Flex direction="column" align="start" style={myStyle.container}>
         {/* rp modal start */}
         <View>
-          <Modal isVisible={isEditModalVisible}>
+          <Modal isVisible={isCancelModalVisible}>
             <Flex style={style.modal} direction="column" align="start">
-              <Text style={{margin: 5, ...style.modalTitle}}>
-                {t('schedule_screen.modal.edit_note')}
-              </Text>
-
-              <WhiteSpace size="lg" />
-
-              <Input
-                cursorColor={color.primaryColor}
-                multiline={true}
-                style={style.textArea}
-                value="This is a note"
-              />
+              <Text>{t('schedule_screen.modal.edit_note')}</Text>
 
               <WhiteSpace size="lg" />
 
               <Flex justify="between" style={{width: '100%', marginLeft: 10}}>
                 <TouchableOpacity
                   onPress={() => {
-                    toggleEditModal();
+                    setCancelModalVisible(false);
                   }}>
                   <Text style={style.textBold}>
-                    {t('schedule_screen.modal.cancel')}
+                    {t('schedule_screen.modal.back')}
                   </Text>
                 </TouchableOpacity>
                 <Button
                   style={style.primaryButtonNoWidth}
                   onPress={() => {
-                    toggleEditModal();
+                    cancelSchedule();
                   }}>
-                  OK
+                  {t('schedule_screen.modal.cancel')}
                 </Button>
               </Flex>
             </Flex>
@@ -187,12 +216,12 @@ const UpcomingScreen = ({navigation: {navigate}}: any) => {
                 justifyContent: 'flex-end',
                 marginRight: -12,
               }}
-              page={0}
-              numberOfPages={5}
-              onPageChange={tarPage => {}}
-              // label={getPagingLabel()}
+              page={page}
+              numberOfPages={Math.ceil(totalSchedules / numberOfItemsPerPage)}
+              onPageChange={tarPage => setPage(tarPage)}
+              label={getPagingLabel()}
               showFastPaginationControls
-              numberOfItemsPerPage={12}
+              numberOfItemsPerPage={numberOfItemsPerPage}
               selectPageDropdownLabel={'Rows per page'}
             />
           </ScrollView>
